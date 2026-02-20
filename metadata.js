@@ -56,30 +56,45 @@ function getBestFolderLabel(filePath, config) {
 
 async function getPhotoMetadata(photoPath, config) {
     let dateStr = "";
-    let locationStr = "";
     let gpsStatus = "Aucun";
     let coords = null;
 
     try {
+        // Robust parsing: enable GPS and XMP segments explicitly
+        // We don't use 'pick' to avoid accidentally filtering out computed tags like latitude/longitude
         const result = await exifr.parse(photoPath, {
-            pick: ['DateTimeOriginal', 'latitude', 'longitude']
+            gps: true,
+            xmp: true,
+            tiff: true,
+            translateKeys: true,
+            translateValues: true
         });
 
         if (result) {
+            // 1. Extract Date
             if (result.DateTimeOriginal) {
                 const date = new Date(result.DateTimeOriginal);
-                dateStr = `${MONTHS_FR[date.getMonth()]} ${date.getFullYear()}`;
+                if (!isNaN(date.getTime())) {
+                    dateStr = `${MONTHS_FR[date.getMonth()]} ${date.getFullYear()}`;
+                }
             }
 
-            if (result.latitude && result.longitude) {
+            // 2. Extract GPS
+            if (typeof result.latitude === 'number' && typeof result.longitude === 'number') {
                 coords = {
                     lat: result.latitude,
                     lon: result.longitude
                 };
+            } else if (result.GPSLatitude && result.GPSLongitude) {
+                // Fallback for some formats
+                coords = {
+                    lat: result.GPSLatitude,
+                    lon: result.GPSLongitude
+                };
             }
         }
     } catch (e) {
-        gpsStatus = `Erreur lecture EXIF: ${e.message}`;
+        gpsStatus = `Erreur EXIF: ${e.message}`;
     }
 
     if (!dateStr) {
