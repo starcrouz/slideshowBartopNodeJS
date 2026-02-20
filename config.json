@@ -1,0 +1,47 @@
+{
+    "SOURCE_DIR": "E:/Google Drive/_Perso/Medias/Photos",
+    "DEST_DIR": "\\\\RECALBOX\\share\\userscripts\\slideshow\\images",
+    "NB_IMAGES": 100,
+    "SCREEN_W": 1280,
+    "SCREEN_H": 1024,
+    "CITY_OVERRIDES": {
+        "Le Kremlin-Bicêtre": "Paris",
+        "Gentilly": "Paris",
+        "Ivry-sur-Seine": "Paris",
+        "Sari-Solenzara": "Ste-Lucie de Porto-Vecchio"
+    },
+    "COUNTRY_NAMES": {
+        "US": "USA",
+        "GB": "Royaume-Uni",
+        "IT": "Italie",
+        "ES": "Espagne",
+        "DE": "Allemagne",
+        "CH": "Suisse",
+        "BE": "Belgique",
+        "TZ": "Tanzanie",
+        "BG": "Bulgarie",
+        "MA": "Maroc",
+        "AT": "Autriche",
+        "NO": "Norvège",
+        "TR": "Turquie",
+        "GR": "Grèce",
+        "PT": "Portugal",
+        "IE": "Irlande",
+        "NL": "Pays-Bas",
+        "CA": "Canada",
+        "HR": "Croatie",
+        "TH": "Thaïlande",
+        "VN": "Vietnam",
+        "GP": "Guadeloupe",
+        "MQ": "Martinique",
+        "RE": "Réunion",
+        "GF": "Guyane"
+    },
+    "GENERIC_FOLDERS": [
+        "carte",
+        "dcim",
+        "apple",
+        "camera",
+        "export"
+    ]
+}
