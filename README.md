@@ -38,10 +38,13 @@ A Python script designed for Recalbox (compatible with Python 2.7 and 3.x) using
 ### Installation on Recalbox
 1. Copy the `display/slideshow.py` file to your Recalbox.
 2. Ensure you have Pygame installed (standard on Recalbox).
-3. Run the script:
-   ```bash
-   python display/slideshow.py
-   ```
+### Controls
+- **Exit**: Move Joystick **Up/Down**, press any **Button**, or press any **Key**.
+- **Next Photo**: Move Joystick **Right** (or D-Pad Right).
+- **Previous Photo**: Move Joystick **Left** (or D-Pad Left).
+
+### Performance Optimization
+The script is tuned for Raspberry Pi 3. It uses a low framing rate (~25 FPS) and pre-scaled images to ensure standard Recalbox drivers can capture your inputs without lag.
 
 ---
 
