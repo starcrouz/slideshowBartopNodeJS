@@ -1,56 +1,61 @@
 # SlideshowRecalbox
 
-A multi-platform project to manage and display a high-quality photo slideshow on a Recalbox-powered Bartop.
+A complete solution to manage and display a high-quality photo slideshow on a Recalbox-powered Bartop/Raspberry Pi.
 
-The project consists of two parts:
-1. **Photo Selector (Node.js)**: Runs on your PC to select, resize, and prepare photos.
-2. **Slideshow Display (Python/Pygame)**: Runs on the Raspberry Pi (Recalbox) to display the photos with a Ken Burns animation.
+The project is divided into two distinct parts:
+1. **Photo Selector (PC)**: A Node.js application to prepare your images.
+2. **Screensaver System (RPi)**: A Python-based idle monitor and animated slideshow for Recalbox.
 
 ---
 
 ## 1. Photo Selector (PC / Node.js)
 
-Automatically selects, resizes, and processes photos (JPG, HEIC) from your library to keep the bartop's storage efficient and responsive.
+Maintains a selection of 100 optimized photos from your library.
 
-### Features
-- **Smart Selection**: Picks 100 random photos from your collection.
-- **HEIC Support**: Converts iPhone photos to JPEG on-the-fly.
-- **Auto-labeling**: Extracts EXIF data and reverse-geocodes locations.
-- **CPU Efficient**: Sequential processing to avoid background lag.
+- **Smart Selection**: Picks random photos (JPG, HEIC).
+- **Auto-labeling**: Extracts EXIF data and reverse-geocodes GPS coordinates to city names.
+- **Auto-conversion**: Converts HEIC photos to JPEG.
+- **Lightweight**: Sequential processing to avoid background lag on your PC.
 
-### Usage
-1. Install dependencies: `npm install`
-2. Configure your paths in `config.json`.
+### Installation & Usage
+1. `npm install`
+2. Configure `config.json`.
 3. Run: `node index.js`
 
 ---
 
-## 2. Slideshow Display (RPi / Python)
+## 2. Screensaver System (RPi / Python)
 
-A Python script designed for Recalbox (compatible with Python 2.7 and 3.x) using Pygame to display the prepared photos.
+A two-script system to turn your Recalbox into a photo frame when idle.
 
-### Features
-- **Ken Burns Effect**: Gentle zoom animation for a dynamic display.
-- **Fade-in**: Smooth transitions between photos.
-- **Metadata Overlay**: Displays the date and location extracted by the Node.js script.
-- **Low Resource**: Optimized to run smoothly on older Raspberry Pi models.
+### Components
+- **[idle_monitor.py](display/idle_monitor.py)**: The "brain". It monitors joysticks/buttons and kills EmulationStation when no activity is detected to launch the slideshow.
+- **[slideshow.py](display/slideshow.py)**: The "display". Shows photos with a Ken Burns (zoom) effect and metadata labels.
+
+### Features & Controls
+- **Ken Burns Effect**: Gentle zoom animation.
+- **Ultra-responsive Exit**: Uses low-level input monitoring (`/dev/input/event*`) to exit or skip photos instantly, even if the CPU is busy.
+- **Controls**:
+  - **Exit**: Move Joystick **Up/Down**, press any **Button**, or any **Key**.
+  - **Navigate**: Move Joystick **Left/Right** to skip or go back.
 
 ### Installation on Recalbox
-1. Copy the `display/slideshow.py` file to your Recalbox.
-2. Ensure you have Pygame installed (standard on Recalbox).
-### Controls
-- **Exit**: Move Joystick **Up/Down**, press any **Button**, or press any **Key**.
-- **Next Photo**: Move Joystick **Right** (or D-Pad Right).
-- **Previous Photo**: Move Joystick **Left** (or D-Pad Left).
-
-### Performance Optimization
-The script is tuned for Raspberry Pi 3. It uses a low framing rate (~25 FPS) and pre-scaled images to ensure standard Recalbox drivers can capture your inputs without lag.
+1. Copy the `display` folder to `/recalbox/share/userscripts/`.
+2. To start the monitor automatically:
+   - Edit `/recalbox/share/system/custom.sh`:
+     ```bash
+     python /recalbox/share/userscripts/idle_monitor.py &
+     ```
+   - Ensure it's executable: `chmod +x /recalbox/share/system/custom.sh`
 
 ---
 
-## Configuration
+## Advanced Options
 
-Edit `config.json` on your PC to set your source/destination folders and screen resolution.
+If your Raspberry Pi is struggling with the animation, you can disable it in `idle_monitor.py` by adding `--no-animation` to the slideshow call:
+```python
+subprocess.call(["python", "/recalbox/share/userscripts/slideshow/slideshow.py", "--no-animation"])
+```
 
 ## License
 ISC
