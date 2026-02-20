@@ -2,13 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const { Jimp } = require('jimp');
 const { globSync } = require('glob');
+const convert = require('heic-convert');
 
 const config = require('./config.json');
 const { getBestLocation } = require('./geo');
 const { getPhotoMetadata } = require('./metadata');
 
 async function processImage(photoPath, id, total) {
-    const meta = getPhotoMetadata(photoPath, config);
+    const isHeic = photoPath.toLowerCase().endsWith('.heic');
+
+    // 1. Get Metadata (Async with exifr)
+    const meta = await getPhotoMetadata(photoPath, config);
     let locationStr = "";
     let gpsStatus = meta.gpsStatus;
 
@@ -40,7 +44,20 @@ async function processImage(photoPath, id, total) {
     console.log(`  --------------------------------------------------`);
 
     try {
-        const image = await Jimp.read(photoPath);
+        let imageBuffer;
+        if (isHeic) {
+            // Convert HEIC to JPEG buffer
+            const inputBuffer = fs.readFileSync(photoPath);
+            imageBuffer = await convert({
+                buffer: inputBuffer,
+                format: 'JPEG',
+                quality: 1
+            });
+        } else {
+            imageBuffer = photoPath;
+        }
+
+        const image = await Jimp.read(imageBuffer);
         image.scaleToFit({ w: config.SCREEN_W, h: config.SCREEN_H });
         await image.write(path.join(config.DEST_DIR, `${id}.jpg`));
         fs.writeFileSync(path.join(config.DEST_DIR, `${id}.txt`), finalLabel, 'utf8');
@@ -50,14 +67,15 @@ async function processImage(photoPath, id, total) {
 }
 
 async function start() {
-    console.log("--- Lancement du tirage photo intelligent (Mode Séquentiel) ---");
+    console.log("--- Lancement du tirage photo intelligent ---");
 
     if (!fs.existsSync(config.DEST_DIR)) {
         console.error(`Erreur : Destination inaccessible : ${config.DEST_DIR}`);
         return;
     }
 
-    const pattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{jpg,JPG,jpeg,JPEG}';
+    // Extended pattern to include HEIC
+    const pattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{jpg,JPG,jpeg,JPEG,heic,HEIC}';
     const allFiles = globSync(pattern);
     console.log(`Photos trouvées : ${allFiles.length}\n`);
 
@@ -66,7 +84,7 @@ async function start() {
     // Shuffle and pick
     const selection = allFiles.sort(() => 0.5 - Math.random()).slice(0, config.NB_IMAGES);
 
-    // Sequential processing to keep CPU usage low
+    // Sequential processing
     for (let i = 0; i < selection.length; i++) {
         const id = (i + 1).toString().padStart(3, '0');
         await processImage(selection[i], id, selection.length);

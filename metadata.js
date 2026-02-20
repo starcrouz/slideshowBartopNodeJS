@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const exifParser = require('exif-parser');
+const exifr = require('exifr');
 
 const MONTHS_FR = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 
@@ -12,11 +12,8 @@ function capitalize(s) {
 function cleanFolderName(name) {
     if (!name) return "";
     let cleaned = name.replace(/[()]/g, '');
-    // Remove dates like YYYY-MM-DD or DD.MM.YYYY
     cleaned = cleaned.replace(/\b\d{1,4}[-\s./]\d{1,2}[-\s./]\d{1,4}\b/g, '');
-    // Remove standalone years
     cleaned = cleaned.replace(/\b\d{4}\b/g, '');
-    // Clean separators and extra spaces
     cleaned = cleaned.replace(/[_|-]/g, ' ').replace(/\s\s+/g, ' ').trim();
 
     if (cleaned === "" || /^(ann[eé]e|chargement appareil photo)$/i.test(cleaned)) {
@@ -33,7 +30,6 @@ function extractDateFromPath(filePath, config) {
         folderName = path.basename(path.dirname(parentPath));
     }
 
-    // 1. Explicit YYYY-MM-DD or similar
     const fullDateMatch = folderName.match(/(\d{4})[-\s.](\d{2})[-\s.](\d{2})/);
     if (fullDateMatch) {
         const year = fullDateMatch[1];
@@ -41,7 +37,6 @@ function extractDateFromPath(filePath, config) {
         if (monthIdx >= 0 && monthIdx < 12) return `${MONTHS_FR[monthIdx]} ${year}`;
     }
 
-    // 2. Fallback to just the year
     const yearMatch = folderName.match(/\b(19|20)\d{2}\b/);
     if (yearMatch) return yearMatch[0];
 
@@ -59,33 +54,34 @@ function getBestFolderLabel(filePath, config) {
     return cleanFolderName(folderName);
 }
 
-function getPhotoMetadata(photoPath, config) {
+async function getPhotoMetadata(photoPath, config) {
     let dateStr = "";
     let locationStr = "";
     let gpsStatus = "Aucun";
     let coords = null;
 
     try {
-        const buffer = fs.readFileSync(photoPath);
-        const parser = exifParser.create(buffer);
-        const result = parser.parse();
+        const result = await exifr.parse(photoPath, {
+            pick: ['DateTimeOriginal', 'latitude', 'longitude']
+        });
 
-        if (result.tags.DateTimeOriginal) {
-            const date = new Date(result.tags.DateTimeOriginal * 1000);
-            dateStr = `${MONTHS_FR[date.getMonth()]} ${date.getFullYear()}`;
-        }
+        if (result) {
+            if (result.DateTimeOriginal) {
+                const date = new Date(result.DateTimeOriginal);
+                dateStr = `${MONTHS_FR[date.getMonth()]} ${date.getFullYear()}`;
+            }
 
-        if (result.tags.GPSLatitude && result.tags.GPSLongitude) {
-            coords = {
-                lat: result.tags.GPSLatitude,
-                lon: result.tags.GPSLongitude
-            };
+            if (result.latitude && result.longitude) {
+                coords = {
+                    lat: result.latitude,
+                    lon: result.longitude
+                };
+            }
         }
     } catch (e) {
-        gpsStatus = "Erreur lecture EXIF";
+        gpsStatus = `Erreur lecture EXIF: ${e.message}`;
     }
 
-    // Fallbacks
     if (!dateStr) {
         dateStr = extractDateFromPath(photoPath, config);
     }
