@@ -36,7 +36,7 @@ def load_settings():
                 return json.load(f)
         except Exception:
             pass
-    return {"display_time": DEFAULT_DISPLAY_TIME}
+    return {"display_time": DEFAULT_DISPLAY_TIME, "info_button": 305}
 
 def save_settings(settings):
     try:
@@ -68,13 +68,15 @@ def get_sidecar_data(image_path):
 def get_input_devices():
     return glob.glob('/dev/input/event*')
 
-def run_slideshow(enable_animation=True):
+def run_slideshow(enable_animation=True, target_info_button=305):
     # Recalbox / FBcon specific settings
     os.environ["SDL_VIDEODRIVER"] = "fbcon"
     os.environ["SDL_NOMOUSE"] = "1"
     
     settings = load_settings()
     display_time = settings.get("display_time", DEFAULT_DISPLAY_TIME)
+    # The info button can be saved in settings if the user finds it
+    info_button_code = settings.get("info_button", target_info_button)
     
     pygame.init()
     if pygame.joystick.get_count() > 0:
@@ -108,6 +110,7 @@ def run_slideshow(enable_animation=True):
     # Load fonts
     font_main = pygame.font.Font(None, int(sh * 0.05))
     font_small = pygame.font.Font(None, int(sh * 0.03))
+    font_tiny = pygame.font.Font(None, int(sh * 0.025))
 
     # List only JPEG images
     all_files = sorted([os.path.join(IMAGE_FOLDER, f) for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith('.jpg')])
@@ -115,7 +118,7 @@ def run_slideshow(enable_animation=True):
         print("No images found in " + IMAGE_FOLDER)
         return
 
-    # Shuffle logic: create a randomized indices list
+    # Shuffle logic
     indices = range(len(all_files))
     random.shuffle(indices)
     current_idx_ptr = 0
@@ -131,39 +134,45 @@ def run_slideshow(enable_animation=True):
     alpha = 0
     meta_data = {}
     
-    # Info Mode variables
+    # Overlays
     show_info = False
     info_timer = 0
-    INFO_DURATION = 10 # Seconds to pause and show info
+    INFO_DURATION = 15 # A bit longer for reading
+
+    speed_overlay_timer = 0
+    SPEED_OVERLAY_DURATION = 2
 
     # Input debouncing
     last_nav_time = 0
     last_speed_time = 0
+
+    print("--- Slideshow Started ---")
+    print("TIP: Press buttons to see their codes in this console.")
+    print("Target Info Button: %d" % info_button_code)
 
     try:
         while running:
             now = time.time()
             
             # --- 1. LOW LEVEL INPUT HANDLING ---
-            # Any input (except maybe axes if we want to be picky) could signal exit.
-            # But the user wants Up/Down for speed.
-            # Let's use ANY BUTTON press to exit, EXCEPT one for Info.
             for f in input_files:
                 try:
                     data = f.read(event_size)
-                    while data: # Process all buffered events
+                    while data:
                         _, _, ev_type, ev_code, ev_value = struct.unpack(event_format, data)
                         
-                        # EV_KEY (Buttons)
-                        if ev_type == EV_KEY and ev_value == 1:
-                            # Usually 304, 305 etc are buttons.
-                            # We'll use one button specifically for Info (e.g. 305 / Button 1)
-                            # All other buttons (or specific ones) can exit.
-                            if ev_code == 305: # Button 1 (Info)
+                        if ev_type == EV_KEY and ev_value == 1: # Button Press
+                            print("[DEBUG] Button pressed! Code: %d" % ev_code)
+                            
+                            # Toggle Info Mode
+                            if ev_code == info_button_code:
                                 show_info = not show_info
                                 if show_info: 
                                     info_timer = now + INFO_DURATION
-                            else: # Any other button exits
+                                    print("[INFO] Mode Info active.")
+                            else: 
+                                # Any other button exits
+                                print("[INFO] Exit signal received (Button %d)." % ev_code)
                                 running = False
                                 break
                         data = f.read(event_size)
@@ -177,8 +186,23 @@ def run_slideshow(enable_animation=True):
                 if event.type in (pygame.QUIT, pygame.KEYDOWN):
                     running = False
                 
+                # Speed Control (Joystick Vertical)
+                if now - last_speed_time > 0.15:
+                    change = 0
+                    if event.type == pygame.JOYAXISMOTION and event.axis == 1:
+                        if event.value < -0.6: change = -1 # Up -> Faster
+                        elif event.value > 0.6: change = 1 # Down -> Slower
+                    elif event.type == pygame.JOYHATMOTION and event.value[1] != 0:
+                        change = -event.value[1]
+
+                    if change != 0:
+                        display_time = max(MIN_DISPLAY_TIME, min(MAX_DISPLAY_TIME, display_time + change))
+                        last_speed_time = now
+                        speed_overlay_timer = now + SPEED_OVERLAY_DURATION
+                        save_settings({"display_time": display_time, "info_button": info_button_code})
+
+                # Navigation (Joystick Horizontal)
                 if now - last_nav_time > 0.4:
-                    # NAVIGATION (Horizontal)
                     if event.type == pygame.JOYAXISMOTION and event.axis == 0:
                         if event.value > 0.6: # Next
                             current_idx_ptr = (current_idx_ptr + 1) % len(indices)
@@ -191,34 +215,16 @@ def run_slideshow(enable_animation=True):
                             need_load = True
                             last_nav_time = now
                     elif event.type == pygame.JOYHATMOTION and event.value[0] != 0:
-                        if event.value[0] == 1: # Right
-                            current_idx_ptr = (current_idx_ptr + 1) % len(indices)
-                        else: # Left
-                            current_idx_ptr = (current_idx_ptr - 1) % len(indices)
+                        if event.value[0] == 1: current_idx_ptr = (current_idx_ptr + 1) % len(indices)
+                        else: current_idx_ptr = (current_idx_ptr - 1) % len(indices)
                         idx = indices[current_idx_ptr]
                         need_load = True
                         last_nav_time = now
 
-                # SPEED CONTROL (Vertical)
-                if now - last_speed_time > 0.2:
-                    change = 0
-                    if event.type == pygame.JOYAXISMOTION and event.axis == 1:
-                        if event.value < -0.6: change = -1 # Up -> Faster (less time)
-                        elif event.value > 0.6: change = 1 # Down -> Slower (more time)
-                    elif event.type == pygame.JOYHATMOTION and event.value[1] != 0:
-                        change = -event.value[1] # Hat Up is 1, so change -1
-
-                    if change != 0:
-                        display_time = max(MIN_DISPLAY_TIME, min(MAX_DISPLAY_TIME, display_time + change))
-                        last_speed_time = now
-                        save_settings({"display_time": display_time})
-
             # --- 3. SLIDE LOGIC ---
-            # If Info mode is on, we "pause" the timer
             if show_info:
-                last_switch = now - display_time + (info_timer - now) # Freeze relative time
-                if now > info_timer:
-                    show_info = False
+                last_switch = now - display_time + (max(0, info_timer - now))
+                if now > info_timer: show_info = False
 
             if not need_load and not show_info and now - last_switch > display_time:
                 current_idx_ptr = (current_idx_ptr + 1) % len(indices)
@@ -231,14 +237,12 @@ def run_slideshow(enable_animation=True):
                     img_w, img_h = img.get_size()
                     ratio = min(float(sw)/img_w, float(sh)/img_h)
                     current_img_raw = pygame.transform.scale(img, (int(img_w*ratio), int(img_h*ratio)))
-                    
                     meta_data = get_sidecar_data(all_files[idx])
                     zoom_factor = 1.0
                     alpha = 0
                     need_load = False
                     last_switch = now
-                except Exception as e:
-                    print("Error loading image " + all_files[idx] + ": " + str(e))
+                except Exception:
                     current_idx_ptr = (current_idx_ptr + 1) % len(indices)
                     idx = indices[current_idx_ptr]
 
@@ -246,54 +250,60 @@ def run_slideshow(enable_animation=True):
             if current_img_raw:
                 screen.fill((0, 0, 0))
                 
-                # Ken Burns Effect
                 if enable_animation and not show_info:
                     zoom_factor += ZOOM_SPEED
                 
                 z_w = int(current_img_raw.get_width() * zoom_factor)
                 z_h = int(current_img_raw.get_height() * zoom_factor)
-                img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                
+                # Optimized zoom centering
                 pos_x = (sw - z_w) // 2
                 pos_y = (sh - z_h) // 2
+                img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
                 
-                # Fade-in
                 if alpha < 255: alpha += FADE_SPEED
                 img_to_draw.set_alpha(min(alpha, 255))
-                
                 screen.blit(img_to_draw, (pos_x, pos_y))
                 
-                # Metadata Overlays
-                if not show_info:
-                    # Normal Overlay
-                    if meta_data.get("label"):
-                        txt = font_main.render(meta_data["label"], True, (255, 255, 255))
-                        shd = font_main.render(meta_data["label"], True, (0, 0, 0))
-                        tx = sw - txt.get_width() - 30
-                        ty = sh - txt.get_height() - 30
-                        screen.blit(shd, (tx+2, ty+2))
-                        screen.blit(txt, (tx, ty))
-                else:
-                    # Detailed Info Mode (Center Screen)
-                    overlay = pygame.Surface((sw * 0.8, sh * 0.4))
-                    overlay.set_alpha(180)
-                    overlay.fill((0, 0, 0))
+                # Overlays
+                if show_info:
+                    # Info Mode Panel
+                    overlay = pygame.Surface((sw * 0.85, sh * 0.5))
+                    overlay.set_alpha(200)
+                    overlay.fill((20, 20, 20))
                     ox = (sw - overlay.get_width()) // 2
                     oy = (sh - overlay.get_height()) // 2
                     screen.blit(overlay, (ox, oy))
                     
                     info_lines = [
-                        "PHOTO %d / %d" % (current_idx_ptr + 1, len(all_files)),
-                        "Lieu: %s" % meta_data.get("label", "Inconnu"),
-                        "Date: %s" % meta_data.get("full_date", "Inconnue"),
-                        "Fichier: %s" % meta_data.get("source_path", "N/A"),
-                        "Vitesse: %d sec" % display_time,
-                        "Retour au diaporama dans %d s..." % int(max(0, info_timer - now))
+                        "DÉTAILS PHOTO [%d/%d]" % (current_idx_ptr + 1, len(all_files)),
+                        "Lieu      : %s" % meta_data.get("label", "N/A"),
+                        "Date      : %s" % meta_data.get("full_date", "N/A"),
+                        "Fichier   : %s" % meta_data.get("source_path", "N/A"),
+                        "Vitesse   : %d secondes" % display_time,
+                        "Bouton ID : %d (Configuré pour Info)" % info_button_code,
+                        "",
+                        "Retour auto dans %ds..." % int(max(0, info_timer - now))
                     ]
-                    
                     for i, line in enumerate(info_lines):
-                        color = (255, 255, 0) if i == 0 else (255, 255, 255)
-                        txt = font_small.render(line, True, color)
-                        screen.blit(txt, (ox + 20, oy + 20 + i * 35))
+                        c = (255, 255, 0) if i == 0 else (255, 255, 255)
+                        txt = font_small.render(line, True, c)
+                        screen.blit(txt, (ox + 30, oy + 30 + i * 32))
+                else:
+                    # Normal label
+                    if meta_data.get("label"):
+                        txt = font_main.render(meta_data["label"], True, (255, 255, 255))
+                        shd = font_main.render(meta_data["label"], True, (0, 0, 0))
+                        tx, ty = sw - txt.get_width() - 40, sh - txt.get_height() - 40
+                        screen.blit(shd, (tx+2, ty+2))
+                        screen.blit(txt, (tx, ty))
+                    
+                    # Speed adjustment overlay
+                    if now < speed_overlay_timer:
+                        s_txt = "Intervalle : %d s" % display_time
+                        txt = font_small.render(s_txt, True, (255, 255, 0))
+                        # Center top or corner
+                        screen.blit(txt, (20, 20))
 
                 pygame.display.flip()
             
@@ -306,6 +316,7 @@ def run_slideshow(enable_animation=True):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--no-animation", action="store_true", help="Disable Ken Burns effect")
+    parser.add_argument("--no-animation", action="store_true")
+    parser.add_argument("--info-button", type=int, default=305)
     args = parser.parse_args()
-    run_slideshow(enable_animation=not args.no_animation)
+    run_slideshow(enable_animation=not args.no_animation, target_info_button=args.info_button)
