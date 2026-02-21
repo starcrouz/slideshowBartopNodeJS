@@ -11,16 +11,26 @@ import fcntl
 import struct
 import random
 import json
+import subprocess
 
-# --- CONFIGURATION (Peut être modifié ici ou via le fichier settings) ---
-INFO_BUTTON_DEFAULT = 289  # Code du bouton pour afficher les détails (Configuré pour votre branche)
+# --- CONFIGURATION PAR DÉFAUT ---
+INFO_BUTTON_DEFAULT = 289
+MODE_BUTTON_DEFAULT = 304  # À configurer par l'utilisateur via le mode Diagnostic
 IMAGE_FOLDER = "/recalbox/share/userscripts/slideshow/images" 
+VIDEO_PERSO_FOLDER = "/recalbox/share/userscripts/slideshow/videos"
+VIDEO_GAMES_FOLDER = "/recalbox/share/screenshots" # Souvent là ou sont les snaps
 SETTINGS_FILE = "/recalbox/share/userscripts/slideshow/slideshow_settings.json"
+
 DEFAULT_DISPLAY_TIME = 15 
 MIN_DISPLAY_TIME = 3
 MAX_DISPLAY_TIME = 60
 ZOOM_SPEED = 0.00015
 FADE_SPEED = 8
+
+# Modes
+MODE_PHOTOS = 1
+MODE_VIDEOS_PERSO = 2
+MODE_VIDEOS_GAMES = 3
 
 # Input event constants
 EV_KEY = 1
@@ -31,17 +41,15 @@ ABS_HAT0X = 16
 ABS_HAT0Y = 17
 
 def load_settings():
-    """Charge les réglages persistants."""
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, 'r') as f:
                 return json.load(f)
         except Exception:
             pass
-    return {"display_time": DEFAULT_DISPLAY_TIME, "info_button": INFO_BUTTON_DEFAULT}
+    return {"display_time": DEFAULT_DISPLAY_TIME, "info_button": INFO_BUTTON_DEFAULT, "mode_button": MODE_BUTTON_DEFAULT, "current_mode": MODE_PHOTOS}
 
 def save_settings(settings):
-    """Sauvegarde les réglages persistants."""
     try:
         with open(SETTINGS_FILE, 'w') as f:
             json.dump(settings, f)
@@ -49,14 +57,12 @@ def save_settings(settings):
         pass
 
 def get_sidecar_data(image_path):
-    """Lit les métadonnées multi-lignes du fichier .txt associé."""
     txt_path = os.path.splitext(image_path)[0] + ".txt"
     data = {"label": u"", "full_date": u"", "source_path": u""}
     if os.path.exists(txt_path):
         try:
             with open(txt_path, 'r') as f:
                 lines = f.readlines()
-                # En Python 2, on décode explicitement chaque ligne
                 if len(lines) >= 1: data["label"] = lines[0].strip().decode('utf-8', 'ignore')
                 if len(lines) >= 2: data["full_date"] = lines[1].strip().decode('utf-8', 'ignore')
                 if len(lines) >= 3: data["source_path"] = lines[2].strip().decode('utf-8', 'ignore')
@@ -67,14 +73,27 @@ def get_sidecar_data(image_path):
 def get_input_devices():
     return glob.glob('/dev/input/event*')
 
-def run_slideshow(enable_animation=True, target_info_button=INFO_BUTTON_DEFAULT):
-    # Paramètres Recalbox / FBcon
+def play_video(file_path):
+    """Lance un lecteur externe pour la vidéo (omxplayer est le standard HDMI sur RPi)."""
+    try:
+        # Sur Recalbox, omxplayer ou ffplay sont souvent dispos. 
+        # On utilise subprocess.call qui bloque jusqu'à la fin de la vidéo.
+        # On peut sortir de omxplayer avec 'q' normalement, mais ici on veut que ce soit transparent.
+        subprocess.call(["omxplayer", "-o", "both", "--no-osd", file_path])
+        return True
+    except Exception:
+        return False
+
+def run_slideshow(enable_animation=True):
+    # Recalbox / FBcon
     os.environ["SDL_VIDEODRIVER"] = "fbcon"
     os.environ["SDL_NOMOUSE"] = "1"
     
     settings = load_settings()
     display_time = settings.get("display_time", DEFAULT_DISPLAY_TIME)
-    info_button_code = settings.get("info_button", target_info_button)
+    info_button_code = settings.get("info_button", INFO_BUTTON_DEFAULT)
+    mode_button_code = settings.get("mode_button", MODE_BUTTON_DEFAULT)
+    current_mode = settings.get("current_mode", MODE_PHOTOS)
     
     pygame.init()
     if pygame.joystick.get_count() > 0:
@@ -82,7 +101,6 @@ def run_slideshow(enable_animation=True, target_info_button=INFO_BUTTON_DEFAULT)
         for i in range(pygame.joystick.get_count()):
             pygame.joystick.Joystick(i).init()
     
-    # Surveillance des entrées bas-niveau (/dev/input)
     devices = get_input_devices()
     input_files = []
     for dev in devices:
@@ -95,51 +113,60 @@ def run_slideshow(enable_animation=True, target_info_button=INFO_BUTTON_DEFAULT)
         except Exception:
             pass
 
-    # Taille de la structure input_event (32-bit sur RPi 3)
     event_format = 'llHHi' 
     event_size = struct.calcsize(event_format)
 
-    # Résolution écran
     info = pygame.display.Info()
     sw, sh = info.current_w, info.current_h
+    # Ajustement pour certains écrans RPi qui ne rapportent pas la bonne taille en fbcon
+    if sw == 0 or sh == 0: sw, sh = 1280, 1024 
+    
     screen = pygame.display.set_mode((sw, sh), pygame.FULLSCREEN)
     pygame.mouse.set_visible(False)
     
-    # Polices
     font_main = pygame.font.Font(None, int(sh * 0.05))
     font_small = pygame.font.Font(None, int(sh * 0.03))
+    font_diag = pygame.font.Font(None, int(sh * 0.04))
 
-    # Filtrage des fichiers JPEG
-    all_files = sorted([os.path.join(IMAGE_FOLDER, f) for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith('.jpg')])
-    if not all_files:
-        print("Aucune image trouvee dans " + IMAGE_FOLDER)
-        return
+    def get_files_for_mode(mode):
+        if mode == MODE_PHOTOS:
+            return sorted([os.path.join(IMAGE_FOLDER, f) for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith('.jpg')])
+        elif mode == MODE_VIDEOS_PERSO:
+            if not os.path.exists(VIDEO_PERSO_FOLDER): return []
+            return sorted([os.path.join(VIDEO_PERSO_FOLDER, f) for f in os.listdir(VIDEO_PERSO_FOLDER) if f.lower().endswith(('.mp4', '.mkv', '.avi', '.mov'))])
+        elif mode == MODE_VIDEOS_GAMES:
+            # Recherche recursive des videos dans les screenshots/snaps
+            vids = []
+            for root, dirs, files in os.walk(VIDEO_GAMES_FOLDER):
+                for f in files:
+                    if f.lower().endswith(('.mp4', '.mkv', '.avi')):
+                        vids.append(os.path.join(root, f))
+            return sorted(vids)
+        return []
 
-    # Mélange aléatoire (Indices)
+    all_files = get_files_for_mode(current_mode)
     indices = range(len(all_files))
     random.shuffle(indices)
     current_idx_ptr = 0
 
-    idx = indices[current_idx_ptr]
     running = True
     need_load = True
     last_switch = time.time()
     
-    # Variables d'état
     current_img_raw = None
     zoom_factor = 1.0
     alpha = 0
     meta_data = {}
     
-    # Superpositions (Overlays)
     show_info = False
     info_timer = 0
     INFO_DURATION = 15 
+    last_detected_code = 0
 
     speed_overlay_timer = 0
-    SPEED_OVERLAY_DURATION = 2
+    mode_overlay_timer = 0
+    OVERLAY_DURATION = 3
 
-    # Anti-rebond
     last_nav_time = 0
     last_speed_time = 0
 
@@ -147,110 +174,146 @@ def run_slideshow(enable_animation=True, target_info_button=INFO_BUTTON_DEFAULT)
         while running:
             now = time.time()
             
-            # --- 1. GESTION DES ENTRÉES BAS-NIVEAU (Réactivité maximale) ---
+            # --- 1. ENTRÉES BAS-NIVEAU ---
             for f in input_files:
                 try:
                     data = f.read(event_size)
                     while data:
                         _, _, ev_type, ev_code, ev_value = struct.unpack(event_format, data)
                         if ev_type == EV_KEY and ev_value == 1: # Bouton Pressé
-                            if ev_code == info_button_code:
-                                show_info = not show_info
-                                if show_info: 
+                            last_detected_code = ev_code
+                            
+                            if show_info:
+                                # En mode info, on ne quitte pas, on affiche le code
+                                if ev_code == info_button_code:
+                                    show_info = False
+                                # On reset le timer info pour laisser le temps de lire le code
+                                info_timer = now + INFO_DURATION
+                            else:
+                                if ev_code == info_button_code:
+                                    show_info = True
                                     info_timer = now + INFO_DURATION
-                            else: 
-                                running = False
-                                break
+                                elif ev_code == mode_button_code:
+                                    # Changement de mode
+                                    current_mode = (current_mode % 3) + 1
+                                    all_files = get_files_for_mode(current_mode)
+                                    indices = range(len(all_files))
+                                    random.shuffle(indices)
+                                    current_idx_ptr = 0
+                                    need_load = True
+                                    mode_overlay_timer = now + OVERLAY_DURATION
+                                    settings["current_mode"] = current_mode
+                                    save_settings(settings)
+                                else:
+                                    running = False
+                                    break
                         data = f.read(event_size)
                 except Exception:
                     pass
             
             if not running: break
             
-            # --- 2. GESTION DES ÉVÉNEMENTS SDL (Navigation et Vitesse) ---
+            # --- 2. ÉVÉNEMENTS SDL ---
             for event in pygame.event.get():
                 if event.type in (pygame.QUIT, pygame.KEYDOWN):
                     running = False
                 
-                # Réglage de la Vitesse (Vertical)
-                if now - last_speed_time > 0.15:
-                    change = 0
-                    if event.type == pygame.JOYAXISMOTION and event.axis == 1:
-                        if event.value < -0.6: change = -3 # Haut -> Plus rapide (- temps)
-                        elif event.value > 0.6: change = 3 # Bas -> Plus lent (+ temps)
-                    elif event.type == pygame.JOYHATMOTION and event.value[1] != 0:
-                        change = -event.value[1] * 3
+                if not show_info:
+                    # Vitesse (Vertical)
+                    if now - last_speed_time > 0.15:
+                        change = 0
+                        if event.type == pygame.JOYAXISMOTION and event.axis == 1:
+                            if event.value < -0.6: change = -3
+                            elif event.value > 0.6: change = 3
+                        elif event.type == pygame.JOYHATMOTION and event.value[1] != 0:
+                            change = -event.value[1] * 3
 
-                    if change != 0:
-                        display_time = max(MIN_DISPLAY_TIME, min(MAX_DISPLAY_TIME, display_time + change))
-                        last_speed_time = now
-                        speed_overlay_timer = now + SPEED_OVERLAY_DURATION
-                        save_settings({"display_time": display_time, "info_button": info_button_code})
+                        if change != 0:
+                            display_time = max(MIN_DISPLAY_TIME, min(MAX_DISPLAY_TIME, display_time + change))
+                            last_speed_time = now
+                            speed_overlay_timer = now + OVERLAY_DURATION
+                            settings["display_time"] = display_time
+                            save_settings(settings)
 
-                # Navigation (Horizontal)
-                if now - last_nav_time > 0.4:
-                    if event.type == pygame.JOYAXISMOTION and event.axis == 0:
-                        if event.value > 0.6: # Suivant
-                            current_idx_ptr = (current_idx_ptr + 1) % len(indices)
-                            idx = indices[current_idx_ptr]
+                    # Navigation (Horizontal)
+                    if now - last_nav_time > 0.4:
+                        if event.type == pygame.JOYAXISMOTION and event.axis == 0:
+                            if abs(event.value) > 0.6:
+                                steer = 1 if event.value > 0.6 else -1
+                                current_idx_ptr = (current_idx_ptr + steer) % len(indices)
+                                need_load = True
+                                last_nav_time = now
+                        elif event.type == pygame.JOYHATMOTION and event.value[0] != 0:
+                            current_idx_ptr = (current_idx_ptr + event.value[0]) % len(indices)
                             need_load = True
                             last_nav_time = now
-                        elif event.value < -0.6: # Précédent
-                            current_idx_ptr = (current_idx_ptr - 1) % len(indices)
-                            idx = indices[current_idx_ptr]
-                            need_load = True
-                            last_nav_time = now
-                    elif event.type == pygame.JOYHATMOTION and event.value[0] != 0:
-                        if event.value[0] == 1: current_idx_ptr = (current_idx_ptr + 1) % len(indices)
-                        else: current_idx_ptr = (current_idx_ptr - 1) % len(indices)
-                        idx = indices[current_idx_ptr]
-                        need_load = True
-                        last_nav_time = now
 
-            # --- 3. LOGIQUE DES DIAPOS ---
+            # --- 3. LOGIQUE ---
             if show_info:
-                # On fige le temps pendant l'affichage des infos
                 last_switch = now - display_time + (max(0, info_timer - now))
                 if now > info_timer: show_info = False
 
             if not need_load and not show_info and now - last_switch > display_time:
                 current_idx_ptr = (current_idx_ptr + 1) % len(indices)
-                idx = indices[current_idx_ptr]
                 need_load = True
 
             if need_load:
-                try:
-                    img = pygame.image.load(all_files[idx]).convert()
-                    img_w, img_h = img.get_size()
-                    ratio = min(float(sw)/img_w, float(sh)/img_h)
-                    current_img_raw = pygame.transform.scale(img, (int(img_w*ratio), int(img_h*ratio)))
-                    meta_data = get_sidecar_data(all_files[idx])
-                    zoom_factor = 1.0
-                    alpha = 0
+                if not indices:
+                    # Pas de fichiers dans ce mode
+                    screen.fill((0, 0, 0))
+                    msg = u"Aucun fichier trouvé pour le Mode %d" % current_mode
+                    txt = font_main.render(msg, True, (255, 0, 0))
+                    screen.blit(txt, ((sw - txt.get_width()) // 2, (sh - txt.get_height()) // 2))
+                    pygame.display.flip()
+                    time.sleep(2)
                     need_load = False
-                    last_switch = now
-                except Exception:
-                    current_idx_ptr = (current_idx_ptr + 1) % len(indices)
-                    idx = indices[current_idx_ptr]
+                    continue
 
-            # --- 4. AFFICHAGE (RENDERING) ---
-            if current_img_raw:
+                idx_file = indices[current_idx_ptr]
+                file_path = all_files[idx_file]
+
+                if current_mode == MODE_PHOTOS:
+                    try:
+                        img = pygame.image.load(file_path).convert()
+                        img_w, img_h = img.get_size()
+                        ratio = min(float(sw)/img_w, float(sh)/img_h)
+                        current_img_raw = pygame.transform.scale(img, (int(img_w*ratio), int(img_h*ratio)))
+                        meta_data = get_sidecar_data(file_path)
+                        zoom_factor = 1.0
+                        alpha = 0
+                        need_load = False
+                        last_switch = now
+                    except Exception:
+                        current_idx_ptr = (current_idx_ptr + 1) % len(indices)
+                else:
+                    # MODE VIDÉO
+                    screen.fill((0, 0, 0))
+                    msg = u"Lecture Vidéo : %s" % os.path.basename(file_path)
+                    txt = font_small.render(msg, True, (255, 255, 255))
+                    screen.blit(txt, (20, sh - 40))
+                    pygame.display.flip()
+                    
+                    play_video(file_path)
+                    
+                    # Après la vidéo, on passe à la suivante
+                    current_idx_ptr = (current_idx_ptr + 1) % len(indices)
+                    need_load = True
+                    last_switch = time.time()
+
+            # --- 4. AFFICHAGE ---
+            if current_img_raw and current_mode == MODE_PHOTOS:
                 screen.fill((0, 0, 0))
-                
                 if enable_animation and not show_info:
                     zoom_factor += ZOOM_SPEED
                 
                 z_w, z_h = int(current_img_raw.get_width() * zoom_factor), int(current_img_raw.get_height() * zoom_factor)
                 img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
-                
                 if alpha < 255: alpha += FADE_SPEED
                 img_to_draw.set_alpha(min(alpha, 255))
                 screen.blit(img_to_draw, ((sw - z_w) // 2, (sh - z_h) // 2))
                 
-                # Overlays
                 if show_info:
-                    # Panneau d'informations détaillées
-                    overlay = pygame.Surface((sw * 0.85, sh * 0.5))
+                    overlay = pygame.Surface((sw * 0.85, sh * 0.55))
                     overlay.set_alpha(200)
                     overlay.fill((20, 20, 20))
                     ox, oy = (sw - overlay.get_width()) // 2, (sh - overlay.get_height()) // 2
@@ -262,28 +325,36 @@ def run_slideshow(enable_animation=True, target_info_button=INFO_BUTTON_DEFAULT)
                         u"Date      : %s" % meta_data.get("full_date", u"N/A"),
                         u"Fichier   : %s" % meta_data.get("source_path", u"N/A"),
                         u"",
+                        u"Diagnostic Entrée :",
+                        u"Dernier bouton détecté : %d" % last_detected_code if last_detected_code else u"Appuyez sur un bouton...",
                         u"Retour auto dans %ds..." % int(max(0, info_timer - now))
                     ]
                     for i, line in enumerate(info_lines):
                         c = (255, 255, 0) if i == 0 else (255, 255, 255)
                         txt = font_small.render(line, True, c)
-                        screen.blit(txt, (ox + 30, oy + 30 + i * 40))
+                        screen.blit(txt, (ox + 30, oy + 30 + i * 38))
                 else:
-                    # Libellé normal (Label)
                     if meta_data.get("label"):
                         txt = font_main.render(meta_data["label"], True, (255, 255, 255))
                         shd = font_main.render(meta_data["label"], True, (0, 0, 0))
                         tx, ty = sw - txt.get_width() - 40, sh - txt.get_height() - 40
                         screen.blit(shd, (tx+2, ty+2))
                         screen.blit(txt, (tx, ty))
-                    
-                    # Indicateur de Vitesse (au changement)
+
+                    # HUD Bas-Gauche
+                    hud_y = sh - 40
                     if now < speed_overlay_timer:
-                        # Calcul d'un score de vitesse de 1 à 20
-                        vitesse_score = (MAX_DISPLAY_TIME - display_time) // 3 + 1
-                        s_txt = u"Vitesse : %d / 20" % vitesse_score
-                        txt = font_small.render(s_txt, True, (255, 255, 0))
-                        screen.blit(txt, (30, 30))
+                        v_score = (MAX_DISPLAY_TIME - display_time) // 3 + 1
+                        s_txt = u"Vitesse : %d / 20" % v_score
+                        stxt = font_small.render(s_txt, True, (255, 255, 0))
+                        screen.blit(stxt, (30, hud_y))
+                        hud_y -= 35
+
+                    if now < mode_overlay_timer:
+                        m_names = {MODE_PHOTOS: u"PHOTOS", MODE_VIDEOS_PERSO: u"VIDÉOS PERSO", MODE_VIDEOS_GAMES: u"VIDÉOS JEUX"}
+                        m_txt = u"MODE : %s" % m_names.get(current_mode, u"Inconnu")
+                        mtxt = font_small.render(m_txt, True, (0, 255, 255))
+                        screen.blit(mtxt, (30, hud_y))
 
                 pygame.display.flip()
             
@@ -297,6 +368,5 @@ def run_slideshow(enable_animation=True, target_info_button=INFO_BUTTON_DEFAULT)
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-animation", action="store_true")
-    parser.add_argument("--info-button", type=int, default=INFO_BUTTON_DEFAULT)
     args = parser.parse_args()
-    run_slideshow(enable_animation=not args.no_animation, target_info_button=args.info_button)
+    run_slideshow(enable_animation=not args.no_animation)
