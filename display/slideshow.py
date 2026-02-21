@@ -8,12 +8,21 @@ import sys
 import argparse
 import glob
 import fcntl
+import struct
 
 # --- CONFIGURATION ---
 IMAGE_FOLDER = "/recalbox/share/userscripts/slideshow/images" 
 DISPLAY_TIME = 15 
 ZOOM_SPEED = 0.00015
 FADE_SPEED = 8
+
+# Input event constants
+EV_KEY = 1
+EV_ABS = 3
+ABS_X = 0
+ABS_Y = 1
+ABS_HAT0X = 16
+ABS_HAT0Y = 17
 
 def get_sidecar_text(image_path):
     """Reads the associated .txt file for a given image."""
@@ -39,8 +48,12 @@ def run_slideshow(enable_animation=True):
     os.environ["SDL_NOMOUSE"] = "1"
     
     pygame.init()
+    if pygame.joystick.get_count() > 0:
+        pygame.joystick.init()
+        for i in range(pygame.joystick.get_count()):
+            pygame.joystick.Joystick(i).init()
     
-    # Low-level input monitoring (more robust than Pygame event loop on Recalbox)
+    # Low-level input monitoring
     devices = get_input_devices()
     input_files = []
     for dev in devices:
@@ -52,6 +65,12 @@ def run_slideshow(enable_animation=True):
             input_files.append(f)
         except Exception:
             pass
+
+    # Detect struct size for input_event (16 bytes on 32-bit, 24 bytes on 64-bit)
+    # RPi 3 on Recalbox 6.1 is usually 32-bit.
+    # format: long, long, short, short, int
+    event_format = 'llHHi' 
+    event_size = struct.calcsize(event_format)
 
     # Get screen resolution
     info = pygame.display.Info()
@@ -88,25 +107,38 @@ def run_slideshow(enable_animation=True):
         while running:
             now = time.time()
             
-            # --- 1. LOW LEVEL INPUT HANDLING (EXIT) ---
-            # We check if any button/joystick was touched to exit immediately
+            # --- 1. LOW LEVEL INPUT HANDLING (SMARTER EXIT) ---
             for f in input_files:
                 try:
-                    if f.read(16):
-                        # Activity detected on /dev/input/event* -> Stop slideshow
-                        running = False
-                        break
+                    data = f.read(event_size)
+                    if data:
+                        # Unpack: sec, usec, type, code, value
+                        _, _, ev_type, ev_code, ev_value = struct.unpack(event_format, data)
+                        
+                        # EV_KEY (Buttons/Keys) -> Exit if pressed (value=1)
+                        if ev_type == EV_KEY and ev_value == 1:
+                            running = False
+                            break
+                        
+                        # EV_ABS (Joysticks/Hats)
+                        if ev_type == EV_ABS:
+                            # Vertical motion -> Exit
+                            if ev_code in (ABS_Y, ABS_HAT0Y) and abs(ev_value) > 10:
+                                running = False
+                                break
+                            # Horizontal motion -> Handled by SDL to avoid double trigger
+                            # but we could also handle it here if SDL is too slow.
+                            # For now, we don't exit on horizontal.
                 except Exception:
                     pass
             
-            # --- 2. SDL EVENT HANDLING (NAVIGATION & KEYS) ---
+            # --- 2. SDL EVENT HANDLING (NAVIGATION) ---
             for event in pygame.event.get():
                 if event.type in (pygame.QUIT, pygame.KEYDOWN):
                     running = False
                 
-                # Navigation via Joystick/D-Pad (if SDL detects them)
                 if now - last_nav_time > 0.4:
-                    # Axis
+                    # Navigation via Joystick/D-Pad
                     if event.type == pygame.JOYAXISMOTION:
                         if event.axis == 0: # Horizontal
                             if event.value > 0.6: # Right
@@ -117,7 +149,6 @@ def run_slideshow(enable_animation=True):
                                 idx = (idx - 1) % len(files)
                                 need_load = True
                                 last_nav_time = now
-                    # Hat
                     elif event.type == pygame.JOYHATMOTION:
                         hx, hy = event.value
                         if hx == 1: # Right
@@ -139,7 +170,6 @@ def run_slideshow(enable_animation=True):
                     img = pygame.image.load(files[idx]).convert()
                     img_w, img_h = img.get_size()
                     ratio = min(float(sw)/img_w, float(sh)/img_h)
-                    # Base fit image
                     current_img_raw = pygame.transform.scale(img, (int(img_w*ratio), int(img_h*ratio)))
                     
                     txt_str = get_sidecar_text(files[idx])
@@ -160,7 +190,6 @@ def run_slideshow(enable_animation=True):
                 screen.fill((0, 0, 0))
                 
                 if enable_animation:
-                    # Ken Burns Effect (Zoom)
                     zoom_factor += ZOOM_SPEED
                     z_w = int(current_img_raw.get_width() * zoom_factor)
                     z_h = int(current_img_raw.get_height() * zoom_factor)
@@ -172,14 +201,12 @@ def run_slideshow(enable_animation=True):
                     pos_x = (sw - current_img_raw.get_width()) // 2
                     pos_y = (sh - current_img_raw.get_height()) // 2
                 
-                # Fade-in
                 if alpha < 255:
                     alpha += FADE_SPEED
                 img_to_draw.set_alpha(min(alpha, 255))
                 
                 screen.blit(img_to_draw, (pos_x, pos_y))
                 
-                # Metadata Overlay
                 if txt_str and txt_surf:
                     tx = sw - txt_surf.get_width() - 30
                     ty = sh - txt_surf.get_height() - 30
@@ -188,7 +215,6 @@ def run_slideshow(enable_animation=True):
 
                 pygame.display.flip()
             
-            # Adaptive sleep to save CPU (higher sleep if animation is off)
             time.sleep(0.04 if enable_animation else 0.1)
 
     finally:
