@@ -15,7 +15,6 @@ const { getPhotoMetadata, getBestFolderLabel, capitalize, extractDateFromPath } 
 
 function getVideoDuration(filePath) {
     try {
-        //ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "file"
         const cmd = `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filePath}"`;
         const output = execSync(cmd).toString().trim();
         const seconds = parseFloat(output);
@@ -49,9 +48,9 @@ async function processImage(photoPath, id, total) {
 
     let finalLabel = "";
     if (locationStr && meta.dateStr) {
-        finalLabel = `${meta.capitalize(locationStr)} - ${meta.dateStr}`;
+        finalLabel = `${capitalize(locationStr)} - ${meta.dateStr}`;
     } else if (locationStr) {
-        finalLabel = meta.capitalize(locationStr);
+        finalLabel = capitalize(locationStr);
     } else if (meta.dateStr) {
         finalLabel = meta.dateStr;
     }
@@ -80,7 +79,7 @@ async function processImage(photoPath, id, total) {
         const sidecarContent = [
             finalLabel,
             meta.fullDateStr || meta.dateStr,
-            meta.rawPath
+            photoPath // On utilise le chemin absolu du PC pour le diagnostic
         ].join('\n');
 
         fs.writeFileSync(path.join(config.DEST_DIR, `${id}.txt`), sidecarContent, 'utf8');
@@ -99,7 +98,6 @@ async function processVideos(allVideoFiles) {
         for (const f of oldFiles) fs.unlinkSync(path.join(config.VIDEO_DEST_DIR, f));
     }
 
-    // Filtrer les fichiers trop petits (< 1Mo)
     const filteredFiles = allVideoFiles.filter(v => {
         const stats = fs.statSync(v);
         return stats.size >= 1 * 1024 * 1024;
@@ -121,23 +119,23 @@ async function processVideos(allVideoFiles) {
             console.log(`[Video ${id}] ${path.basename(vidPath)} (${(stats.size / 1024 / 1024).toFixed(1)} Mo)`);
             fs.copyFileSync(vidPath, destPath);
 
-            // Création Sidecar pour Vidéo
+            // Extraction Metadata Vidéo
             const label = getBestFolderLabel(vidPath, config);
             const date = extractDateFromPath(vidPath, config);
             const duration = getVideoDuration(vidPath);
 
-            let finalLabel = label;
+            let finalLabel = "";
             if (label && date) finalLabel = `${capitalize(label)} - ${date}`;
+            else if (label) finalLabel = capitalize(label);
             else if (date) finalLabel = date;
 
             const sidecarContent = [
                 finalLabel || "Vidéo Perso",
                 duration || "Durée inconnue",
-                vidPath
+                vidPath // Chemin PC original
             ].join('\n');
 
             fs.writeFileSync(path.join(config.VIDEO_DEST_DIR, `${id}.txt`), sidecarContent, 'utf8');
-
             currentSizeByte += stats.size;
         }
         if (currentSizeByte >= limitByte) break;

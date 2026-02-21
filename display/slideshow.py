@@ -34,7 +34,7 @@ MODE_PHOTOS = 1
 MODE_VIDEOS_PERSO = 2
 MODE_VIDEOS_GAMES = 3
 MODE_CYCLE = 4
-CYCLE_INTERVAL = 60 # 1 minute pour le test
+CYCLE_INTERVAL = 60 
 
 # Input event constants
 EV_KEY = 1
@@ -64,7 +64,9 @@ def get_sidecar_data(file_path):
     if os.path.exists(txt_path):
         try:
             with open(txt_path, 'r') as f:
-                lines = [l.strip().decode('utf-8', 'ignore') for l in f.readlines()]
+                content = f.read()
+                if hasattr(content, 'decode'): content = content.decode('utf-8', 'ignore')
+                lines = [l.strip() for l in content.split('\n')]
                 if len(lines) >= 1: data["label"] = lines[0]
                 if len(lines) >= 2: data["info"] = lines[1]
                 if len(lines) >= 3: data["source_path"] = lines[2]
@@ -72,9 +74,7 @@ def get_sidecar_data(file_path):
     return data
 
 def clean_game_name(name):
-    # Enlever tout ce qui est entre parenthèses ou crochets
     cleaned = re.sub(r'[\(\[].*?[\)\]]', '', name)
-    # Remplacer les underscores par des espaces et mettre en majuscule chaque mot
     cleaned = cleaned.replace('_', ' ').strip()
     return cleaned.title()
 
@@ -86,7 +86,6 @@ def parse_game_metadata(file_path):
             idx = parts.index("roms")
             if len(parts) > idx + 1: console = parts[idx+1].upper()
     except Exception: pass
-    
     bname = os.path.splitext(os.path.basename(file_path))[0]
     if hasattr(bname, 'decode'): bname = bname.decode('utf-8', 'ignore')
     game_name = clean_game_name(bname)
@@ -102,6 +101,24 @@ def stop_video(proc):
             proc.wait()
         except: pass
 
+def draw_wrapped_text(screen, text, font, color, rect):
+    words = text.split('/')
+    if len(words) < 2: words = text.split('\\')
+    y = rect.top
+    line = ""
+    for word in words:
+        test_line = line + word + "/"
+        if font.size(test_line)[0] < rect.width:
+            line = test_line
+        else:
+            txt_surface = font.render(line, True, color)
+            screen.blit(txt_surface, (rect.left, y))
+            y += font.get_linesize()
+            line = word + "/"
+    if line:
+        txt_surface = font.render(line, True, color)
+        screen.blit(txt_surface, (rect.left, y))
+
 def run_slideshow(enable_animation=True):
     os.environ["SDL_VIDEODRIVER"] = "fbcon"
     os.environ["SDL_NOMOUSE"] = "1"
@@ -113,7 +130,6 @@ def run_slideshow(enable_animation=True):
     current_mode = settings.get("current_mode", MODE_PHOTOS)
     is_muted = settings.get("is_muted", False)
     
-    # Mode Cycle Logic
     internal_mode = current_mode if current_mode != MODE_CYCLE else MODE_PHOTOS
     last_cycle_time = time.time()
 
@@ -189,7 +205,7 @@ def run_slideshow(enable_animation=True):
                 indices = range(len(all_files))
                 random.shuffle(indices)
                 current_idx_ptr = 0; need_load = True; last_cycle_time = now
-                mode_overlay_timer = now + OVERLAY_DURATION
+                # Silent cycle: on ne déclenche PAS mode_overlay_timer
                 if video_proc: stop_video(video_proc); video_proc = None
 
             # --- 2. ENTRÉES ---
@@ -221,7 +237,9 @@ def run_slideshow(enable_animation=True):
                                     all_files = get_files_for_mode(internal_mode)
                                     indices = range(len(all_files))
                                     random.shuffle(indices)
-                                    current_idx_ptr = 0; need_load = True; mode_overlay_timer = now + OVERLAY_DURATION
+                                    current_idx_ptr = 0; need_load = True
+                                    # Manuel toggle: on affiche l'overlay
+                                    mode_overlay_timer = now + OVERLAY_DURATION
                                     settings["current_mode"] = current_mode; save_settings(settings)
                                     last_cycle_time = now
                                     if video_proc: stop_video(video_proc); video_proc = None
@@ -287,6 +305,7 @@ def run_slideshow(enable_animation=True):
                 else:
                     screen.fill((0, 0, 0))
                     margin_h = 60
+                    # Préparer le HUD pour rincer la zone avant lancement omxplayer
                     if internal_mode == MODE_VIDEOS_GAMES:
                         vm = parse_game_metadata(file_path)
                         t1 = font_small.render(vm["game"], True, (255, 255, 255))
@@ -295,7 +314,8 @@ def run_slideshow(enable_animation=True):
                         screen.blit(t2, (20, sh - 45))
                     else:
                         vm = get_sidecar_data(file_path)
-                        t1 = font_small.render(vm.get("label", u"Vidéo Perso"), True, (255, 255, 255))
+                        label = vm.get("label", u"Vidéo Perso")
+                        t1 = font_small.render(label, True, (255, 255, 255))
                         screen.blit(t1, (sw - t1.get_width() - 20, sh - 45))
                         if vm.get("info"):
                             t2 = font_tiny.render(u"Durée : %s" % vm["info"], True, (200, 200, 200))
@@ -317,15 +337,17 @@ def run_slideshow(enable_animation=True):
                 screen.blit(img_to_draw, ((sw-z_w)//2, (sh-z_h)//2))
                 
                 if show_info:
-                    ov_w, ov_h = sw * 0.5, sh * 0.15
+                    ov_w, ov_h = sw * 0.7, sh * 0.2
                     overlay = pygame.Surface((ov_w, ov_h)); overlay.set_alpha(200); overlay.fill((15, 15, 15))
                     ox, oy = (sw-ov_w)//2, sh-ov_h-120
                     screen.blit(overlay, (ox, oy))
                     
-                    lines = [meta_data.get("label", u"Sans lieu"), meta_data.get("source_path", u"Chemin inconnu")]
-                    for i, line in enumerate(lines):
-                        txt = font_small.render(line, True, (255, 255, 255))
-                        screen.blit(txt, (ox + 20, oy + 20 + i * 35))
+                    label_txt = meta_data.get("label", u"Sans titre")
+                    screen.blit(font_small.render(label_txt, True, (255, 255, 255)), (ox + 20, oy + 20))
+                    
+                    # Chemin avec wrap
+                    path_rect = pygame.Rect(ox + 20, oy + 55, ov_w - 40, ov_h - 75)
+                    draw_wrapped_text(screen, meta_data.get("source_path", u""), font_tiny, (180, 180, 180), path_rect)
                     
                     cnt = u"%ds" % int(max(0, info_timer - now))
                     ctxt = font_tiny.render(cnt, True, (200, 200, 100))
@@ -333,15 +355,15 @@ def run_slideshow(enable_animation=True):
                     
                     if last_detected_code and now < code_timer:
                         d_txt = font_tiny.render(u"Touche: %d" % last_detected_code, True, (255, 255, 0))
-                        screen.blit(d_txt, (ox + 20, oy + ov_h - 25))
+                        screen.blit(d_txt, (ox + ov_w - d_txt.get_width() - 60, oy + ov_h - 25))
                 else:
                     if meta_data.get("label"):
-                        txt = font_main.render(meta_data["label"], True, (255, 255, 255))
-                        shd = font_main.render(meta_data["label"], True, (0, 0, 0))
+                        label = meta_data["label"]
+                        txt = font_main.render(label, True, (255, 255, 255))
+                        shd = font_main.render(label, True, (0, 0, 0))
                         tx, ty = sw-txt.get_width()-30, sh-txt.get_height()-30
                         screen.blit(shd, (tx+2, ty+2)); screen.blit(txt, (tx, ty))
 
-                    # HUD Bas-Gauche
                     hy = sh - 35
                     if now < speed_overlay_timer:
                         img_per_min = int(60.0 / display_time)
