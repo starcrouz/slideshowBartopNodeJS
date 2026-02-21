@@ -33,11 +33,14 @@ A two-script system to turn your Recalbox into a photo frame when idle.
 - **[slideshow.py](display/slideshow.py)**: The "display". Shows photos with a Ken Burns (zoom) effect and metadata labels.
 
 ### Features & Controls
+- **Smart Shuffling**: Photos are displayed in random order without repeats until the end of the list.
 - **Ken Burns Effect**: Gentle zoom animation.
-- **Ultra-responsive Exit**: Uses low-level input monitoring (`/dev/input/event*`) to exit or skip photos instantly, even if the CPU is busy.
+- **Ultra-responsive Exit**: Uses low-level input monitoring to exit instantly.
 - **Controls**:
-  - **Exit**: Move Joystick **Up/Down**, press any **Button**, or any **Key**.
-  - **Navigate**: Move Joystick **Left/Right** to skip or go back.
+  - **Exit**: Press **Any Button** (except Info) or any **Key**.
+  - **Navigate**: Move Joystick **Left/Right** (or D-Pad) to skip or go back.
+  - **Adjust Speed**: Move Joystick **Up/Down** to change display time (saved automatically).
+  - **Info Mode**: Press **Button 1** (or 'B') to pause and show detailed photo info (Path, Full Date, Position).
 
 ### Installation on Recalbox
 1. Copy the `display` folder to `/recalbox/share/userscripts/`.

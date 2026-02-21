@@ -60,7 +60,16 @@ async function processImage(photoPath, id, total) {
         const image = await Jimp.read(imageBuffer);
         image.scaleToFit({ w: config.SCREEN_W, h: config.SCREEN_H });
         await image.write(path.join(config.DEST_DIR, `${id}.jpg`));
-        fs.writeFileSync(path.join(config.DEST_DIR, `${id}.txt`), finalLabel, 'utf8');
+
+        // Detailed Sidecar Text
+        // Format: Label\nFull Date\nSource Path
+        const sidecarContent = [
+            finalLabel,
+            meta.fullDateStr || meta.dateStr,
+            meta.rawPath
+        ].join('\n');
+
+        fs.writeFileSync(path.join(config.DEST_DIR, `${id}.txt`), sidecarContent, 'utf8');
     } catch (e) {
         console.error(`  ! Erreur image : ${e.message}`);
     }

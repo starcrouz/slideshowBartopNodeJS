@@ -56,12 +56,11 @@ function getBestFolderLabel(filePath, config) {
 
 async function getPhotoMetadata(photoPath, config) {
     let dateStr = "";
+    let fullDateStr = "";
     let gpsStatus = "Aucun";
     let coords = null;
 
     try {
-        // Robust parsing: enable GPS and XMP segments explicitly
-        // We don't use 'pick' to avoid accidentally filtering out computed tags like latitude/longitude
         const result = await exifr.parse(photoPath, {
             gps: true,
             xmp: true,
@@ -76,8 +75,14 @@ async function getPhotoMetadata(photoPath, config) {
                 const date = new Date(result.DateTimeOriginal);
                 if (!isNaN(date.getTime())) {
                     dateStr = `${MONTHS_FR[date.getMonth()]} ${date.getFullYear()}`;
+                    // Full date: "21 Février 2026 14:30"
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const hour = String(date.getHours()).padStart(2, '0');
+                    const min = String(date.getMinutes()).padStart(2, '0');
+                    fullDateStr = `${day} ${MONTHS_FR[date.getMonth()]} ${date.getFullYear()} ${hour}:${min}`;
                 }
             }
+            // ...
 
             // 2. Extract GPS
             if (typeof result.latitude === 'number' && typeof result.longitude === 'number') {
@@ -105,10 +110,12 @@ async function getPhotoMetadata(photoPath, config) {
 
     return {
         dateStr,
+        fullDateStr,
         coords,
         folderLabel,
         gpsStatus,
-        capitalize
+        capitalize,
+        rawPath: photoPath
     };
 }
 
