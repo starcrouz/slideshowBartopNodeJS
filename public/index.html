@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bartop Slideshow Controller</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at 50% 50%, #1a1b2f 0%, #0d0e15 100%);
+            --panel-bg: rgba(22, 24, 40, 0.7);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --shadow-subtle: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
+        header {
+            background: rgba(13, 14, 21, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--panel-border);
+            padding: 1.25rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a5b4fc 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            font-size: 0.75rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* Onglets */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.35rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--panel-border);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            background: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Conteneurs de page */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Glassmorphic */
+        .glass-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 1rem;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        /* Onglet 1: Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-banner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--panel-border);
+            border-radius: 0.75rem;
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .stat-box .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            color: var(--primary);
+        }
+
+        .stat-box.green .value { color: var(--accent-green); }
+        .stat-box.red .value { color: var(--accent-red); }
+
+        .stat-box .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .run-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-run {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+            color: #fff;
+            border: none;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-run:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-run:active {
+            transform: translateY(0);
+        }
+
+        .btn-run:disabled {
+            background: #27293d;
+            box-shadow: none;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Terminal de console */
+        .terminal {
+            background: #090a0f;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #34d399;
+            height: 350px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+            line-height: 1.5;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background: #3b3f5c;
+        }
+        .terminal-dot.red { background: #ef4444; }
+        .terminal-dot.yellow { background: #f59e0b; }
+        .terminal-dot.green { background: #10b981; }
+
+        /* Onglets 2 et 3: Galeries de photos */
+        .gallery-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--panel-border);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            width: 300px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-bar:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-card {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--panel-border);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .photo-thumb-wrapper {
+            width: 100%;
+            height: 180px;
+            background: #090a0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .photo-card:hover .photo-thumb {
+            scale: 1.05;
+        }
+
+        .photo-info {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .photo-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .photo-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .photo-path {
+            font-size: 0.7rem;
+            color: #5d6174;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 0.5rem;
+        }
+
+        /* Badges de score / rejet */
+        .badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .badge.sharpness-high {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .badge.sharpness-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .badge.sharpness-low {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .card-reason {
+            color: #f87171;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px dashed rgba(239, 68, 68, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Onglet 4: Configuration Form */
+        .config-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .config-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .config-section {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--panel-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .config-section h3 {
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 0.5rem;
+            color: #a5b4fc;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-group .description {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .form-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--panel-border);
+            border-radius: 0.5rem;
+            padding: 0.6rem 0.85rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Toggles/Switches */
+        .switch-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #373b54;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--panel-border);
+            padding-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--panel-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(22, 24, 40, 0.95);
+            border: 1px solid var(--accent-green);
+            color: var(--text-main);
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-subtle);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast.error {
+            border-color: var(--accent-red);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>Bartop Slideshow Controller</h1>
+            <span>PC DASHBOARD</span>
+        </div>
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                Tableau de Bord
+            </button>
+            <button class="tab-btn" onclick="switchTab('selected-gallery')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Photos Sélectionnées
+            </button>
+            <button class="tab-btn" onclick="switchTab('rejected-gallery')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                Photos Écartées
+            </button>
+            <button class="tab-btn" onclick="switchTab('configuration')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Configuration
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Onglet 1: Tableau de Bord -->
+        <div id="tab-dashboard" class="page-content active">
+            <div class="dashboard-grid">
+                <div class="glass-card run-controls">
+                    <h2>Contrôle du Tirage</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                        Consultez les résultats de la dernière exécution ou déclenchez un nouveau tirage de photos instantanément.
+                    </p>
+                    
+                    <div class="stat-banner">
+                        <div class="stat-box">
+                            <div class="value" id="stat-total">0</div>
+                            <div class="label">Photos Scannées</div>
+                        </div>
+                        <div class="stat-box green">
+                            <div class="value" id="stat-selected">0</div>
+                            <div class="label">Sélectionnées</div>
+                        </div>
+                        <div class="stat-box red">
+                            <div class="value" id="stat-rejected">0</div>
+                            <div class="label">Rejetées</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <label>Date du dernier tirage :</label>
+                        <div id="stat-date" style="color: #a5b4fc; font-weight: 500; font-size: 0.95rem;">-</div>
+                    </div>
+                    
+                    <button class="btn-run" id="btn-trigger" onclick="runSelector()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Lancer le Tirage
+                    </button>
+                </div>
+                
+                <div class="glass-card">
+                    <div class="terminal-header">
+                        <span>CONSOLE LOGS (DIRECT)</span>
+                        <div class="terminal-dots">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                        </div>
+                    </div>
+                    <div class="terminal" id="console-terminal">En attente d'activité...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet 2: Photos Sélectionnées -->
+        <div id="tab-selected-gallery" class="page-content">
+            <div class="glass-card">
+                <div class="gallery-controls">
+                    <h2>Sélection Actuelle (<span id="count-selected">0</span> photos)</h2>
+                    <input type="text" class="search-bar" id="search-selected" placeholder="Rechercher par lieu, date..." oninput="filterGallery('selected')">
+                </div>
+                <div class="photo-grid" id="grid-selected">
+                    <!-- Rempli par le JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet 3: Photos Écartées -->
+        <div id="tab-rejected-gallery" class="page-content">
+            <div class="glass-card">
+                <div class="gallery-controls">
+                    <h2>Photos Écartées (<span id="count-rejected">0</span> photos)</h2>
+                    <input type="text" class="search-bar" id="search-rejected" placeholder="Rechercher par motif, chemin..." oninput="filterGallery('rejected')">
+                </div>
+                <div class="photo-grid" id="grid-rejected">
+                    <!-- Rempli par le JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet 4: Configuration -->
+        <div id="tab-configuration" class="page-content">
+            <form id="config-form" class="glass-card config-form" onsubmit="saveConfig(event)">
+                <div class="config-section">
+                    <h3>📁 Chemins & Limites</h3>
+                    
+                    <div class="form-group">
+                        <label for="SOURCE_DIR">Dossier Source Photos/Vidéos</label>
+                        <input type="text" class="form-input" id="SOURCE_DIR" required>
+                        <span class="description">Le répertoire contenant vos originaux sur votre PC.</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="DEST_DIR">Dossier Cible Images Recalbox</label>
+                        <input type="text" class="form-input" id="DEST_DIR" required>
+                        <span class="description">Chemin réseau d'écriture (UNC) pour le diaporama du Bartop.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="VIDEO_DEST_DIR">Dossier Cible Vidéos Recalbox</label>
+                        <input type="text" class="form-input" id="VIDEO_DEST_DIR" required>
+                        <span class="description">Chemin réseau d'écriture pour les vidéos persos.</span>
+                    </div>
+                    
+                    <div class="form-group-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="NB_IMAGES">Nombre maximal de photos</label>
+                            <input type="number" class="form-input" id="NB_IMAGES" min="1" max="1000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="VIDEO_LIMIT_MB">Limite stockage vidéos (Mo)</label>
+                            <input type="number" class="form-input" id="VIDEO_LIMIT_MB" min="1" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <h3>⚡ Filtres de Qualité</h3>
+                    
+                    <div class="form-group switch-group">
+                        <div>
+                            <label for="ENABLE_QUALITY_FILTERS">Activer les filtres de qualité</label>
+                            <div class="description">Valider la netteté et la taille avant envoi.</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="ENABLE_QUALITY_FILTERS" onchange="toggleQualityFields(this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group-row quality-field" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="FILTER_MIN_WIDTH">Largeur minimale (px)</label>
+                            <input type="number" class="form-input" id="FILTER_MIN_WIDTH">
+                        </div>
+                        <div class="form-group">
+                            <label for="FILTER_MIN_HEIGHT">Hauteur minimale (px)</label>
+                            <input type="number" class="form-input" id="FILTER_MIN_HEIGHT">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group switch-group quality-field">
+                        <div>
+                            <label for="FILTER_ALLOW_PORTRAIT">Autoriser les photos verticales (Portrait)</label>
+                            <div class="description">Si désactivé, seules les photos horizontales restent.</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="FILTER_ALLOW_PORTRAIT">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group-row quality-field" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="FILTER_MAX_ASPECT_RATIO">Ratio d'aspect maximal</label>
+                            <input type="number" class="form-input" id="FILTER_MAX_ASPECT_RATIO" step="0.1" min="1.0">
+                            <span class="description">Exclut les panoramas extrêmes (ex: 2.2).</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="FILTER_MIN_SHARPNESS">Score de netteté minimal</label>
+                            <input type="number" class="form-input" id="FILTER_MIN_SHARPNESS" min="1">
+                            <span class="description">Seuil du flou (Laplacien). Défaut ~100.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="loadConfig()">Annuler les modifications</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer la Configuration</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toast-message">Message ici</span>
+    </div>
+
+    <script>
+        let selectedPhotosData = [];
+        let rejectedPhotosData = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadConfig();
+            loadHistory();
+            connectLogs();
+        });
+
+        // Gestion de la navigation par onglets
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+            
+            // Trouver le bouton cliqué et lui ajouter la classe active
+            const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if (clickedBtn) clickedBtn.classList.add('active');
+            
+            const targetPage = document.getElementById(`tab-${tabId}`);
+            if (targetPage) targetPage.classList.add('active');
+        }
+
+        // Notifications Toast
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            
+            toastMsg.innerText = message;
+            if (isError) {
+                toast.classList.add('error');
+            } else {
+                toast.classList.remove('error');
+            }
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Configurer les champs de qualité selon le switch global
+        function toggleQualityFields(enabled) {
+            document.querySelectorAll('.quality-field').forEach(el => {
+                if (enabled) {
+                    el.style.opacity = '1';
+                    el.style.pointerEvents = 'auto';
+                } else {
+                    el.style.opacity = '0.5';
+                    el.style.pointerEvents = 'none';
+                }
+            });
+        }
+
+        // Charger config.json
+        async function loadConfig() {
+            try {
+                const response = await fetch('/api/config');
+                if (!response.ok) throw new Error('Impossible de charger la config');
+                const config = await response.json();
+                
+                // Remplir les inputs
+                for (const key in config) {
+                    const input = document.getElementById(key);
+                    if (input) {
+                        if (input.type === 'checkbox') {
+                            input.checked = config[key];
+                        } else {
+                            input.value = config[key];
+                        }
+                    }
+                }
+                toggleQualityFields(config.ENABLE_QUALITY_FILTERS);
+            } catch (e) {
+                showToast(e.message, true);
+            }
+        }
+
+        // Enregistrer la configuration
+        async function saveConfig(event) {
+            event.preventDefault();
+            const config = {};
+            const inputs = document.querySelectorAll('.form-input, .switch input');
+            
+            inputs.forEach(input => {
+                if (input.id) {
+                    if (input.type === 'checkbox') {
+                        config[input.id] = input.checked;
+                    } else if (input.type === 'number') {
+                        config[input.id] = Number(input.value);
+                    } else {
+                        config[input.id] = input.value;
+                    }
+                }
+            });
+
+            try {
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                
+                if (!response.ok) throw new Error('Erreur lors de la sauvegarde');
+                showToast('Configuration enregistrée avec succès !');
+            } catch (e) {
+                showToast(e.message, true);
+            }
+        }
+
+        // Charger last_run.json (Historique)
+        async function loadHistory() {
+            try {
+                const response = await fetch('/api/history');
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        // Aucun historique encore
+                        return;
+                    }
+                    throw new Error('Erreur historique');
+                }
+                const data = await response.json();
+                
+                // Remplir les statistiques
+                document.getElementById('stat-total').innerText = data.stats.totalPhotos;
+                document.getElementById('stat-selected').innerText = data.stats.selected;
+                document.getElementById('stat-rejected').innerText = data.stats.rejected;
+                document.getElementById('count-selected').innerText = data.stats.selected;
+                document.getElementById('count-rejected').innerText = data.stats.rejected;
+                
+                const d = new Date(data.timestamp);
+                document.getElementById('stat-date').innerText = d.toLocaleString('fr-FR');
+
+                selectedPhotosData = data.selected || [];
+                rejectedPhotosData = data.rejected || [];
+
+                renderGallery('selected');
+                renderGallery('rejected');
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Rendu de la galerie de photos
+        function renderGallery(type) {
+            const grid = document.getElementById(`grid-${type}`);
+            const data = type === 'selected' ? selectedPhotosData : rejectedPhotosData;
+            grid.innerHTML = '';
+
+            if (data.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">Aucune photo à afficher.</div>`;
+                return;
+            }
+
+            data.forEach(photo => {
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                
+                // Détermination du badge de netteté/rejet
+                let badgeHTML = '';
+                if (type === 'selected') {
+                    const sh = photo.sharpness;
+                    let cls = 'sharpness-low';
+                    if (sh >= 1000) cls = 'sharpness-high';
+                    else if (sh >= 300) cls = 'sharpness-medium';
+                    badgeHTML = `<span class="badge ${cls}">✨ ${sh}</span>`;
+                } else {
+                    const sh = photo.sharpness || 0;
+                    badgeHTML = `<span class="badge sharpness-low">❌ Rejeté</span>`;
+                }
+
+                // URL de l'API de preview de photo locale
+                const imgUrl = `/api/photo?path=${encodeURIComponent(photo.path)}`;
+                const filename = photo.path.split(/[\\/]/).pop();
+
+                card.innerHTML = `
+                    <div class="photo-thumb-wrapper">
+                        <img class="photo-thumb" src="${imgUrl}" alt="${filename}" loading="lazy">
+                        ${badgeHTML}
+                    </div>
+                    <div class="photo-info">
+                        <h4 class="photo-title" title="${filename}">${filename}</h4>
+                        <div class="photo-meta">
+                            <span>${photo.width} x ${photo.height}</span>
+                            ${type === 'selected' ? `<span style="color:#a5b4fc; font-weight:600;">${photo.label}</span>` : ''}
+                        </div>
+                        ${type === 'rejected' ? `<div class="card-reason" title="${photo.reason}">${photo.reason}</div>` : ''}
+                        <div class="photo-path" title="${photo.path}">${photo.path}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filtre de recherche dans la galerie
+        function filterGallery(type) {
+            const query = document.getElementById(`search-${type}`).value.toLowerCase();
+            const sourceData = type === 'selected' ? selectedPhotosData : rejectedPhotosData;
+            
+            const filtered = sourceData.filter(photo => {
+                const filename = photo.path.split(/[\\/]/).pop().toLowerCase();
+                const path = photo.path.toLowerCase();
+                const label = (photo.label || '').toLowerCase();
+                const reason = (photo.reason || '').toLowerCase();
+                return filename.includes(query) || path.includes(query) || label.includes(query) || reason.includes(query);
+            });
+
+            if (type === 'selected') {
+                selectedPhotosData = filtered;
+                renderGallery('selected');
+                selectedPhotosData = sourceData; // réinitialise la référence d'origine
+                document.getElementById('count-selected').innerText = filtered.length;
+            } else {
+                rejectedPhotosData = filtered;
+                renderGallery('rejected');
+                rejectedPhotosData = sourceData;
+                document.getElementById('count-rejected').innerText = filtered.length;
+            }
+        }
+
+        // Se connecter aux logs temps réel SSE
+        function connectLogs() {
+            const terminal = document.getElementById('console-terminal');
+            const eventSource = new EventSource('/api/run-logs');
+
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.logs) {
+                    terminal.innerText = data.logs;
+                    terminal.scrollTop = terminal.scrollHeight;
+                } else if (data.text) {
+                    terminal.innerText += data.text;
+                    terminal.scrollTop = terminal.scrollHeight;
+                    // Si on détecte la fin, on recharge l'historique final et arrête le polling
+                    if (data.text.includes('Terminé !') || data.text.includes('Fin du script sans modification.')) {
+                        if (window.historyPollInterval) {
+                            clearInterval(window.historyPollInterval);
+                            window.historyPollInterval = null;
+                        }
+                        loadHistory();
+                        document.getElementById('btn-trigger').removeAttribute('disabled');
+                    }
+                }
+            };
+
+            eventSource.onerror = () => {
+                // Reconnexion automatique gérée par EventSource
+            };
+        }
+
+        // Lancer la sélection
+        async function runSelector() {
+            const btn = document.getElementById('btn-trigger');
+            const terminal = document.getElementById('console-terminal');
+            
+            btn.setAttribute('disabled', 'true');
+            terminal.innerText = 'Démarrage du processus de tirage...\n';
+            
+            // Réinitialiser immédiatement l'affichage local
+            document.getElementById('stat-total').innerText = '0';
+            document.getElementById('stat-selected').innerText = '0';
+            document.getElementById('stat-rejected').innerText = '0';
+            document.getElementById('count-selected').innerText = '0';
+            document.getElementById('count-rejected').innerText = '0';
+            selectedPhotosData = [];
+            rejectedPhotosData = [];
+            renderGallery('selected');
+            renderGallery('rejected');
+
+            // Lancer le polling toutes les 1,5 secondes pendant la durée du traitement
+            if (window.historyPollInterval) {
+                clearInterval(window.historyPollInterval);
+            }
+            window.historyPollInterval = setInterval(loadHistory, 1500);
+
+            try {
+                const response = await fetch('/api/run', { method: 'POST' });
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Impossible de démarrer le tirage');
+                }
+                showToast('Tirage lancé en arrière-plan !');
+            } catch (e) {
+                showToast(e.message, true);
+                btn.removeAttribute('disabled');
+                if (window.historyPollInterval) {
+                    clearInterval(window.historyPollInterval);
+                    window.historyPollInterval = null;
+                }
+                loadHistory(); // Recharger le dernier état stable
+            }
+        }
+    </script>
+</body>
+</html>

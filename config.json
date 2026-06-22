@@ -49,5 +49,11 @@
         "videos",
         "movies",
         "photos"
-    ]
+    ],
+    "ENABLE_QUALITY_FILTERS": true,
+    "FILTER_MIN_WIDTH": 800,
+    "FILTER_MIN_HEIGHT": 600,
+    "FILTER_ALLOW_PORTRAIT": true,
+    "FILTER_MAX_ASPECT_RATIO": 2.2,
+    "FILTER_MIN_SHARPNESS": 100
 }
