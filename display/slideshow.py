@@ -73,6 +73,14 @@ def get_sidecar_data(file_path):
         except Exception: pass
     return data
 
+def write_current_state(data):
+    current_json_path = "/recalbox/share/userscripts/slideshow/current.json"
+    try:
+        with open(current_json_path, 'w') as f:
+            json.dump(data, f)
+    except Exception:
+        pass
+
 def clean_game_name(name):
     cleaned = re.sub(r'[\(\[].*?[\)\]]', '', name)
     cleaned = cleaned.replace('_', ' ').strip()
@@ -333,6 +341,14 @@ def run_slideshow(enable_animation=True):
                             anim_type = random.choice(["zoom_in", "zoom_out", "pan_left", "pan_right", "pan_up", "pan_down"])
                             
                         meta_data = get_sidecar_data(file_path)
+                        write_current_state({
+                            "type": "photo",
+                            "filename": os.path.basename(file_path),
+                            "label": meta_data.get("label", u""),
+                            "info": meta_data.get("info", u""),
+                            "source_path": meta_data.get("source_path", u""),
+                            "timestamp": time.time()
+                        })
                         zoom_factor = 1.15 if anim_type == "zoom_out" else 1.0
                         alpha = 0
                         need_load = False
@@ -343,6 +359,14 @@ def run_slideshow(enable_animation=True):
                     margin_h = 60
                     if internal_mode == MODE_VIDEOS_GAMES:
                         vm = parse_game_metadata(file_path)
+                        write_current_state({
+                            "type": "video_game",
+                            "filename": os.path.basename(file_path),
+                            "label": vm["game"],
+                            "info": vm["console"],
+                            "source_path": file_path,
+                            "timestamp": time.time()
+                        })
                         t1 = font_small.render(vm["game"], True, (255, 255, 255))
                         t2 = font_small.render(vm["console"], True, (0, 255, 255)) # Uniformisé
                         sh1 = font_small.render(vm["game"], True, (0, 0, 0))
@@ -354,6 +378,14 @@ def run_slideshow(enable_animation=True):
                     else:
                         vm = get_sidecar_data(file_path)
                         label = vm.get("label", u"Vidéo Perso")
+                        write_current_state({
+                            "type": "video_perso",
+                            "filename": os.path.basename(file_path),
+                            "label": label,
+                            "info": vm.get("info", u""),
+                            "source_path": vm.get("source_path", u""),
+                            "timestamp": time.time()
+                        })
                         t1 = font_small.render(label, True, (255, 255, 255))
                         sh1 = font_small.render(label, True, (0, 0, 0))
                         screen.blit(sh1, (sw - t1.get_width() - 18, sh - 43))

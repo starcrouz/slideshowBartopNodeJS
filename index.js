@@ -6,6 +6,7 @@ const convert = require('heic-convert');
 const { execSync } = require('child_process');
 const net = require('net');
 const crypto = require('crypto');
+const { createWorker } = require('tesseract.js');
 
 const config = require('./config.json');
 
@@ -133,6 +134,83 @@ function calculateSharpness(image) {
         return variance;
     } catch (e) {
         return 999; // Fallback en cas d'erreur
+    }
+}
+
+function computeImageLabel(meta) {
+    if (!meta) return "";
+    let locationStr = "";
+    if (meta.coords) {
+        const geo = getBestLocation(meta.coords.lat, meta.coords.lon, config);
+        if (geo) {
+            locationStr = geo.label;
+        }
+    }
+    if (!locationStr) {
+        locationStr = meta.folderLabel;
+    }
+    let finalLabel = "";
+    if (locationStr && meta.dateStr) {
+        finalLabel = `${capitalize(locationStr)} - ${meta.dateStr}`;
+    } else if (locationStr) {
+        finalLabel = capitalize(locationStr);
+    } else if (meta.dateStr) {
+        finalLabel = meta.dateStr;
+    }
+    return finalLabel;
+}
+
+let tesseractWorker = null;
+
+async function getTesseractWorker() {
+    if (!tesseractWorker) {
+        tesseractWorker = await createWorker('fra+eng');
+    }
+    return tesseractWorker;
+}
+
+async function terminateTesseractWorker() {
+    if (tesseractWorker) {
+        await tesseractWorker.terminate();
+        tesseractWorker = null;
+    }
+}
+
+async function detectText(image) {
+    try {
+        // Redimensionner pour l'OCR rapide (max 800px)
+        const resized = image.clone().scaleToFit({ w: 800, h: 800 });
+        const buffer = await resized.getBuffer('image/jpeg', { quality: 85 });
+        const worker = await getTesseractWorker();
+        const { data: ocrData } = await worker.recognize(buffer, {}, { blocks: true });
+        
+        const words = [];
+        if (ocrData && ocrData.blocks) {
+            for (const block of ocrData.blocks) {
+                if (block.paragraphs) {
+                    for (const para of block.paragraphs) {
+                        if (para.lines) {
+                            for (const line of para.lines) {
+                                if (line.words) {
+                                    for (const word of line.words) {
+                                        words.push(word);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return {
+            text: ocrData.text,
+            confidence: ocrData.confidence,
+            words: words
+        };
+    } catch (err) {
+        console.warn(`  [Avertissement] Échec de l'analyse OCR : ${err.message}`);
+        return null;
     }
 }
 
@@ -294,29 +372,7 @@ function getVideoDuration(filePath) {
 
 async function processImage(photoPath, image, id, total, checkResult, meta) {
     const finalMeta = meta || await getPhotoMetadata(photoPath, config);
-    let locationStr = "";
-    let gpsStatus = finalMeta.gpsStatus;
-
-    if (finalMeta.coords) {
-        const geo = getBestLocation(finalMeta.coords.lat, finalMeta.coords.lon, config);
-        if (geo) {
-            locationStr = geo.label;
-            gpsStatus = geo.status;
-        }
-    }
-
-    if (!locationStr) {
-        locationStr = finalMeta.folderLabel;
-    }
-
-    let finalLabel = "";
-    if (locationStr && finalMeta.dateStr) {
-        finalLabel = `${capitalize(locationStr)} - ${finalMeta.dateStr}`;
-    } else if (locationStr) {
-        finalLabel = capitalize(locationStr);
-    } else if (finalMeta.dateStr) {
-        finalLabel = finalMeta.dateStr;
-    }
+    const finalLabel = computeImageLabel(finalMeta);
 
     const sharpnessInfo = checkResult && checkResult.sharpness ? ` [Netteté: ${Math.round(checkResult.sharpness)}]` : "";
     console.log(`[Photo ${id}/${total}]${sharpnessInfo}`);
@@ -366,6 +422,7 @@ async function processVideos(allVideoFiles) {
     let currentSizeByte = 0;
     const limitByte = config.VIDEO_LIMIT_MB * 1024 * 1024;
     let count = 0;
+    const selectedVideosResult = [];
 
     for (const vidPath of shuffled) {
         const stats = fs.statSync(vidPath);
@@ -408,6 +465,15 @@ async function processVideos(allVideoFiles) {
 
             fs.writeFileSync(path.join(config.VIDEO_DEST_DIR, `${id}.txt`), sidecarContent, 'utf8');
             currentSizeByte += stats.size;
+
+            selectedVideosResult.push({
+                path: vidPath,
+                label: finalLabel || "Vidéo Perso",
+                duration: duration || "Durée inconnue",
+                sizeMb: parseFloat((stats.size / 1024 / 1024).toFixed(1)),
+                id: id,
+                filename: path.basename(vidPath)
+            });
         }
         if (currentSizeByte >= limitByte) break;
     }
@@ -429,6 +495,7 @@ async function processVideos(allVideoFiles) {
     }
 
     console.log(`Total Vidéos : ${count} (${(currentSizeByte / 1024 / 1024).toFixed(1)} Mo)`);
+    return selectedVideosResult;
 }
 
 async function start() {
@@ -438,41 +505,43 @@ async function start() {
     }
     console.log("--- Lancement du tirage intelligent ---");
 
-    const host = getHostFromPath(config.DEST_DIR);
-    if (host) {
-        console.log(`Vérification de la connexion avec le Bartop (${host})...`);
-        const online = await isHostOnline(host);
-        if (!online) {
-            console.log(`[INFO] Le Bartop (${host}) est éteint ou injoignable sur le réseau.`);
-            console.log("Fin du script sans modification.");
+    try {
+        const host = getHostFromPath(config.DEST_DIR);
+        if (host) {
+            console.log(`Vérification de la connexion avec le Bartop (${host})...`);
+            const online = await isHostOnline(host);
+            if (!online) {
+                console.log(`[INFO] Le Bartop (${host}) est éteint ou injoignable sur le réseau.`);
+                console.log("Fin du script sans modification.");
+                return;
+            }
+            console.log("Le Bartop est en ligne !");
+        }
+
+        if (!fs.existsSync(config.DEST_DIR)) {
+            console.error(`Erreur : Destination Photos inaccessible : ${config.DEST_DIR}`);
             return;
         }
-        console.log("Le Bartop est en ligne !");
-    }
 
-    if (!fs.existsSync(config.DEST_DIR)) {
-        console.error(`Erreur : Destination Photos inaccessible : ${config.DEST_DIR}`);
-        return;
-    }
+        const photoPattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{jpg,JPG,jpeg,JPEG,heic,HEIC}';
+        const allPhotos = globSync(photoPattern);
+        console.log(`Photos trouvées : ${allPhotos.length}`);
 
-    const photoPattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{jpg,JPG,jpeg,JPEG,heic,HEIC}';
-    const allPhotos = globSync(photoPattern);
-    console.log(`Photos trouvées : ${allPhotos.length}`);
+        const videoPattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{mp4,MP4,mkv,MKV,avi,AVI,mov,MOV}';
+        const allVideos = globSync(videoPattern);
+        console.log(`Vidéos trouvées : ${allVideos.length}`);
 
-    if (allPhotos.length > 0) {
-        const shuffled = allPhotos.sort(() => 0.5 - Math.random());
-        let count = 0;
-        const maxAttempts = Math.min(shuffled.length, config.NB_IMAGES * 5);
-        
         const runReport = {
             timestamp: Date.now(),
             stats: {
                 totalPhotos: allPhotos.length,
+                totalVideos: allVideos.length,
                 selected: 0,
                 rejected: 0
             },
             selected: [],
-            rejected: []
+            rejected: [],
+            videos: []
         };
 
         const writeReport = () => {
@@ -486,156 +555,224 @@ async function start() {
         // Écriture initiale vide pour réinitialiser l'affichage
         writeReport();
         
-        console.log(`\n--- Sélection de ${config.NB_IMAGES} photos de qualité ---`);
-        if (config.ENABLE_QUALITY_FILTERS) {
-            console.log(`Filtres actifs :`);
-            console.log(`  - Résolution min : ${config.FILTER_MIN_WIDTH}x${config.FILTER_MIN_HEIGHT}`);
-            console.log(`  - Autoriser portrait : ${config.FILTER_ALLOW_PORTRAIT}`);
-            console.log(`  - Ratio max : ${config.FILTER_MAX_ASPECT_RATIO}`);
-            console.log(`  - Netteté min : ${config.FILTER_MIN_SHARPNESS}`);
-        }
-
-        for (let i = 0; i < shuffled.length && count < config.NB_IMAGES; i++) {
-            if (i >= maxAttempts) {
-                console.log(`\n[Avertissement] Limite de tentatives atteinte (${maxAttempts}). Arrêt de la sélection.`);
-                break;
+        if (allPhotos.length > 0) {
+            const shuffled = allPhotos.sort(() => 0.5 - Math.random());
+            let count = 0;
+            const maxAttempts = Math.min(shuffled.length, config.NB_IMAGES * 5);
+            
+            console.log(`\n--- Sélection de ${config.NB_IMAGES} photos de qualité ---`);
+            if (config.ENABLE_QUALITY_FILTERS) {
+                console.log(`Filtres actifs :`);
+                console.log(`  - Résolution min : ${config.FILTER_MIN_WIDTH}x${config.FILTER_MIN_HEIGHT}`);
+                console.log(`  - Autoriser portrait : ${config.FILTER_ALLOW_PORTRAIT}`);
+                console.log(`  - Ratio max : ${config.FILTER_MAX_ASPECT_RATIO}`);
+                console.log(`  - Netteté min : ${config.FILTER_MIN_SHARPNESS}`);
+                if (config.FILTER_REJECT_DOCUMENTS) {
+                    console.log(`  - Rejet des documents (OCR Tesseract.js) : Actif`);
+                }
             }
 
-            const photoPath = shuffled[i];
-            try {
-                // 1. Lire les métadonnées en premier pour optimiser et récupérer l'orientation
-                const meta = await getPhotoMetadata(photoPath, config);
-
-                // Validation préliminaire rapide via les métadonnées (évite de charger et décoder l'image inutilement)
-                const preCheck = validateMetadata(photoPath, meta);
-                if (!preCheck.valid) {
-                    console.log(`  [Rejeté (Pre-EXIF)] ${path.basename(photoPath)} : ${preCheck.reason}`);
-                    runReport.rejected.push({
-                        path: photoPath,
-                        reason: preCheck.reason,
-                        sharpness: 0,
-                        width: meta ? (meta.width || 0) : 0,
-                        height: meta ? (meta.height || 0) : 0,
-                        rotationDeg: meta ? (meta.rotationDeg || 0) : 0
-                    });
-                    runReport.stats.rejected++;
-                    writeReport();
-                    continue;
+            for (let i = 0; i < shuffled.length && count < config.NB_IMAGES; i++) {
+                if (i >= maxAttempts) {
+                    console.log(`\n[Avertissement] Limite de tentatives atteinte (${maxAttempts}). Arrêt de la sélection.`);
+                    break;
                 }
 
-                // 2. Charger l'image (l'auto-orientation est gérée en natif par Jimp et heic-convert)
-                const image = await loadImage(photoPath);
-                
-                // 3. Valider la qualité
-                const check = validateImageQuality(image, photoPath, meta);
-                
-                if (!check.valid) {
-                    console.log(`  [Rejeté] ${path.basename(photoPath)} : ${check.reason}`);
+                const photoPath = shuffled[i];
+                try {
+                    // 1. Lire les métadonnées en premier pour optimiser et récupérer l'orientation
+                    const meta = await getPhotoMetadata(photoPath, config);
+
+                    // Validation préliminaire rapide via les métadonnées (évite de charger et décoder l'image inutilement)
+                    const preCheck = validateMetadata(photoPath, meta);
+                    if (!preCheck.valid) {
+                        console.log(`  [Rejeté (Pre-EXIF)] ${path.basename(photoPath)} : ${preCheck.reason}`);
+                        runReport.rejected.push({
+                            path: photoPath,
+                            reason: preCheck.reason,
+                            sharpness: 0,
+                            width: meta ? (meta.width || 0) : 0,
+                            height: meta ? (meta.height || 0) : 0,
+                            rotationDeg: meta ? (meta.rotationDeg || 0) : 0,
+                            label: meta ? computeImageLabel(meta) : ""
+                        });
+                        runReport.stats.rejected++;
+                        writeReport();
+                        continue;
+                    }
+
+                    // 2. Charger l'image (l'auto-orientation est gérée en natif par Jimp et heic-convert)
+                    const image = await loadImage(photoPath);
                     
-                    // Écrire également dans le cache local du PC pour un affichage Web instantané
-                    try {
-                        const cachePath = getCachePath(photoPath);
-                        if (!fs.existsSync(cachePath)) {
-                            const cacheImage = image.clone().scaleToFit({ w: 800, h: 800 });
-                            await cacheImage.write(cachePath);
+                    // 3. Valider la qualité
+                    const check = validateImageQuality(image, photoPath, meta);
+                    
+                    if (!check.valid) {
+                        console.log(`  [Rejeté] ${path.basename(photoPath)} : ${check.reason}`);
+                        
+                        // Écrire également dans le cache local du PC pour un affichage Web instantané
+                        try {
+                            const cachePath = getCachePath(photoPath);
+                            if (!fs.existsSync(cachePath)) {
+                                const cacheImage = image.clone().scaleToFit({ w: 800, h: 800 });
+                                await cacheImage.write(cachePath);
+                            }
+                        } catch (cacheErr) {
+                            // Ignorer les erreurs d'écriture de cache
                         }
-                    } catch (cacheErr) {
-                        // Ignorer les erreurs d'écriture de cache
+
+                        runReport.rejected.push({
+                            path: photoPath,
+                            reason: check.reason,
+                            sharpness: Math.round(check.sharpness || 0),
+                            width: meta ? (meta.width || image.bitmap.width) : image.bitmap.width,
+                            height: meta ? (meta.height || image.bitmap.height) : image.bitmap.height,
+                            rotationDeg: meta ? (meta.rotationDeg || 0) : 0,
+                            label: meta ? computeImageLabel(meta) : ""
+                        });
+                        runReport.stats.rejected++;
+                        writeReport();
+                        continue;
                     }
 
+                    // 4. Détecter si c'est un document (OCR Tesseract)
+                    let ocrWords = 0;
+                    let ocrChars = 0;
+                    if (config.FILTER_REJECT_DOCUMENTS) {
+                        console.log(`  [OCR] Analyse de texte pour ${path.basename(photoPath)}...`);
+                        const ocrData = await detectText(image);
+                        if (ocrData && ocrData.words) {
+                            const minConfidence = typeof config.FILTER_OCR_MIN_CONFIDENCE === 'number'
+                                ? config.FILTER_OCR_MIN_CONFIDENCE
+                                : 70;
+                            const validWords = ocrData.words.filter(w => {
+                                const clean = w.text.replace(/[^a-zA-Z0-9àâäéèêëîïôöùûüçÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]/g, '');
+                                return w.confidence >= minConfidence && clean.length >= 2;
+                            });
+
+                            ocrWords = validWords.length;
+                            ocrChars = validWords.reduce((sum, w) => sum + w.text.length, 0);
+
+                            const maxWords = typeof config.FILTER_OCR_MAX_WORDS === 'number' ? config.FILTER_OCR_MAX_WORDS : 15;
+                            const maxChars = typeof config.FILTER_OCR_MAX_CHARS === 'number' ? config.FILTER_OCR_MAX_CHARS : 100;
+
+                            if (ocrWords >= maxWords || ocrChars >= maxChars) {
+                                const reason = `Contient trop de texte (OCR : ${ocrWords} mots, ${ocrChars} caract.)`;
+                                console.log(`  [Rejeté (OCR)] ${path.basename(photoPath)} : ${reason}`);
+
+                                try {
+                                    const cachePath = getCachePath(photoPath);
+                                    if (!fs.existsSync(cachePath)) {
+                                        const cacheImage = image.clone().scaleToFit({ w: 800, h: 800 });
+                                        await cacheImage.write(cachePath);
+                                    }
+                                } catch (cacheErr) {
+                                    // Ignorer
+                                }
+
+                                runReport.rejected.push({
+                                    path: photoPath,
+                                    reason: reason,
+                                    sharpness: Math.round(check.sharpness || 0),
+                                    width: meta ? (meta.width || image.bitmap.width) : image.bitmap.width,
+                                    height: meta ? (meta.height || image.bitmap.height) : image.bitmap.height,
+                                    rotationDeg: meta ? (meta.rotationDeg || 0) : 0,
+                                    ocrWords: ocrWords,
+                                    ocrChars: ocrChars,
+                                    label: meta ? computeImageLabel(meta) : ""
+                                });
+                                runReport.stats.rejected++;
+                                writeReport();
+                                continue;
+                            }
+                        }
+                    }
+
+                    const originalWidth = image.bitmap.width;
+                    const originalHeight = image.bitmap.height;
+
+                    count++;
+                    const id = count.toString().padStart(3, '0');
+                    const label = await processImage(photoPath, image, id, config.NB_IMAGES, check, meta);
+                    
+                    runReport.selected.push({
+                        path: photoPath,
+                        label: label || "Sans label",
+                        sharpness: Math.round(check.sharpness),
+                        width: meta ? (meta.width || originalWidth) : originalWidth,
+                        height: meta ? (meta.height || originalHeight) : originalHeight,
+                        rotationDeg: meta ? (meta.rotationDeg || 0) : 0,
+                        ocrWords: ocrWords,
+                        ocrChars: ocrChars
+                    });
+                    runReport.stats.selected++;
+                    writeReport();
+                } catch (err) {
+                    console.log(`  [Rejeté] Erreur chargement ${path.basename(photoPath)} : ${err.message}`);
                     runReport.rejected.push({
                         path: photoPath,
-                        reason: check.reason,
-                        sharpness: Math.round(check.sharpness || 0),
-                        width: image.bitmap.width,
-                        height: image.bitmap.height,
-                        rotationDeg: meta ? (meta.rotationDeg || 0) : 0
+                        reason: `Erreur chargement : ${err.message}`,
+                        sharpness: 0,
+                        width: 0,
+                        height: 0,
+                        rotationDeg: 0,
+                        label: meta ? computeImageLabel(meta) : ""
                     });
                     runReport.stats.rejected++;
                     writeReport();
-                    continue;
                 }
-
-                count++;
-                const id = count.toString().padStart(3, '0');
-                const label = await processImage(photoPath, image, id, config.NB_IMAGES, check, meta);
-                
-                runReport.selected.push({
-                    path: photoPath,
-                    label: label || "Sans label",
-                    sharpness: Math.round(check.sharpness),
-                    width: image.bitmap.width,
-                    height: image.bitmap.height,
-                    rotationDeg: meta ? (meta.rotationDeg || 0) : 0
-                });
-                runReport.stats.selected++;
-                writeReport();
+            }
+            
+            // Nettoyage des anciennes images en trop à la fin de la sélection (ex: 101.jpg à 120.jpg si le nombre a baissé)
+            try {
+                const oldFiles = fs.readdirSync(config.DEST_DIR);
+                for (const f of oldFiles) {
+                    const match = f.match(/^(\d+)\.(jpg|txt)$/i);
+                    if (match) {
+                        const fileIndex = parseInt(match[1], 10);
+                        if (fileIndex > count) {
+                            fs.unlinkSync(path.join(config.DEST_DIR, f));
+                        }
+                    }
+                }
             } catch (err) {
-                console.log(`  [Rejeté] Erreur chargement ${path.basename(photoPath)} : ${err.message}`);
-                runReport.rejected.push({
-                    path: photoPath,
-                    reason: `Erreur chargement : ${err.message}`,
-                    sharpness: 0,
-                    width: 0,
-                    height: 0,
-                    rotationDeg: 0
-                });
-                runReport.stats.rejected++;
-                writeReport();
+                console.warn(`Attention : Impossible de nettoyer les fichiers d'images superflus : ${err.message}`);
             }
-        }
-        
-        // Nettoyage des anciennes images en trop à la fin de la sélection (ex: 101.jpg à 120.jpg si le nombre a baissé)
-        try {
-            const oldFiles = fs.readdirSync(config.DEST_DIR);
-            for (const f of oldFiles) {
-                const match = f.match(/^(\d+)\.(jpg|txt)$/i);
-                if (match) {
-                    const fileIndex = parseInt(match[1], 10);
-                    if (fileIndex > count) {
-                        fs.unlinkSync(path.join(config.DEST_DIR, f));
+
+            console.log(`\nTotal Photos sélectionnées : ${count}/${config.NB_IMAGES}`);
+
+            // Nettoyage final du cache d'aperçus (supprime les vignettes des anciennes sessions)
+            try {
+                const cacheDir = path.join(__dirname, '.cache');
+                if (fs.existsSync(cacheDir)) {
+                    const validCacheFiles = new Set();
+                    const allPhotosReport = [...runReport.selected, ...runReport.rejected];
+                    for (const photo of allPhotosReport) {
+                        validCacheFiles.add(path.basename(getCachePath(photo.path)));
+                    }
+                    const files = fs.readdirSync(cacheDir);
+                    for (const file of files) {
+                        if (file.endsWith('.jpg') && !validCacheFiles.has(file)) {
+                            fs.unlinkSync(path.join(cacheDir, file));
+                        }
                     }
                 }
+            } catch (cacheErr) {
+                console.warn(`[Avertissement] Impossible de nettoyer le cache : ${cacheErr.message}`);
             }
-        } catch (err) {
-            console.warn(`Attention : Impossible de nettoyer les fichiers d'images superflus : ${err.message}`);
         }
 
-        console.log(`\nTotal Photos sélectionnées : ${count}/${config.NB_IMAGES}`);
-
-        // Écriture finale
-        writeReport();
-
-        // Nettoyage final du cache d'aperçus (supprime les vignettes des anciennes sessions)
-        try {
-            const cacheDir = path.join(__dirname, '.cache');
-            if (fs.existsSync(cacheDir)) {
-                const validCacheFiles = new Set();
-                const allPhotosReport = [...runReport.selected, ...runReport.rejected];
-                for (const photo of allPhotosReport) {
-                    validCacheFiles.add(path.basename(getCachePath(photo.path)));
-                }
-                const files = fs.readdirSync(cacheDir);
-                for (const file of files) {
-                    if (file.endsWith('.jpg') && !validCacheFiles.has(file)) {
-                        fs.unlinkSync(path.join(cacheDir, file));
-                    }
-                }
-            }
-        } catch (cacheErr) {
-            console.warn(`[Avertissement] Impossible de nettoyer le cache : ${cacheErr.message}`);
+        if (allVideos.length > 0) {
+            const selectedVids = await processVideos(allVideos);
+            runReport.videos = selectedVids || [];
+            writeReport();
         }
+
+        console.log("\n--- Terminé ! ---");
+    } finally {
+        await terminateTesseractWorker();
+        releaseLock();
     }
-
-    const videoPattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{mp4,MP4,mkv,MKV,avi,AVI,mov,MOV}';
-    const allVideos = globSync(videoPattern);
-    console.log(`Vidéos trouvées : ${allVideos.length}`);
-
-    if (allVideos.length > 0) {
-        await processVideos(allVideos);
-    }
-
-    console.log("\n--- Terminé ! ---");
 }
 
 if (require.main === module) {

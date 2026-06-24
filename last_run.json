@@ -1,868 +1,673 @@
 {
-  "timestamp": 1782337590952,
+  "timestamp": 1782343849237,
   "stats": {
     "totalPhotos": 296690,
-    "selected": 100,
-    "rejected": 7
+    "totalVideos": 13278,
+    "selected": 23,
+    "rejected": 41
   },
   "selected": [
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_4818.JPG",
-      "label": "Arona (Espagne) - Janvier 2024",
-      "sharpness": 2536,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 180
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2004\\2004-10-21 (anniv mila 2ans sidonie patrick ema brice mel soso franço cyril)\\P_PICT2778.JPG",
+      "label": "Anniv mila 2ans sidonie patrick ema brice mel soso franço cyril - Février 2001",
+      "sharpness": 420,
+      "width": 1600,
+      "height": 1200,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 9
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-08-14 20.15.18-2.jpg",
-      "label": "Ajaccio - Août 2015",
-      "sharpness": 1253,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-05-08 (Xiaomi Sonia)\\IMG_20181202_201552.jpg",
-      "label": "Paris - Décembre 2018",
-      "sharpness": 1523,
-      "width": 1280,
-      "height": 720,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC07008.JPG",
-      "label": "Izmir Lesbos Chios Claire Denis - Août 2025",
-      "sharpness": 1999,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_1877.JPG",
-      "label": "Paris - Novembre 2019",
-      "sharpness": 1976,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_4531.JPG",
-      "label": "Istanbul - Octobre 2019",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-11 12.09.21.jpg",
+      "label": "2015 - Novembre 2015",
       "sharpness": 837,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
+      "width": 1909,
+      "height": 1072,
+      "rotationDeg": 0,
+      "ocrWords": 11,
+      "ocrChars": 23
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 1\\IMG_1935.JPG",
-      "label": "Vacances Californie - Avril 2019",
-      "sharpness": 3448,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-05-08 (Xiaomi Sonia)\\IMG_20190503_223104.jpg",
+      "label": "Redwood City (USA) - Mai 2019",
+      "sharpness": 524,
+      "width": 4000,
+      "height": 3000,
+      "rotationDeg": 0,
+      "ocrWords": 11,
+      "ocrChars": 25
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-02-15 (Abu Dhabi)\\IMG_5985.JPG",
-      "label": "Abu Dhabi - Février 2020",
-      "sharpness": 1507,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2017\\2017-12-25 (Noel Port Sud)\\IMG_6944.JPG",
+      "label": "Noel Port Sud - Décembre 2017",
+      "sharpness": 672,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 13,
+      "ocrChars": 30
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_5604.jpeg",
-      "label": "İstanbul (Turquie) - Octobre 2019",
-      "sharpness": 3465,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9404.JPG",
+      "label": "Paris - Avril 2018",
+      "sharpness": 546,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 7,
+      "ocrChars": 16
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_0731.HEIC",
-      "label": "Linxe - Juillet 2021",
-      "sharpness": 2869,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_2855.JPG",
-      "label": "Vacances Californie - Avril 2019",
-      "sharpness": 614,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_1525.heic",
-      "label": "Paris - Septembre 2020",
-      "sharpness": 949,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 14 - So\\IMG_4528.HEIC",
-      "label": "Montpellier - Avril 2023",
-      "sharpness": 8310,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_3085.JPG",
-      "label": "Vacances Californie - Avril 2019",
-      "sharpness": 873,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7285 1.HEIC",
-      "label": "Gallipoli (Italie) - Août 2023",
-      "sharpness": 2161,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_4432.jpeg",
-      "label": "Zlatograd (Bulgarie) - Août 2019",
-      "sharpness": 2760,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_1968.JPG",
-      "label": "Gap - Février 2019",
-      "sharpness": 802,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2586.JPG",
-      "label": "Gif-sur-Yvette - Janvier 2020",
-      "sharpness": 354,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_4313.HEIC",
-      "label": "Paris - Décembre 2023",
-      "sharpness": 3451,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8582.HEIC",
-      "label": "Massy - Novembre 2023",
-      "sharpness": 662,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_9824.JPG",
-      "label": "Rouen - Mai 2021",
-      "sharpness": 1708,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_2696.JPG",
-      "label": "Los Angeles (USA) - Avril 2019",
-      "sharpness": 2194,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7424.HEIC",
-      "label": "Taranto (Italie) - Août 2023",
-      "sharpness": 499,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_3495.JPG",
-      "label": "Vacances Californie - Mai 2019",
-      "sharpness": 4347,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_8985.heic",
-      "label": "Paris - Mai 2020",
-      "sharpness": 1255,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_3105.JPG",
-      "label": "Paris - Mai 2019",
-      "sharpness": 3322,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 13 pro Steph\\IMG_7538.HEIC",
-      "label": "Paris - Janvier 2023",
-      "sharpness": 2935,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_8130.heic",
-      "label": "Paris - Mars 2020",
-      "sharpness": 934,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_1094.JPG",
-      "label": "Champigny-sur-Marne - Septembre 2019",
-      "sharpness": 429,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\LJJY7828.JPG",
-      "label": "2022 - Janvier 2023",
-      "sharpness": 1948,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_3733.JPG",
-      "label": "Vacances Californie - Mai 2019",
-      "sharpness": 2618,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 866.JPG",
-      "label": "Kavála (Grèce) - Août 2019",
-      "sharpness": 5014,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_5184.JPG",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_5222.JPG",
       "label": "Istanbul - Octobre 2019",
-      "sharpness": 1421,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
+      "sharpness": 849,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 11,
+      "ocrChars": 26
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-10-01 (WE Vienne Patemma)\\DSC02339.JPG",
-      "label": "Vienna (Autriche) - Octobre 2023",
-      "sharpness": 1232,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9246.JPG",
+      "label": "Marrakesh (Maroc) - Avril 2018",
+      "sharpness": 1550,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 7,
+      "ocrChars": 18
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-11-10 (100 ans Nanou Belgique)\\6F5CB62A-E2E8-46EB-A395-BC3D311C8B0B.jpeg",
-      "label": "100 ans Nanou Belgique - Novembre 2019",
-      "sharpness": 2747,
-      "width": 1280,
-      "height": 854,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_1169.JPG",
+      "label": "Paris - Septembre 2014",
+      "sharpness": 478,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 90,
+      "ocrWords": 8,
+      "ocrChars": 19
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2357.JPG",
-      "label": "Paris - Janvier 2020",
-      "sharpness": 1038,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0283.JPG",
+      "label": "2018 - Août 2018",
+      "sharpness": 411,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 5,
+      "ocrChars": 13
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 13 pro Steph\\IMG_9405.HEIC",
-      "label": "Lafayette (USA) - Mars 2023",
-      "sharpness": 4011,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\IMG_0830(1).JPG",
+      "label": "Sarajevo (BA) - Juillet 2018",
+      "sharpness": 477,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 7,
+      "ocrChars": 17
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-11-10 (100 ans Nanou Belgique)\\0CB71CA7-C36A-4011-8AFF-C98F758DE55B.jpeg",
-      "label": "100 ans Nanou Belgique - Novembre 2019",
-      "sharpness": 1145,
-      "width": 1280,
-      "height": 854,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 1\\IMG_1753.JPG",
-      "label": "Vacances Californie - Avril 2019",
-      "sharpness": 1102,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_5321.JPG",
-      "label": "Istanbul - Octobre 2019",
-      "sharpness": 798,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IPEJ6921.jpeg",
-      "label": "Iphone steph - Septembre 2019",
-      "sharpness": 3689,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC07351.JPG",
-      "label": "Izmir Lesbos Chios Claire Denis - Août 2025",
-      "sharpness": 2815,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_8786.heic",
-      "label": "Paris - Avril 2020",
-      "sharpness": 2980,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2211.JPG",
-      "label": "Paris - Décembre 2019",
-      "sharpness": 2310,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 13 pro Steph\\IMG_1215.HEIC",
-      "label": "Versailles - Juillet 2023",
-      "sharpness": 1563,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_1772.HEIC",
-      "label": "Toulouse - Janvier 2023",
-      "sharpness": 761,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_0383.HEIC",
-      "label": "Aix-en-Provence - Décembre 2022",
-      "sharpness": 1696,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_0528 1.HEIC",
-      "label": "Saint-Paul-lès-Dax - Juillet 2021",
-      "sharpness": 3429,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_5350.JPG",
-      "label": "Istanbul - Octobre 2019",
-      "sharpness": 747,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_1020 1.HEIC",
-      "label": "Vieux-Boucau-les-Bains - Juillet 2021",
-      "sharpness": 734,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_E7025.HEIC",
-      "label": "Granada (Espagne) - Août 2021",
-      "sharpness": 1155,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_2785.JPG",
-      "label": "Santa Barbara (USA) - Avril 2019",
-      "sharpness": 2449,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2625.HEIC",
-      "label": "Capbreton - Octobre 2021",
-      "sharpness": 2140,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_7642.heic",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_7721.heic",
       "label": "Abu Dhabi (AE) - Février 2020",
-      "sharpness": 3022,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
+      "sharpness": 375,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_2788.JPG",
-      "label": "Santa Barbara (USA) - Avril 2019",
-      "sharpness": 3107,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_9145.JPG",
+      "label": "Paris - Mai 2018",
+      "sharpness": 952,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2273 1.JPG",
-      "label": "Breuillet - Décembre 2019",
-      "sharpness": 2171,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-04-08 19.33.11.jpg",
+      "label": "Lyon - Avril 2015",
+      "sharpness": 908,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 0,
+      "ocrWords": 10,
+      "ocrChars": 43
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-22 (WE Bretagne fagonade)\\IMG_9244.JPG",
+      "label": "WE Bretagne fagonade - Mai 2018",
+      "sharpness": 306,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 14,
+      "ocrChars": 36
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-22 (WE Bretagne fagonade)\\IMG_9438.JPG",
+      "label": "WE Bretagne fagonade - Mai 2018",
+      "sharpness": 469,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 11,
+      "ocrChars": 24
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-05-10 13.00.52.jpg",
+      "label": "Paris - Mai 2015",
+      "sharpness": 843,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-08-13 11.50.20.jpg",
+      "label": "2015 - Décembre 2015",
+      "sharpness": 809,
       "width": 1280,
       "height": 960,
-      "rotationDeg": 0
+      "rotationDeg": 0,
+      "ocrWords": 5,
+      "ocrChars": 11
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-02-15 (Abu Dhabi)\\IMG_5760.JPG",
-      "label": "Abu Dhabi - Février 2020",
-      "sharpness": 1467,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_8493.JPG",
+      "label": "Paris - Mars 2018",
+      "sharpness": 432,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 5,
+      "ocrChars": 13
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_8905.heic",
-      "label": "Paris - Mai 2020",
-      "sharpness": 2685,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-07-17\\IMG_1508.JPG",
+      "label": "2018 - Juillet 2018",
+      "sharpness": 501,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 1,
+      "ocrChars": 3
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_8925.heic",
-      "label": "Paris - Mai 2020",
-      "sharpness": 1421,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_4324.jpeg",
-      "label": "Burgas (Bulgarie) - Août 2019",
-      "sharpness": 1136,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_E5983.HEIC",
-      "label": "Sevilla (Espagne) - Juillet 2021",
-      "sharpness": 1426,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC07545.JPG",
-      "label": "Izmir Lesbos Chios Claire Denis - Août 2025",
-      "sharpness": 2931,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_7604.heic",
-      "label": "Abu Dhabi (AE) - Février 2020",
-      "sharpness": 1511,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-02-15 (Abu Dhabi)\\IMG_5908.JPG",
-      "label": "Abu Dhabi - Février 2020",
-      "sharpness": 662,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3502.HEIC",
-      "label": "Brussels (Belgique) - Septembre 2024",
-      "sharpness": 668,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_3862.HEIC",
-      "label": "Versailles - Octobre 2023",
-      "sharpness": 693,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 13 pro Steph\\IMG_1294.HEIC",
-      "label": "Paris - Juillet 2023",
-      "sharpness": 1134,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_2769.JPG",
-      "label": "Los Angeles (USA) - Avril 2019",
-      "sharpness": 3143,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-05-08 (Xiaomi Sonia)\\IMG_20190507_102741.jpg",
-      "label": "Xiaomi Sonia - Mai 2019",
-      "sharpness": 1310,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2880.HEIC",
-      "label": "Les Abymes (Guadeloupe) - Avril 2022",
-      "sharpness": 1651,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_4180.jpeg",
-      "label": "Varna (Bulgarie) - Août 2019",
-      "sharpness": 1631,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3508.HEIC",
-      "label": "Brussels (Belgique) - Septembre 2024",
-      "sharpness": 5808,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_1738.HEIC",
-      "label": "Aulnay-sous-Bois - Juin 2024",
-      "sharpness": 3586,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_1506.HEIC",
-      "label": "Milano (Italie) - Mai 2024",
-      "sharpness": 4926,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_1170.heic",
-      "label": "Porto-Vecchio - Août 2020",
-      "sharpness": 918,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 3\\IMG_3878.JPG",
-      "label": "Vacances Californie - Mai 2019",
-      "sharpness": 2779,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-06-14 (iphone steph)\\IMG_2780.JPG",
-      "label": "Oxnard Shores (USA) - Avril 2019",
-      "sharpness": 328,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_0765.heic",
-      "label": "Ajaccio - Août 2020",
-      "sharpness": 1897,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_1849 1.HEIC",
-      "label": "Almería (Espagne) - Août 2021",
-      "sharpness": 3445,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_2545.HEIC",
-      "label": "Porto-Vecchio - Août 2023",
-      "sharpness": 2287,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_5313.JPG",
-      "label": "Istanbul - Octobre 2019",
-      "sharpness": 879,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-02-15 (Abu Dhabi)\\IMG_5874.JPG",
-      "label": "Abu Dhabi - Février 2020",
-      "sharpness": 1498,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_3101.JPG",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_2752.JPG",
       "label": "Vacances Californie - Avril 2019",
-      "sharpness": 1612,
-      "width": 683,
-      "height": 1024,
-      "rotationDeg": 90
+      "sharpness": 323,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7430 1.HEIC",
-      "label": "Taranto (Italie) - Août 2023",
-      "sharpness": 1535,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_8006.heic",
-      "label": "Paris - Février 2020",
-      "sharpness": 2247,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2502.HEIC",
-      "label": "Iphone So - Avril 2022",
-      "sharpness": 3058,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_0842.HEIC",
-      "label": "Arusha (Tanzanie) - Décembre 2022",
-      "sharpness": 4131,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_5360.JPG",
-      "label": "Istanbul - Octobre 2019",
-      "sharpness": 775,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\JJRQ9082.JPG",
-      "label": "2022 - Mai 2021",
-      "sharpness": 1858,
-      "width": 576,
-      "height": 1024,
-      "rotationDeg": 90
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2608.JPG",
-      "label": "Gif-sur-Yvette - Janvier 2020",
-      "sharpness": 940,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-10-29 (Istanbul)\\IMG_4195.JPG",
-      "label": "Istanbul - Octobre 2019",
-      "sharpness": 1482,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_0663.heic",
-      "label": "Ajaccio - Août 2020",
-      "sharpness": 1340,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_7736.heic",
-      "label": "Abu Dhabi (AE) - Février 2020",
-      "sharpness": 2354,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 14 - So\\IMG_3116.HEIC",
-      "label": "Baton Rouge (USA) - Mars 2023",
-      "sharpness": 5013,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_E7031.HEIC",
-      "label": "Granada (Espagne) - Août 2021",
-      "sharpness": 1085,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\OCGH7367.JPG",
-      "label": "2022 - Avril 2021",
-      "sharpness": 1073,
-      "width": 1280,
-      "height": 720,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 1\\IMG_1855.JPG",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_2766.JPG",
       "label": "Vacances Californie - Avril 2019",
-      "sharpness": 1066,
-      "width": 1280,
-      "height": 853,
-      "rotationDeg": 0
+      "sharpness": 529,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6880 1.HEIC",
-      "label": "Valmontone (Italie) - Juillet 2023",
-      "sharpness": 4540,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6927.HEIC",
+      "label": "Villecresnes - Avril 2025",
+      "sharpness": 1280,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\JYFK0380.JPG",
-      "label": "2022 - Mars 2021",
-      "sharpness": 3036,
-      "width": 1280,
-      "height": 720,
-      "rotationDeg": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_3091.HEIC",
-      "label": "Vienna (Autriche) - Septembre 2023",
-      "sharpness": 2430,
-      "width": 768,
-      "height": 1024,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7655 1.HEIC",
+      "label": "Ajaccio - Août 2023",
+      "sharpness": 921,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 23
     }
   ],
   "rejected": [
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\Chargements appareil photo\\2017\\2017-09-30 17.40.07-5.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 62 < 100)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-06-21 (USA)\\2015-06-05 20.59.03.jpg",
+      "reason": "Image trop floue ou plate (Netteté: 261 < 300)",
+      "sharpness": 0,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 0,
+      "label": "Reykjavík (IS) - Juin 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-08-11 16.55.43.jpg",
+      "reason": "Contient trop de texte (OCR : 18 mots, 95 caract.)",
+      "sharpness": 384,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 18,
+      "ocrChars": 95,
+      "label": "Sofia (Bulgarie) - Août 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2017\\2017-08-03 (Vacances Lacs italiens et Monza)\\IMG_5093.JPG",
+      "reason": "Contient trop de texte (OCR : 19 mots, 48 caract.)",
+      "sharpness": 951,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 19,
+      "ocrChars": 48,
+      "label": "Vacances Lacs italiens et Monza - Juillet 2017"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-10 (Bulgarie)\\IMG_6024.JPG",
+      "reason": "Contient trop de texte (OCR : 17 mots, 43 caract.)",
+      "sharpness": 1272,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 17,
+      "ocrChars": 43,
+      "label": "Varna (Bulgarie) - Août 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-07-17\\IMG_1303.JPG",
+      "reason": "Contient trop de texte (OCR : 15 mots, 36 caract.)",
+      "sharpness": 1393,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 15,
+      "ocrChars": 36,
+      "label": "2018 - Juillet 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_2343.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 123 < 300)",
       "sharpness": 0,
       "width": 3264,
       "height": 2448,
-      "rotationDeg": 0
+      "rotationDeg": 0,
+      "label": "Paris - Janvier 2015"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_9568.jpeg",
-      "reason": "Résolution insuffisante (480x640 < 800x600)",
-      "sharpness": 0,
-      "width": 480,
-      "height": 640,
-      "rotationDeg": 90
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_4511.JPG",
+      "reason": "Contient trop de texte (OCR : 18 mots, 42 caract.)",
+      "sharpness": 1741,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 18,
+      "ocrChars": 42,
+      "label": "Argenteuil - Janvier 2018"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\WUNS4405.JPG",
-      "reason": "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)",
-      "sharpness": 0,
-      "width": 0,
-      "height": 0,
-      "rotationDeg": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-07-22\\IMG_2406.JPG",
+      "reason": "Contient trop de texte (OCR : 29 mots, 77 caract.)",
+      "sharpness": 398,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 29,
+      "ocrChars": 77,
+      "label": "2018 - Juillet 2018"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-05-08 (Xiaomi Sonia)\\SAVE_20181031_224648.jpeg",
-      "reason": "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-05-06 20.57.19.jpg",
+      "reason": "Image trop floue ou plate (Netteté: 183 < 300)",
       "sharpness": 0,
-      "width": 0,
-      "height": 0,
-      "rotationDeg": 0
+      "width": 960,
+      "height": 1280,
+      "rotationDeg": 0,
+      "label": "2015 - Mai 2015"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\TMNQ6059.jpeg",
-      "reason": "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\JNUJ8909.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 131 < 300)",
       "sharpness": 0,
-      "width": 0,
-      "height": 0,
-      "rotationDeg": 0
+      "width": 1408,
+      "height": 1056,
+      "rotationDeg": 0,
+      "label": "Iphone steph - Mai 2018"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-05-08 (Xiaomi Sonia)\\SAVE_20181028_122123.jpeg",
-      "reason": "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_8755.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 92 < 300)",
       "sharpness": 0,
-      "width": 0,
-      "height": 0,
-      "rotationDeg": 0
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "label": "Paris - Avril 2018"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\JJPW9933.JPG",
-      "reason": "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9099.JPG",
+      "reason": "Contient trop de texte (OCR : 45 mots, 109 caract.)",
+      "sharpness": 5434,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 45,
+      "ocrChars": 109,
+      "label": "Essaouira (Maroc) - Avril 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-07-27\\IMG_3449.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 228 < 300)",
       "sharpness": 0,
-      "width": 0,
-      "height": 0,
-      "rotationDeg": 0
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "label": "2018 - Juillet 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-08-15 10.30.54.jpg",
+      "reason": "Contient trop de texte (OCR : 38 mots, 95 caract.)",
+      "sharpness": 1389,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 38,
+      "ocrChars": 95,
+      "label": "Ajaccio - Août 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\IMG_2189.JPG",
+      "reason": "Contient trop de texte (OCR : 36 mots, 90 caract.)",
+      "sharpness": 1877,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 36,
+      "ocrChars": 90,
+      "label": "Belgrade (RS) - Juillet 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 575.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 213 < 300)",
+      "sharpness": 0,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "label": "Varna (Bulgarie) - Août 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 1\\IMG_2699.JPG",
+      "reason": "Contient trop de texte (OCR : 48 mots, 130 caract.)",
+      "sharpness": 1993,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 48,
+      "ocrChars": 130,
+      "label": "Vacances Californie - Avril 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 1990.JPG",
+      "reason": "Contient trop de texte (OCR : 26 mots, 61 caract.)",
+      "sharpness": 940,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 26,
+      "ocrChars": 61,
+      "label": "İstanbul (Turquie) - Octobre 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_9435.heic",
+      "reason": "Contient trop de texte (OCR : 25 mots, 62 caract.)",
+      "sharpness": 1194,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 25,
+      "ocrChars": 62,
+      "label": "Versailles - Juin 2020"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-12 (horo ecole bulgare)\\IMG_9189.JPG",
+      "reason": "Contient trop de texte (OCR : 15 mots, 36 caract.)",
+      "sharpness": 994,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 15,
+      "ocrChars": 36,
+      "label": "Horo ecole bulgare - Mai 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\IMG_2734.JPG",
+      "reason": "Contient trop de texte (OCR : 39 mots, 95 caract.)",
+      "sharpness": 919,
+      "width": 1932,
+      "height": 2576,
+      "rotationDeg": 270,
+      "ocrWords": 39,
+      "ocrChars": 95,
+      "label": "Budva (ME) - Juillet 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so)\\IMG_2875.JPG",
+      "reason": "Contient trop de texte (OCR : 45 mots, 112 caract.)",
+      "sharpness": 628,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 45,
+      "ocrChars": 112,
+      "label": "Venezia (Italie) - Septembre 2017"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 252.JPG",
+      "reason": "Contient trop de texte (OCR : 25 mots, 64 caract.)",
+      "sharpness": 1905,
+      "width": 1024,
+      "height": 768,
+      "rotationDeg": 0,
+      "ocrWords": 25,
+      "ocrChars": 64,
+      "label": "Iphone X Steph - Janvier 2020"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9625.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 114 < 300)",
+      "sharpness": 0,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "label": "Paris - Mai 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_9691.heic",
+      "reason": "Contient trop de texte (OCR : 49 mots, 133 caract.)",
+      "sharpness": 3110,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 49,
+      "ocrChars": 133,
+      "label": "Angers - Juillet 2020"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-08-06 13.21.34.jpg",
+      "reason": "Contient trop de texte (OCR : 50 mots, 125 caract.)",
+      "sharpness": 2686,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 0,
+      "ocrWords": 50,
+      "ocrChars": 125,
+      "label": "Varna (Bulgarie) - Août 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_2801.JPG",
+      "reason": "Contient trop de texte (OCR : 20 mots, 48 caract.)",
+      "sharpness": 487,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 20,
+      "ocrChars": 48,
+      "label": "Vacances Californie - Avril 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 2097.JPG",
+      "reason": "Contient trop de texte (OCR : 26 mots, 62 caract.)",
+      "sharpness": 308,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 26,
+      "ocrChars": 62,
+      "label": "Paris - Octobre 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-03-21 21.32.53.jpg",
+      "reason": "Image trop floue ou plate (Netteté: 276 < 300)",
+      "sharpness": 0,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "label": "Paris - Mars 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_8491.JPG",
+      "reason": "Contient trop de texte (OCR : 47 mots, 123 caract.)",
+      "sharpness": 2001,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 47,
+      "ocrChars": 123,
+      "label": "Paris - Mars 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 2204.JPG",
+      "reason": "Contient trop de texte (OCR : 37 mots, 89 caract.)",
+      "sharpness": 1196,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 37,
+      "ocrChars": 89,
+      "label": "Brussels (Belgique) - Novembre 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_4229.JPG",
+      "reason": "Contient trop de texte (OCR : 99 mots, 244 caract.)",
+      "sharpness": 4533,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 99,
+      "ocrChars": 244,
+      "label": "Argenteuil - Décembre 2017"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_4294.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 110 < 300)",
+      "sharpness": 0,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "label": "Paris - Décembre 2017"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_1793.JPG",
+      "reason": "Contient trop de texte (OCR : 20 mots, 45 caract.)",
+      "sharpness": 392,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 90,
+      "ocrWords": 20,
+      "ocrChars": 45,
+      "label": "Paris - Novembre 2014"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-08-04 (Vacances Californie)\\Carte 2\\IMG_2765.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 279 < 300)",
+      "sharpness": 0,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "label": "Vacances Californie - Avril 2019"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\SIWT3868.JPG",
+      "reason": "Contient trop de texte (OCR : 213 mots, 1020 caract.)",
+      "sharpness": 4015,
+      "width": 2160,
+      "height": 3840,
+      "rotationDeg": 90,
+      "ocrWords": 213,
+      "ocrChars": 1020,
+      "label": "2022 - Avril 2022"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2026\\2026-03-29 (USA Texas Louisiane Mississipi Tennessee)\\DSC08712.JPG",
+      "reason": "Contient trop de texte (OCR : 18 mots, 43 caract.)",
+      "sharpness": 1511,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 18,
+      "ocrChars": 43,
+      "label": "USA Texas Louisiane Mississipi Tennessee - Mars 2026"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9474.JPG",
+      "reason": "Contient trop de texte (OCR : 26 mots, 65 caract.)",
+      "sharpness": 738,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 26,
+      "ocrChars": 65,
+      "label": "Paris - Mai 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8644.HEIC",
+      "reason": "Contient trop de texte (OCR : 80 mots, 196 caract.)",
+      "sharpness": 4009,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 80,
+      "ocrChars": 196,
+      "label": "Paris - Novembre 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2026\\2026-03-29 (USA Texas Louisiane Mississipi Tennessee)\\DSC08686.JPG",
+      "reason": "Contient trop de texte (OCR : 28 mots, 82 caract.)",
+      "sharpness": 1251,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 28,
+      "ocrChars": 82,
+      "label": "USA Texas Louisiane Mississipi Tennessee - Mars 2026"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6172.HEIC",
+      "reason": "Contient trop de texte (OCR : 16 mots, 40 caract.)",
+      "sharpness": 1895,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 16,
+      "ocrChars": 40,
+      "label": "Palermo (Italie) - Mars 2025"
     }
-  ]
+  ],
+  "videos": []
 }

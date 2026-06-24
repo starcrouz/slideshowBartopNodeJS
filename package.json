@@ -17,6 +17,7 @@
     "heic-convert": "^2.1.0",
     "jimp": "^1.6.0",
     "nearby-cities": "^1.1.0",
-    "parse-dms": "^0.0.5"
+    "parse-dms": "^0.0.5",
+    "tesseract.js": "^7.0.0"
   }
 }

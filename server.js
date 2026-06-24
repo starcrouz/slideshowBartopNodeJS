@@ -141,6 +141,68 @@ app.post('/api/run', (req, res) => {
     res.json({ message: 'Tirage démarré' });
 });
 
+// API: Interrompre un tirage en cours
+app.post('/api/stop', (req, res) => {
+    try {
+        let processKilled = false;
+
+        // 1. Interrompre le processus enfant géré par le serveur Express
+        if (activeProcess) {
+            activeProcess.kill('SIGTERM');
+            processKilled = true;
+        }
+
+        // 2. Fallback: Lire le PID depuis selection.lock pour arrêter le processus (tâche planifiée, execution console, etc.)
+        if (fs.existsSync(lockFilePath)) {
+            const pidStr = fs.readFileSync(lockFilePath, 'utf8').trim();
+            const pid = parseInt(pidStr, 10);
+            if (!isNaN(pid)) {
+                try {
+                    process.kill(pid, 'SIGTERM');
+                    processKilled = true;
+                } catch (e) {
+                    // Ignorer si le processus est déjà mort
+                }
+            }
+        }
+
+        if (processKilled) {
+            res.json({ message: 'Tirage interrompu avec succès' });
+        } else {
+            res.status(400).json({ error: 'Aucun tirage actif à interrompre' });
+        }
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+
+// API: Obtenir le statut actuel de l'exécution
+app.get('/api/status', (req, res) => {
+    res.json({ running: isSelectionRunning() });
+});
+
+// API: Obtenir l'élément actuellement affiché sur le Bartop
+app.get('/api/bartop-current', (req, res) => {
+    try {
+        const configPath = path.join(__dirname, 'config.json');
+        if (!fs.existsSync(configPath)) {
+            return res.status(404).json({ error: 'Config introuvable' });
+        }
+        const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        const currentFilePath = path.join(path.dirname(config.DEST_DIR), 'current.json');
+        
+        if (fs.existsSync(currentFilePath)) {
+            const data = JSON.parse(fs.readFileSync(currentFilePath, 'utf8'));
+            return res.json(data);
+        }
+        res.json({ error: "Aucun élément en cours de lecture" });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+
 // API: Stream de logs temps réel (Server-Sent Events)
 app.get('/api/run-logs', (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
@@ -221,6 +283,64 @@ app.get('/api/photo', async (req, res) => {
         res.status(500).send('Erreur lors de la génération de l\'aperçu : ' + e.message);
     }
 });
+
+// API: Servir les vidéos avec Range Requests (HTTP 206)
+app.get('/api/video', (req, res) => {
+    const videoPath = req.query.path;
+    if (!videoPath) return res.status(400).send('Chemin manquant');
+    if (!fs.existsSync(videoPath)) return res.status(404).send('Fichier introuvable');
+
+    try {
+        const stat = fs.statSync(videoPath);
+        const fileSize = stat.size;
+        const range = req.headers.range;
+
+        // Content-Type par défaut et détection simple selon l'extension
+        let contentType = 'video/mp4';
+        const ext = path.extname(videoPath).toLowerCase();
+        if (ext === '.mov') {
+            contentType = 'video/quicktime';
+        } else if (ext === '.avi') {
+            contentType = 'video/x-msvideo';
+        } else if (ext === '.mkv') {
+            contentType = 'video/x-matroska';
+        }
+
+        if (range) {
+            const parts = range.replace(/bytes=/, "").split("-");
+            const start = parseInt(parts[0], 10);
+            const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+            if (start >= fileSize) {
+                res.status(416).send('Requested range not satisfiable\n' + start + ' >= ' + fileSize);
+                return;
+            }
+
+            const chunksize = (end - start) + 1;
+            const file = fs.createReadStream(videoPath, { start, end });
+            const head = {
+                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                'Accept-Ranges': 'bytes',
+                'Content-Length': chunksize,
+                'Content-Type': contentType,
+            };
+
+            res.writeHead(206, head);
+            file.pipe(res);
+        } else {
+            const head = {
+                'Content-Length': fileSize,
+                'Content-Type': contentType,
+            };
+            res.writeHead(200, head);
+            fs.createReadStream(videoPath).pipe(res);
+        }
+    } catch (e) {
+        console.error('Erreur lors de la diffusion de la vidéo :', e);
+        res.status(500).send('Erreur lors de la diffusion de la vidéo : ' + e.message);
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`==================================================`);

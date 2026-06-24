@@ -145,6 +145,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
         /* Card Glassmorphic */
         .glass-card {
             background: var(--panel-bg);
@@ -158,11 +164,17 @@
         /* Onglet 1: Dashboard */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
+            grid-template-columns: 1fr 1fr 1.5fr;
             gap: 2rem;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1.2fr;
+            }
+        }
+
+        @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
@@ -646,6 +658,10 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 Photos Sélectionnées
             </button>
+            <button class="tab-btn" onclick="switchTab('selected-videos')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                Vidéos Sélectionnées
+            </button>
             <button class="tab-btn" onclick="switchTab('rejected-gallery')">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                 Photos Écartées
@@ -687,10 +703,29 @@
                         <div id="stat-date" style="color: #a5b4fc; font-weight: 500; font-size: 0.95rem;">-</div>
                     </div>
                     
-                    <button class="btn-run" id="btn-trigger" onclick="runSelector()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        Lancer le Tirage
-                    </button>
+                    <div style="display: flex; gap: 1rem; width: 100%;">
+                        <button class="btn-run" id="btn-trigger" onclick="runSelector()" style="flex: 1;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            Lancer le Tirage
+                        </button>
+                        <button class="btn" id="btn-stop" onclick="stopSelector()" style="display: none; background: linear-gradient(135deg, var(--accent-red) 0%, #dc2626 100%); color: white; border: none; flex: 1; font-weight: 700; font-family: 'Outfit', sans-serif; font-size: 1.1rem; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4); justify-content: center; align-items: center; gap: 0.75rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                            Interrompre
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card" id="bartop-live-card" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="terminal-header" style="border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem; margin-bottom: 0;">
+                        <span>EN DIRECT DU BARTOP</span>
+                        <div style="display: flex; align-items: center; gap: 0.35rem;">
+                            <span style="width: 8px; height: 8px; border-radius: 9999px; background: var(--accent-green); animation: pulse 1.5s infinite;"></span>
+                            <span style="font-size: 0.7rem; color: var(--accent-green); font-weight: bold; letter-spacing: 0.05em;">LIVE</span>
+                        </div>
+                    </div>
+                    <div id="bartop-live-content" style="display: flex; flex-direction: column; gap: 0.75rem; justify-content: center; height: 100%; min-height: 250px;">
+                        <div style="color: var(--text-muted); text-align: center; font-size: 0.9rem;">Recherche du statut de lecture...</div>
+                    </div>
                 </div>
                 
                 <div class="glass-card">
@@ -715,6 +750,19 @@
                     <input type="text" class="search-bar" id="search-selected" placeholder="Rechercher par lieu, date..." oninput="filterGallery('selected')">
                 </div>
                 <div class="photo-grid" id="grid-selected">
+                    <!-- Rempli par le JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Vidéos Sélectionnées -->
+        <div id="tab-selected-videos" class="page-content">
+            <div class="glass-card">
+                <div class="gallery-controls">
+                    <h2>Vidéos Sélectionnées (<span id="count-videos">0</span> vidéos)</h2>
+                    <input type="text" class="search-bar" id="search-videos" placeholder="Rechercher par nom, date, lieu..." oninput="filterVideos()">
+                </div>
+                <div class="photo-grid" id="grid-videos">
                     <!-- Rempli par le JS -->
                 </div>
             </div>
@@ -829,6 +877,35 @@
                         </label>
                     </div>
 
+                    <div class="form-group switch-group quality-field" style="margin-top: 0.5rem;">
+                        <div>
+                            <label for="FILTER_REJECT_DOCUMENTS">Rejeter les photos de documents (OCR)</label>
+                            <div class="description">Détecter automatiquement par OCR et exclure les photos contenant beaucoup de texte (captures d'écran, livres, journaux, etc.).</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="FILTER_REJECT_DOCUMENTS">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group-row quality-field" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 0.5rem;">
+                        <div class="form-group">
+                            <label for="FILTER_OCR_MAX_WORDS">Mots max (OCR)</label>
+                            <input type="number" class="form-input" id="FILTER_OCR_MAX_WORDS" min="1" required>
+                            <span class="description">Nombre max de mots (ex: 15).</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="FILTER_OCR_MAX_CHARS">Lettres max (OCR)</label>
+                            <input type="number" class="form-input" id="FILTER_OCR_MAX_CHARS" min="1" required>
+                            <span class="description">Nombre max de lettres (ex: 100).</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="FILTER_OCR_MIN_CONFIDENCE">Confiance min (%)</label>
+                            <input type="number" class="form-input" id="FILTER_OCR_MIN_CONFIDENCE" min="0" max="100" required>
+                            <span class="description">Seuil pour éliminer le bruit (ex: 70).</span>
+                        </div>
+                    </div>
+
                     <div class="form-group quality-field" style="margin-top: 0.5rem;">
                         <label for="FILTER_FORBIDDEN_KEYWORDS">Mots-clés exclus (séparés par des virgules)</label>
                         <input type="text" class="form-input" id="FILTER_FORBIDDEN_KEYWORDS" placeholder="screenshot, capture, whatsapp, fb_img">
@@ -848,14 +925,16 @@
     <div id="lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(8, 9, 14, 0.95); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(12px);" onclick="closeLightbox()">
         <div style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;" onclick="event.stopPropagation(); closeLightbox()">&times;</div>
         <div class="glass-card" style="width: 90%; max-width: 1000px; display: flex; flex-direction: column; gap: 1.5rem; max-height: 90vh; overflow: hidden; padding: 1.5rem;" onclick="event.stopPropagation()">
-            <div style="width: 100%; height: 60vh; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+            <div style="width: 100%; height: 60vh; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative;">
                 <img id="lightbox-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.3s ease; opacity: 0;" src="" alt="Aperçu" onload="this.style.opacity = 1">
+                <video id="lightbox-video" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;" controls autoplay></video>
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                 <h3 id="lightbox-title" style="font-size: 1.2rem; color: var(--text-main);">Titre</h3>
                 <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--panel-border); padding-bottom: 0.75rem;">
                     <span>Résolution: <strong id="lightbox-res" style="color: var(--text-main);">-</strong></span>
                     <span>Netteté: <strong id="lightbox-sharp" style="color: var(--text-main);">-</strong></span>
+                    <span id="lightbox-ocr-container" style="display: none;">Texte (OCR): <strong id="lightbox-ocr" style="color: var(--text-main);">-</strong></span>
                     <span id="lightbox-meta-extra" style="display: none;">Label: <strong id="lightbox-label" style="color: var(--text-main);">-</strong></span>
                 </div>
                 <div id="lightbox-reason-box" style="display: none;" class="card-reason">
@@ -884,11 +963,13 @@
     <script>
         let selectedPhotosData = [];
         let rejectedPhotosData = [];
+        let videosData = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             loadConfig();
             loadHistory();
             connectLogs();
+            startBartopLivePolling();
         });
 
         // Gestion de la navigation par onglets
@@ -1014,15 +1095,20 @@
                 document.getElementById('stat-rejected').innerText = data.stats.rejected;
                 document.getElementById('count-selected').innerText = data.stats.selected;
                 document.getElementById('count-rejected').innerText = data.stats.rejected;
+                if (document.getElementById('count-videos')) {
+                    document.getElementById('count-videos').innerText = (data.videos || []).length;
+                }
                 
                 const d = new Date(data.timestamp);
                 document.getElementById('stat-date').innerText = d.toLocaleString('fr-FR');
 
                 selectedPhotosData = data.selected || [];
                 rejectedPhotosData = data.rejected || [];
+                videosData = data.videos || [];
 
                 renderGallery('selected');
                 renderGallery('rejected');
+                renderVideos();
             } catch (e) {
                 console.error(e);
             }
@@ -1039,7 +1125,7 @@
             }
 
             // Enlever le message d'absence de photo
-            if (grid.firstElementChild && grid.firstElementChild.style.gridColumn === '1 / -1') {
+            if (grid.firstElementChild && !grid.firstElementChild.classList.contains('photo-card')) {
                 grid.innerHTML = '';
             }
 
@@ -1068,8 +1154,14 @@
                     if (sh >= 1000) cls = 'sharpness-high';
                     else if (sh >= 300) cls = 'sharpness-medium';
                     badgeHTML = `<span class="badge ${cls}">✨ ${sh}</span>`;
+                    if (typeof photo.ocrWords === 'number' && photo.ocrWords > 0) {
+                        badgeHTML += `<span class="badge" style="right: auto; left: 0.75rem; background: rgba(99, 102, 241, 0.25); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.4);">📝 ${photo.ocrWords}w / ${photo.ocrChars}c</span>`;
+                    }
                 } else {
                     badgeHTML = `<span class="badge sharpness-low">❌ Rejeté</span>`;
+                    if (typeof photo.ocrWords === 'number' && photo.ocrWords > 0) {
+                        badgeHTML += `<span class="badge" style="right: auto; left: 0.75rem; background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">📝 ${photo.ocrWords}w / ${photo.ocrChars}c</span>`;
+                    }
                 }
 
                 const cardContent = `
@@ -1081,7 +1173,7 @@
                         <h4 class="photo-title" title="${filename}">${filename}</h4>
                         <div class="photo-meta">
                             <span>${photo.width} x ${photo.height}</span>
-                            ${type === 'selected' ? `<span style="color:#a5b4fc; font-weight:600;">${photo.label}</span>` : ''}
+                            ${photo.label ? `<span style="color:#a5b4fc; font-weight:600;">${photo.label}</span>` : ''}
                         </div>
                         ${type === 'rejected' ? `<div class="card-reason" title="${photo.reason}">${photo.reason}</div>` : ''}
                         <div class="photo-path" title="${photo.path}">${photo.path}</div>
@@ -1110,6 +1202,7 @@
         function showPhotoModal(photo, type) {
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
+            const videoEl = document.getElementById('lightbox-video');
             const title = document.getElementById('lightbox-title');
             const res = document.getElementById('lightbox-res');
             const sharp = document.getElementById('lightbox-sharp');
@@ -1120,19 +1213,38 @@
 
             const filename = photo.path.split(/[\\/]/).pop();
             
+            // Masquer la vidéo
+            videoEl.style.display = 'none';
+            videoEl.src = '';
+            
+            img.style.display = 'block';
             img.style.opacity = '0';
             img.src = `/api/photo?path=${encodeURIComponent(photo.path)}`;
+            
             title.innerText = filename;
             res.innerText = `${photo.width} x ${photo.height}`;
             sharp.innerText = photo.sharpness || 0;
             pathInput.value = photo.path;
 
-            if (type === 'selected') {
+            const ocrContainer = document.getElementById('lightbox-ocr-container');
+            const ocrVal = document.getElementById('lightbox-ocr');
+            if (typeof photo.ocrWords === 'number' && photo.ocrWords > 0) {
+                ocrContainer.style.display = 'inline';
+                ocrVal.innerText = `${photo.ocrWords} mots / ${photo.ocrChars} lettres`;
+            } else {
+                ocrContainer.style.display = 'none';
+            }
+
+            if (photo.label) {
                 metaExtra.style.display = 'inline';
                 label.innerText = photo.label;
-                reasonBox.style.display = 'none';
             } else {
                 metaExtra.style.display = 'none';
+            }
+
+            if (type === 'selected') {
+                reasonBox.style.display = 'none';
+            } else {
                 reasonBox.style.display = 'block';
                 reasonBox.innerText = photo.reason;
             }
@@ -1140,9 +1252,46 @@
             lightbox.style.display = 'flex';
         }
 
+        function showVideoModal(video) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const videoEl = document.getElementById('lightbox-video');
+            const title = document.getElementById('lightbox-title');
+            const res = document.getElementById('lightbox-res');
+            const sharp = document.getElementById('lightbox-sharp');
+            const metaExtra = document.getElementById('lightbox-meta-extra');
+            const label = document.getElementById('lightbox-label');
+            const reasonBox = document.getElementById('lightbox-reason-box');
+            const pathInput = document.getElementById('lightbox-path');
+
+            // Masquer l'image
+            img.style.display = 'none';
+            img.src = '';
+            
+            // Afficher et lire la vidéo avec le son
+            videoEl.style.display = 'block';
+            videoEl.src = `/api/video?path=${encodeURIComponent(video.path)}`;
+            videoEl.play().catch(e => console.warn(e));
+
+            title.innerText = video.filename;
+            res.innerText = `${video.sizeMb} Mo`;
+            sharp.innerText = video.duration;
+            pathInput.value = video.path;
+
+            metaExtra.style.display = 'inline';
+            label.innerText = video.label;
+            reasonBox.style.display = 'none';
+
+            lightbox.style.display = 'flex';
+        }
+
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
             document.getElementById('lightbox-img').src = ''; // Arrêter le chargement
+            
+            const videoEl = document.getElementById('lightbox-video');
+            videoEl.pause();
+            videoEl.src = '';
         }
 
         function copyLightboxPath() {
@@ -1189,6 +1338,16 @@
                 if (data.logs) {
                     terminal.innerText = data.logs;
                     terminal.scrollTop = terminal.scrollHeight;
+                    // Détecter si une exécution est déjà active lors de la connexion
+                    const hasStart = data.logs.includes('Lancement du tirage intelligent');
+                    const hasEnd = data.logs.includes('Terminé !') || data.logs.includes('Fin du script sans modification.');
+                    if (hasStart && !hasEnd) {
+                        document.getElementById('btn-trigger').setAttribute('disabled', 'true');
+                        document.getElementById('btn-stop').style.display = 'flex';
+                        if (!window.historyPollInterval) {
+                            window.historyPollInterval = setInterval(loadHistory, 1500);
+                        }
+                    }
                 } else if (data.text) {
                     terminal.innerText += data.text;
                     terminal.scrollTop = terminal.scrollHeight;
@@ -1200,6 +1359,11 @@
                         }
                         loadHistory();
                         document.getElementById('btn-trigger').removeAttribute('disabled');
+                        
+                        const btnStop = document.getElementById('btn-stop');
+                        btnStop.style.display = 'none';
+                        btnStop.removeAttribute('disabled');
+                        btnStop.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg> Interrompre`;
                     }
                 }
             };
@@ -1209,12 +1373,128 @@
             };
         }
 
+        function renderVideos() {
+            const grid = document.getElementById('grid-videos');
+            const data = videosData;
+
+            if (data.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">Aucune vidéo sélectionnée.</div>`;
+                return;
+            }
+
+            if (grid.firstElementChild && !grid.firstElementChild.classList.contains('photo-card')) {
+                grid.innerHTML = '';
+            }
+
+            const newPaths = new Set(data.map(p => p.path));
+
+            Array.from(grid.children).forEach(child => {
+                const p = child.getAttribute('data-path');
+                if (p && !newPaths.has(p)) {
+                    grid.removeChild(child);
+                }
+            });
+
+            data.forEach((video, index) => {
+                const videoUrl = `/api/video?path=${encodeURIComponent(video.path)}`;
+                let card = Array.from(grid.children).find(child => child.getAttribute('data-path') === video.path);
+
+                const cardContent = `
+                    <div class="photo-thumb-wrapper" style="position: relative;">
+                        <video class="photo-thumb video-preview" src="${videoUrl}" muted loop playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+                        <span class="badge sharpness-high">▶️ ${video.duration}</span>
+                    </div>
+                    <div class="photo-info">
+                        <h4 class="photo-title" title="${video.filename}">${video.filename}</h4>
+                        <div class="photo-meta">
+                            <span>${video.sizeMb} Mo</span>
+                            <span style="color:#a5b4fc; font-weight:600;">${video.label}</span>
+                        </div>
+                        <div class="photo-path" title="${video.path}">${video.path}</div>
+                    </div>
+                `;
+
+                if (!card) {
+                    card = document.createElement('div');
+                    card.className = 'photo-card';
+                    card.setAttribute('data-path', video.path);
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', () => showVideoModal(video));
+                    
+                    card.addEventListener('mouseenter', () => {
+                        const videoEl = card.querySelector('video');
+                        if (videoEl) videoEl.play().catch(e => {});
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        const videoEl = card.querySelector('video');
+                        if (videoEl) {
+                            videoEl.pause();
+                            videoEl.currentTime = 0;
+                        }
+                    });
+
+                    card.innerHTML = cardContent;
+
+                    const videoEl = card.querySelector('video');
+                    if (videoEl) {
+                        videoEl.addEventListener('loadeddata', () => {
+                            videoEl.classList.add('loaded');
+                        });
+                    }
+                    
+                    const ref = grid.children[index];
+                    if (ref) {
+                        grid.insertBefore(card, ref);
+                    } else {
+                        grid.appendChild(card);
+                    }
+                }
+            });
+        }
+
+        function filterVideos() {
+            const query = document.getElementById('search-videos').value.toLowerCase();
+            const sourceData = videosData;
+            
+            const filtered = sourceData.filter(video => {
+                const filename = video.filename.toLowerCase();
+                const path = video.path.toLowerCase();
+                const label = (video.label || '').toLowerCase();
+                return filename.includes(query) || path.includes(query) || label.includes(query);
+            });
+
+            videosData = filtered;
+            renderVideos();
+            videosData = sourceData;
+            document.getElementById('count-videos').innerText = filtered.length;
+        }
+
+        // Interrompre la sélection
+        async function stopSelector() {
+            const btnStop = document.getElementById('btn-stop');
+            btnStop.setAttribute('disabled', 'true');
+            btnStop.innerText = 'Interruption...';
+            try {
+                const response = await fetch('/api/stop', { method: 'POST' });
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Impossible d\'interrompre le tirage');
+                }
+                showToast('Demande d\'interruption envoyée !');
+            } catch (e) {
+                showToast(e.message, true);
+                btnStop.removeAttribute('disabled');
+                btnStop.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg> Interrompre`;
+            }
+        }
+
         // Lancer la sélection
         async function runSelector() {
             const btn = document.getElementById('btn-trigger');
             const terminal = document.getElementById('console-terminal');
             
             btn.setAttribute('disabled', 'true');
+            document.getElementById('btn-stop').style.display = 'flex';
             terminal.innerText = 'Démarrage du processus de tirage...\n';
             
             // Réinitialiser immédiatement l'affichage local
@@ -1223,10 +1503,13 @@
             document.getElementById('stat-rejected').innerText = '0';
             document.getElementById('count-selected').innerText = '0';
             document.getElementById('count-rejected').innerText = '0';
+            document.getElementById('count-videos').innerText = '0';
             selectedPhotosData = [];
             rejectedPhotosData = [];
+            videosData = [];
             renderGallery('selected');
             renderGallery('rejected');
+            renderVideos();
 
             // Lancer le polling toutes les 1,5 secondes pendant la durée du traitement
             if (window.historyPollInterval) {
@@ -1244,12 +1527,81 @@
             } catch (e) {
                 showToast(e.message, true);
                 btn.removeAttribute('disabled');
+                document.getElementById('btn-stop').style.display = 'none';
                 if (window.historyPollInterval) {
                     clearInterval(window.historyPollInterval);
                     window.historyPollInterval = null;
                 }
                 loadHistory(); // Recharger le dernier état stable
             }
+        }
+
+        let lastLivePath = "";
+
+        async function updateBartopLive() {
+            try {
+                const response = await fetch('/api/bartop-current');
+                if (!response.ok) {
+                    showBartopLiveEmpty();
+                    return;
+                }
+                const data = await response.json();
+                if (data.error || !data.source_path) {
+                    showBartopLiveEmpty(data.error);
+                    return;
+                }
+
+                if (data.source_path === lastLivePath) {
+                    return;
+                }
+                lastLivePath = data.source_path;
+
+                const content = document.getElementById('bartop-live-content');
+                let mediaHTML = "";
+                
+                if (data.type === "photo") {
+                    const imgUrl = `/api/photo?path=${encodeURIComponent(data.source_path)}`;
+                    mediaHTML = `
+                        <div style="width: 100%; height: 180px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid var(--panel-border);">
+                            <img src="${imgUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                    `;
+                } else if (data.type && data.type.startsWith("video")) {
+                    const videoUrl = `/api/video?path=${encodeURIComponent(data.source_path)}`;
+                    mediaHTML = `
+                        <div style="width: 100%; height: 180px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; border: 1px solid var(--panel-border);">
+                            <video src="${videoUrl}" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+                            <span class="badge sharpness-high" style="top: 0.5rem; right: 0.5rem;">▶️ VIDEO</span>
+                        </div>
+                    `;
+                }
+
+                content.innerHTML = `
+                    <div style="width: 100%; display: flex; flex-direction: column; gap: 0.5rem;">
+                        ${mediaHTML}
+                        <div style="display: flex; flex-direction: column; gap: 0.15rem;">
+                            <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-main); text-align: center; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${data.filename}">${data.filename}</div>
+                            <div style="font-size: 0.8rem; color: #a5b4fc; text-align: center; font-weight: 500;">${data.label || ''}</div>
+                            ${data.info ? `<div style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">${data.info}</div>` : ''}
+                            <div style="font-size: 0.7rem; color: #5d6174; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 0.25rem;" title="${data.source_path}">${data.source_path}</div>
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                console.error("Erreur lors de la mise à jour du live Bartop:", e);
+                showBartopLiveEmpty();
+            }
+        }
+
+        function showBartopLiveEmpty(customMsg) {
+            const content = document.getElementById('bartop-live-content');
+            content.innerHTML = `<div style="color: var(--text-muted); text-align: center; font-size: 0.9rem;">${customMsg || 'Aucun élément en cours de lecture.'}</div>`;
+            lastLivePath = "";
+        }
+
+        function startBartopLivePolling() {
+            updateBartopLive();
+            setInterval(updateBartopLive, 2000);
         }
     </script>
 </body>

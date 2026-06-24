@@ -55,7 +55,7 @@
     "FILTER_MIN_HEIGHT": 600,
     "FILTER_ALLOW_PORTRAIT": true,
     "FILTER_MAX_ASPECT_RATIO": 2.2,
-    "FILTER_MIN_SHARPNESS": 100,
+    "FILTER_MIN_SHARPNESS": 300,
     "FILTER_FORBIDDEN_KEYWORDS": [
         "screenshot",
         "capture",
@@ -63,5 +63,9 @@
         "fb_img",
         "copie"
     ],
-    "FILTER_REQUIRE_EXIF": true
+    "FILTER_REJECT_DOCUMENTS": true,
+    "FILTER_REQUIRE_EXIF": false,
+    "FILTER_OCR_MAX_WORDS": 15,
+    "FILTER_OCR_MAX_CHARS": 100,
+    "FILTER_OCR_MIN_CONFIDENCE": 10
 }
