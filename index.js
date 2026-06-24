@@ -108,8 +108,8 @@ async function loadImage(photoPath) {
 
 function calculateSharpness(image) {
     try {
-        // Redimensionne à 128x128 et convertit en niveaux de gris
-        const gray = image.clone().resize({ w: 128, h: 128 }).greyscale();
+        // Redimensionne à 512x512 et convertit en niveaux de gris pour une analyse fidèle du flou
+        const gray = image.clone().resize({ w: 512, h: 512 }).greyscale();
         const { data, width, height } = gray.bitmap;
         const laps = [];
         
