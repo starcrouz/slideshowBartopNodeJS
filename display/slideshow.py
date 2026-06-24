@@ -190,6 +190,7 @@ def run_slideshow(enable_animation=True):
 
     running = True; need_load = True; last_switch = time.time()
     current_img_raw = None; zoom_factor = 1.0; alpha = 0; meta_data = {}
+    anim_type = "zoom_in"; scroll_dir = "down"
     
     show_info = False; info_timer = 0; INFO_DURATION = 15
     last_detected_code = 0; code_timer = 0
@@ -314,10 +315,28 @@ def run_slideshow(enable_animation=True):
                     try:
                         img = pygame.image.load(file_path).convert()
                         img_w, img_h = img.get_size()
-                        ratio = min(float(sw)/img_w, float(sh)/img_h)
-                        current_img_raw = pygame.transform.scale(img, (int(img_w*ratio), int(img_h*ratio)))
+                        
+                        # Détection d'image verticale
+                        is_vertical = img_h > img_w
+                        
+                        if is_vertical:
+                            # Calé sur la largeur de l'écran (sw), la hauteur déborde (défilement vertical sans bandes noires)
+                            scale_w = sw
+                            scale_h = int(img_h * (float(sw) / img_w))
+                            current_img_raw = pygame.transform.scale(img, (scale_w, scale_h))
+                            anim_type = "scroll_v"
+                            scroll_dir = random.choice(["down", "up"])
+                        else:
+                            # Comportement normal pour photos horizontales
+                            ratio = min(float(sw)/img_w, float(sh)/img_h)
+                            current_img_raw = pygame.transform.scale(img, (int(img_w*ratio), int(img_h*ratio)))
+                            anim_type = random.choice(["zoom_in", "zoom_out", "pan_left", "pan_right", "pan_up", "pan_down"])
+                            
                         meta_data = get_sidecar_data(file_path)
-                        zoom_factor = 1.0; alpha = 0; need_load = False; last_switch = now
+                        zoom_factor = 1.15 if anim_type == "zoom_out" else 1.0
+                        alpha = 0
+                        need_load = False
+                        last_switch = now
                     except: current_idx_ptr = (current_idx_ptr + 1) % len(indices)
                 else:
                     screen.fill((0, 0, 0))
@@ -356,12 +375,78 @@ def run_slideshow(enable_animation=True):
             # --- 5. AFFICHAGE ---
             if internal_mode == MODE_PHOTOS and current_img_raw and not need_load:
                 screen.fill((0, 0, 0))
-                if enable_animation and not show_info: zoom_factor += ZOOM_SPEED
-                z_w, z_h = int(current_img_raw.get_width()*zoom_factor), int(current_img_raw.get_height()*zoom_factor)
-                img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                
+                # Progression du temps d'affichage (de 0.0 à 1.0)
+                progress = min(1.0, (now - last_switch) / display_time)
+                
+                if enable_animation and not show_info:
+                    if anim_type == "scroll_v":
+                        scale_h = current_img_raw.get_height()
+                        max_offset = sh - scale_h # Négatif car scale_h > sh
+                        if scroll_dir == "down":
+                            y_offset = int(progress * max_offset)
+                        else:
+                            y_offset = int((1.0 - progress) * max_offset)
+                        img_to_draw = current_img_raw
+                        x_offset = 0
+                    elif anim_type == "zoom_in":
+                        zoom_factor = 1.0 + progress * 0.12 # Zoom de 1.0 à 1.12
+                        z_w = int(current_img_raw.get_width() * zoom_factor)
+                        z_h = int(current_img_raw.get_height() * zoom_factor)
+                        img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                        x_offset = (sw - z_w) // 2
+                        y_offset = (sh - z_h) // 2
+                    elif anim_type == "zoom_out":
+                        zoom_factor = 1.12 - progress * 0.12 # Zoom de 1.12 à 1.0
+                        z_w = int(current_img_raw.get_width() * zoom_factor)
+                        z_h = int(current_img_raw.get_height() * zoom_factor)
+                        img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                        x_offset = (sw - z_w) // 2
+                        y_offset = (sh - z_h) // 2
+                    elif anim_type == "pan_left":
+                        zoom_factor = 1.15
+                        z_w = int(current_img_raw.get_width() * zoom_factor)
+                        z_h = int(current_img_raw.get_height() * zoom_factor)
+                        img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                        max_x_offset = sw - z_w
+                        max_y_offset = sh - z_h
+                        x_offset = int((1.0 - progress) * max_x_offset) if max_x_offset < 0 else max_x_offset // 2
+                        y_offset = max_y_offset // 2
+                    elif anim_type == "pan_right":
+                        zoom_factor = 1.15
+                        z_w = int(current_img_raw.get_width() * zoom_factor)
+                        z_h = int(current_img_raw.get_height() * zoom_factor)
+                        img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                        max_x_offset = sw - z_w
+                        max_y_offset = sh - z_h
+                        x_offset = int(progress * max_x_offset) if max_x_offset < 0 else max_x_offset // 2
+                        y_offset = max_y_offset // 2
+                    elif anim_type == "pan_up":
+                        zoom_factor = 1.15
+                        z_w = int(current_img_raw.get_width() * zoom_factor)
+                        z_h = int(current_img_raw.get_height() * zoom_factor)
+                        img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                        max_x_offset = sw - z_w
+                        max_y_offset = sh - z_h
+                        x_offset = max_x_offset // 2
+                        y_offset = int((1.0 - progress) * max_y_offset) if max_y_offset < 0 else max_y_offset // 2
+                    elif anim_type == "pan_down":
+                        zoom_factor = 1.15
+                        z_w = int(current_img_raw.get_width() * zoom_factor)
+                        z_h = int(current_img_raw.get_height() * zoom_factor)
+                        img_to_draw = pygame.transform.scale(current_img_raw, (z_w, z_h))
+                        max_x_offset = sw - z_w
+                        max_y_offset = sh - z_h
+                        x_offset = max_x_offset // 2
+                        y_offset = int(progress * max_y_offset) if max_y_offset < 0 else max_y_offset // 2
+                else:
+                    img_to_draw = current_img_raw
+                    x_offset = (sw - current_img_raw.get_width()) // 2
+                    y_offset = (sh - current_img_raw.get_height()) // 2
+
                 if alpha < 255: alpha += FADE_SPEED
                 img_to_draw.set_alpha(min(alpha, 255))
-                screen.blit(img_to_draw, ((sw-z_w)//2, (sh-z_h)//2))
+                screen.blit(img_to_draw, (x_offset, y_offset))
                 
                 if show_info:
                     ov_w, ov_h = sw * 0.7, sh * 0.12

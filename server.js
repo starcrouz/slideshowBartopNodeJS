@@ -3,9 +3,58 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const convert = require('heic-convert');
+const { Jimp } = require('jimp');
+const exifr = require('exifr');
+const crypto = require('crypto');
+const { getPhotoMetadata } = require('./metadata');
+
+// Augmenter la limite mémoire pour les grosses photos HEIC/iPhone 15
+Jimp.maxMemoryUsageInMB = 2048;
 
 const app = express();
 const PORT = 3000;
+
+// Dossier cache pour les aperçus d'images
+const cacheDir = path.join(__dirname, '.cache');
+if (!fs.existsSync(cacheDir)) {
+    fs.mkdirSync(cacheDir, { recursive: true });
+}
+
+function getCachePath(filePath) {
+    try {
+        const stats = fs.statSync(filePath);
+        const mtime = stats.mtimeMs;
+        const hash = crypto.createHash('md5').update(`${filePath}_${mtime}`).digest('hex');
+        return path.join(cacheDir, `${hash}.jpg`);
+    } catch (e) {
+        const hash = crypto.createHash('md5').update(filePath).digest('hex');
+        return path.join(cacheDir, `${hash}.jpg`);
+    }
+}
+
+const lockFilePath = path.join(__dirname, 'selection.lock');
+
+function isSelectionRunning() {
+    if (fs.existsSync(lockFilePath)) {
+        try {
+            const pidStr = fs.readFileSync(lockFilePath, 'utf8').trim();
+            const pid = parseInt(pidStr, 10);
+            if (!isNaN(pid)) {
+                try {
+                    process.kill(pid, 0);
+                    return true;
+                } catch (e) {
+                    // Lock obsolète
+                }
+            }
+        } catch (e) {
+            // Ignorer
+        }
+    }
+    return false;
+}
+
+
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -66,8 +115,8 @@ app.get('/api/history', (req, res) => {
 
 // API: Lancer un tirage
 app.post('/api/run', (req, res) => {
-    if (activeProcess) {
-        return res.status(400).json({ error: 'Un tirage est déjà en cours de traitement' });
+    if (activeProcess || isSelectionRunning()) {
+        return res.status(400).json({ error: 'Un tirage est déjà en cours de traitement (via le serveur ou la tâche planifiée)' });
     }
 
     logBuffer = [];
@@ -120,28 +169,56 @@ function sendLogsToClients(text) {
     });
 }
 
-// API: Servir les photos (avec conversion HEIC à la volée pour le navigateur)
+// API: Servir les photos (avec conversion HEIC à la volée et cache local optimisé / auto-orienté)
 app.get('/api/photo', async (req, res) => {
     const photoPath = req.query.path;
     if (!photoPath) return res.status(400).send('Chemin manquant');
     if (!fs.existsSync(photoPath)) return res.status(404).send('Fichier introuvable');
 
-    const isHeic = photoPath.toLowerCase().endsWith('.heic');
-    if (isHeic) {
-        try {
+    try {
+        const cachePath = getCachePath(photoPath);
+        if (fs.existsSync(cachePath)) {
+            res.contentType('image/jpeg');
+            return res.send(fs.readFileSync(cachePath));
+        }
+
+        // Sinon, on génère le preview
+        const isHeic = photoPath.toLowerCase().endsWith('.heic');
+        let imageBuffer;
+        if (isHeic) {
             const inputBuffer = fs.readFileSync(photoPath);
-            const outputBuffer = await convert({
+            imageBuffer = await convert({
                 buffer: inputBuffer,
                 format: 'JPEG',
-                quality: 0.6
+                quality: 1
             });
-            res.contentType('image/jpeg');
-            res.send(outputBuffer);
-        } catch (e) {
-            res.status(500).send('Erreur de conversion HEIC : ' + e.message);
+        } else {
+            imageBuffer = fs.readFileSync(photoPath);
         }
-    } else {
-        res.sendFile(photoPath);
+
+        const image = await Jimp.fromBuffer(imageBuffer, {
+            'image/jpeg': {
+                maxMemoryUsageInMB: 2048
+            }
+        });
+
+
+
+        // Redimensionner pour le Web (max 1000px pour un affichage rapide et de bonne qualité)
+        image.scaleToFit({ w: 1000, h: 1000 });
+
+        // Écrire dans le cache
+        const jpegBuffer = await image.getBuffer('image/jpeg', { quality: 80 });
+        fs.writeFileSync(cachePath, jpegBuffer);
+
+        res.contentType('image/jpeg');
+        res.send(jpegBuffer);
+    } catch (e) {
+        console.error('Erreur lors de la génération de l\'aperçu :', e);
+        if (!photoPath.toLowerCase().endsWith('.heic')) {
+            return res.sendFile(photoPath);
+        }
+        res.status(500).send('Erreur lors de la génération de l\'aperçu : ' + e.message);
     }
 });
 

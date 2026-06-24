@@ -65,9 +65,21 @@ async function getPhotoMetadata(photoPath, config) {
     let fullDateStr = "";
     let gpsStatus = "Aucun";
     let coords = null;
+    let orientation = null;
+    let rotationDeg = 0;
+    let hasExif = false;
+    let result = null;
+    const isHeic = photoPath.toLowerCase().endsWith('.heic');
 
     try {
-        const result = await exifr.parse(photoPath, {
+        if (!isHeic) {
+            const rot = await exifr.rotation(photoPath).catch(() => null);
+            if (rot) {
+                rotationDeg = rot.deg || 0;
+            }
+        }
+
+        result = await exifr.parse(photoPath, {
             gps: true,
             xmp: true,
             tiff: true,
@@ -76,7 +88,13 @@ async function getPhotoMetadata(photoPath, config) {
         });
 
         if (result) {
-            // 1. Extract Date
+            hasExif = true;
+            // 1. Extract Orientation
+            if (!isHeic) {
+                orientation = result.Orientation || null;
+            }
+
+            // 2. Extract Date
             if (result.DateTimeOriginal) {
                 const date = new Date(result.DateTimeOriginal);
                 if (!isNaN(date.getTime())) {
@@ -90,7 +108,7 @@ async function getPhotoMetadata(photoPath, config) {
             }
             // ...
 
-            // 2. Extract GPS
+            // 3. Extract GPS
             if (typeof result.latitude === 'number' && typeof result.longitude === 'number') {
                 coords = {
                     lat: result.latitude,
@@ -112,6 +130,13 @@ async function getPhotoMetadata(photoPath, config) {
         dateStr = extractDateFromPath(photoPath, config);
     }
 
+    let width = null;
+    let height = null;
+    if (result) {
+        width = result.ImageWidth || result.PixelXDimension || result.width || null;
+        height = result.ImageHeight || result.PixelYDimension || result.height || null;
+    }
+
     const folderLabel = getBestFolderLabel(photoPath, config);
 
     return {
@@ -120,6 +145,11 @@ async function getPhotoMetadata(photoPath, config) {
         coords,
         folderLabel,
         gpsStatus,
+        orientation,
+        rotationDeg,
+        hasExif,
+        width,
+        height,
         capitalize,
         rawPath: photoPath
     };

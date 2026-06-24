@@ -5,14 +5,86 @@ const { globSync } = require('glob');
 const convert = require('heic-convert');
 const { execSync } = require('child_process');
 const net = require('net');
+const crypto = require('crypto');
 
 const config = require('./config.json');
 
 // Augmenter la limite mémoire pour les grosses photos HEIC/iPhone 15
-Jimp.maxMemoryUsageInMB = 1024;
+Jimp.maxMemoryUsageInMB = 2048;
+
+const lockFilePath = path.join(__dirname, 'selection.lock');
+
+function acquireLock() {
+    if (fs.existsSync(lockFilePath)) {
+        try {
+            const pidStr = fs.readFileSync(lockFilePath, 'utf8').trim();
+            const pid = parseInt(pidStr, 10);
+            if (!isNaN(pid)) {
+                try {
+                    process.kill(pid, 0);
+                    console.error(`[ERREUR] Un autre tirage est déjà en cours (PID: ${pid}).`);
+                    return false;
+                } catch (e) {
+                    console.log(`[INFO] Un verrou obsolète (PID: ${pid}) a été détecté et sera ignoré.`);
+                }
+            }
+        } catch (e) {
+            console.log(`[INFO] Impossible de lire le fichier de verrouillage, écriture par-dessus.`);
+        }
+    }
+    
+    try {
+        fs.writeFileSync(lockFilePath, process.pid.toString(), 'utf8');
+        return true;
+    } catch (e) {
+        console.error(`[ERREUR] Impossible de créer le fichier de verrouillage : ${e.message}`);
+        return false;
+    }
+}
+
+function releaseLock() {
+    try {
+        if (fs.existsSync(lockFilePath)) {
+            const pidStr = fs.readFileSync(lockFilePath, 'utf8').trim();
+            const pid = parseInt(pidStr, 10);
+            if (pid === process.pid) {
+                fs.unlinkSync(lockFilePath);
+            }
+        }
+    } catch (e) {
+        console.error(`[AVERTISSEMENT] Erreur lors de la suppression du fichier de verrouillage : ${e.message}`);
+    }
+}
+
+// Nettoyage automatique à la sortie du processus
+process.on('exit', () => {
+    releaseLock();
+});
+process.on('SIGINT', () => {
+    process.exit(2);
+});
+process.on('SIGTERM', () => {
+    process.exit(2);
+});
 
 const { getBestLocation } = require('./geo');
 const { getPhotoMetadata, getBestFolderLabel, capitalize, extractDateFromPath } = require('./metadata');
+
+function getCachePath(filePath) {
+    const cacheDir = path.join(__dirname, '.cache');
+    if (!fs.existsSync(cacheDir)) {
+        fs.mkdirSync(cacheDir, { recursive: true });
+    }
+    try {
+        const stats = fs.statSync(filePath);
+        const mtime = stats.mtimeMs;
+        const hash = crypto.createHash('md5').update(`${filePath}_${mtime}`).digest('hex');
+        return path.join(cacheDir, `${hash}.jpg`);
+    } catch (e) {
+        const hash = crypto.createHash('md5').update(filePath).digest('hex');
+        return path.join(cacheDir, `${hash}.jpg`);
+    }
+}
 
 async function loadImage(photoPath) {
     const isHeic = photoPath.toLowerCase().endsWith('.heic');
@@ -25,9 +97,13 @@ async function loadImage(photoPath) {
             quality: 1
         });
     } else {
-        imageBuffer = photoPath;
+        imageBuffer = fs.readFileSync(photoPath);
     }
-    return await Jimp.read(imageBuffer);
+    return await Jimp.fromBuffer(imageBuffer, {
+        'image/jpeg': {
+            maxMemoryUsageInMB: 2048
+        }
+    });
 }
 
 function calculateSharpness(image) {
@@ -60,11 +136,74 @@ function calculateSharpness(image) {
     }
 }
 
-function validateImageQuality(image, filePath) {
+function validateMetadata(filePath, meta) {
+    // 0. Mots-clés exclus (exclut les captures d'écran, etc.)
+    if (config.FILTER_FORBIDDEN_KEYWORDS && config.FILTER_FORBIDDEN_KEYWORDS.length > 0) {
+        const pathLower = filePath.toLowerCase();
+        for (const kw of config.FILTER_FORBIDDEN_KEYWORDS) {
+            if (pathLower.includes(kw.toLowerCase())) {
+                return { valid: false, reason: `Chemin/Nom de fichier contient le mot-clé exclu '${kw}'` };
+            }
+        }
+    }
+
+    // 0b. Exclure les images sans EXIF si configuré
+    if (config.FILTER_REQUIRE_EXIF && meta && !meta.hasExif) {
+        return { valid: false, reason: "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)" };
+    }
+
+    // 1. Résolution et orientation si les dimensions EXIF sont disponibles
+    if (config.ENABLE_QUALITY_FILTERS && meta && typeof meta.width === 'number' && typeof meta.height === 'number') {
+        const width = meta.width;
+        const height = meta.height;
+
+        // Si rotation de 90 ou 270 degrés, les dimensions affichées sont inversées
+        const isRotated = meta.rotationDeg === 90 || meta.rotationDeg === 270;
+        const displayWidth = isRotated ? height : width;
+        const displayHeight = isRotated ? width : height;
+
+        // Résolution minimale
+        if (displayWidth < config.FILTER_MIN_WIDTH || displayHeight < config.FILTER_MIN_HEIGHT) {
+            return { valid: false, reason: `Résolution insuffisante (${displayWidth}x${displayHeight} < ${config.FILTER_MIN_WIDTH}x${config.FILTER_MIN_HEIGHT})` };
+        }
+
+        // Format portrait
+        const isPortrait = displayHeight > displayWidth;
+        if (isPortrait && !config.FILTER_ALLOW_PORTRAIT) {
+            return { valid: false, reason: "Format portrait exclu par la configuration" };
+        }
+
+        // Ratio d'aspect maximum
+        const ratio = displayWidth / displayHeight;
+        const maxRatio = config.FILTER_MAX_ASPECT_RATIO;
+        if (ratio > maxRatio || (1 / ratio) > maxRatio) {
+            return { valid: false, reason: `Ratio d'aspect trop extrême (${ratio.toFixed(2)} > ${maxRatio})` };
+        }
+    }
+
+    return { valid: true };
+}
+
+function validateImageQuality(image, filePath, meta) {
     if (!config.ENABLE_QUALITY_FILTERS) return { valid: true };
 
     const width = image.bitmap.width;
     const height = image.bitmap.height;
+
+    // 0. Mots-clés exclus (exclut les captures d'écran, etc.)
+    if (config.FILTER_FORBIDDEN_KEYWORDS && config.FILTER_FORBIDDEN_KEYWORDS.length > 0) {
+        const pathLower = filePath.toLowerCase();
+        for (const kw of config.FILTER_FORBIDDEN_KEYWORDS) {
+            if (pathLower.includes(kw.toLowerCase())) {
+                return { valid: false, reason: `Chemin/Nom de fichier contient le mot-clé exclu '${kw}'` };
+            }
+        }
+    }
+
+    // 0b. Exclure les images sans EXIF si configuré
+    if (config.FILTER_REQUIRE_EXIF && meta && !meta.hasExif) {
+        return { valid: false, reason: "Aucune métadonnée EXIF trouvée (capture d'écran ou téléchargement probable)" };
+    }
 
     // 1. Résolution minimale
     if (width < config.FILTER_MIN_WIDTH || height < config.FILTER_MIN_HEIGHT) {
@@ -153,13 +292,13 @@ function getVideoDuration(filePath) {
     }
 }
 
-async function processImage(photoPath, image, id, total, checkResult) {
-    const meta = await getPhotoMetadata(photoPath, config);
+async function processImage(photoPath, image, id, total, checkResult, meta) {
+    const finalMeta = meta || await getPhotoMetadata(photoPath, config);
     let locationStr = "";
-    let gpsStatus = meta.gpsStatus;
+    let gpsStatus = finalMeta.gpsStatus;
 
-    if (meta.coords) {
-        const geo = getBestLocation(meta.coords.lat, meta.coords.lon, config);
+    if (finalMeta.coords) {
+        const geo = getBestLocation(finalMeta.coords.lat, finalMeta.coords.lon, config);
         if (geo) {
             locationStr = geo.label;
             gpsStatus = geo.status;
@@ -167,16 +306,16 @@ async function processImage(photoPath, image, id, total, checkResult) {
     }
 
     if (!locationStr) {
-        locationStr = meta.folderLabel;
+        locationStr = finalMeta.folderLabel;
     }
 
     let finalLabel = "";
-    if (locationStr && meta.dateStr) {
-        finalLabel = `${capitalize(locationStr)} - ${meta.dateStr}`;
+    if (locationStr && finalMeta.dateStr) {
+        finalLabel = `${capitalize(locationStr)} - ${finalMeta.dateStr}`;
     } else if (locationStr) {
         finalLabel = capitalize(locationStr);
-    } else if (meta.dateStr) {
-        finalLabel = meta.dateStr;
+    } else if (finalMeta.dateStr) {
+        finalLabel = finalMeta.dateStr;
     }
 
     const sharpnessInfo = checkResult && checkResult.sharpness ? ` [Netteté: ${Math.round(checkResult.sharpness)}]` : "";
@@ -188,9 +327,18 @@ async function processImage(photoPath, image, id, total, checkResult) {
         image.scaleToFit({ w: config.SCREEN_W, h: config.SCREEN_H });
         await image.write(path.join(config.DEST_DIR, `${id}.jpg`));
 
+        // Écrire également dans le cache local du PC pour un affichage Web instantané
+        try {
+            const cachePath = getCachePath(photoPath);
+            const cacheImage = image.clone().scaleToFit({ w: 1000, h: 1000 });
+            await cacheImage.write(cachePath);
+        } catch (cacheErr) {
+            // Ignorer les erreurs d'écriture de cache
+        }
+
         const sidecarContent = [
             finalLabel,
-            meta.fullDateStr || meta.dateStr,
+            finalMeta.fullDateStr || finalMeta.dateStr,
             photoPath // On utilise le chemin absolu du PC pour le diagnostic
         ].join('\n');
 
@@ -284,6 +432,10 @@ async function processVideos(allVideoFiles) {
 }
 
 async function start() {
+    if (!acquireLock()) {
+        console.log("Fin du script car un autre tirage est actif.");
+        return;
+    }
     console.log("--- Lancement du tirage intelligent ---");
 
     const host = getHostFromPath(config.DEST_DIR);
@@ -351,17 +503,53 @@ async function start() {
 
             const photoPath = shuffled[i];
             try {
+                // 1. Lire les métadonnées en premier pour optimiser et récupérer l'orientation
+                const meta = await getPhotoMetadata(photoPath, config);
+
+                // Validation préliminaire rapide via les métadonnées (évite de charger et décoder l'image inutilement)
+                const preCheck = validateMetadata(photoPath, meta);
+                if (!preCheck.valid) {
+                    console.log(`  [Rejeté (Pre-EXIF)] ${path.basename(photoPath)} : ${preCheck.reason}`);
+                    runReport.rejected.push({
+                        path: photoPath,
+                        reason: preCheck.reason,
+                        sharpness: 0,
+                        width: meta ? (meta.width || 0) : 0,
+                        height: meta ? (meta.height || 0) : 0,
+                        rotationDeg: meta ? (meta.rotationDeg || 0) : 0
+                    });
+                    runReport.stats.rejected++;
+                    writeReport();
+                    continue;
+                }
+
+                // 2. Charger l'image (l'auto-orientation est gérée en natif par Jimp et heic-convert)
                 const image = await loadImage(photoPath);
-                const check = validateImageQuality(image, photoPath);
+                
+                // 3. Valider la qualité
+                const check = validateImageQuality(image, photoPath, meta);
                 
                 if (!check.valid) {
                     console.log(`  [Rejeté] ${path.basename(photoPath)} : ${check.reason}`);
+                    
+                    // Écrire également dans le cache local du PC pour un affichage Web instantané
+                    try {
+                        const cachePath = getCachePath(photoPath);
+                        if (!fs.existsSync(cachePath)) {
+                            const cacheImage = image.clone().scaleToFit({ w: 800, h: 800 });
+                            await cacheImage.write(cachePath);
+                        }
+                    } catch (cacheErr) {
+                        // Ignorer les erreurs d'écriture de cache
+                    }
+
                     runReport.rejected.push({
                         path: photoPath,
                         reason: check.reason,
                         sharpness: Math.round(check.sharpness || 0),
                         width: image.bitmap.width,
-                        height: image.bitmap.height
+                        height: image.bitmap.height,
+                        rotationDeg: meta ? (meta.rotationDeg || 0) : 0
                     });
                     runReport.stats.rejected++;
                     writeReport();
@@ -370,14 +558,15 @@ async function start() {
 
                 count++;
                 const id = count.toString().padStart(3, '0');
-                const label = await processImage(photoPath, image, id, config.NB_IMAGES, check);
+                const label = await processImage(photoPath, image, id, config.NB_IMAGES, check, meta);
                 
                 runReport.selected.push({
                     path: photoPath,
                     label: label || "Sans label",
                     sharpness: Math.round(check.sharpness),
                     width: image.bitmap.width,
-                    height: image.bitmap.height
+                    height: image.bitmap.height,
+                    rotationDeg: meta ? (meta.rotationDeg || 0) : 0
                 });
                 runReport.stats.selected++;
                 writeReport();
@@ -388,7 +577,8 @@ async function start() {
                     reason: `Erreur chargement : ${err.message}`,
                     sharpness: 0,
                     width: 0,
-                    height: 0
+                    height: 0,
+                    rotationDeg: 0
                 });
                 runReport.stats.rejected++;
                 writeReport();
@@ -415,6 +605,26 @@ async function start() {
 
         // Écriture finale
         writeReport();
+
+        // Nettoyage final du cache d'aperçus (supprime les vignettes des anciennes sessions)
+        try {
+            const cacheDir = path.join(__dirname, '.cache');
+            if (fs.existsSync(cacheDir)) {
+                const validCacheFiles = new Set();
+                const allPhotosReport = [...runReport.selected, ...runReport.rejected];
+                for (const photo of allPhotosReport) {
+                    validCacheFiles.add(path.basename(getCachePath(photo.path)));
+                }
+                const files = fs.readdirSync(cacheDir);
+                for (const file of files) {
+                    if (file.endsWith('.jpg') && !validCacheFiles.has(file)) {
+                        fs.unlinkSync(path.join(cacheDir, file));
+                    }
+                }
+            }
+        } catch (cacheErr) {
+            console.warn(`[Avertissement] Impossible de nettoyer le cache : ${cacheErr.message}`);
+        }
     }
 
     const videoPattern = config.SOURCE_DIR.replace(/\\/g, '/') + '/**/*.{mp4,MP4,mkv,MKV,avi,AVI,mov,MOV}';

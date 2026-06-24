@@ -346,11 +346,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: opacity 0.5s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
         }
 
-        .photo-card:hover .photo-thumb {
-            scale: 1.05;
+        .photo-thumb.loaded {
+            opacity: 1;
+        }
+
+        .photo-card:hover .photo-thumb.loaded {
+            transform: scale(1.05);
         }
 
         .photo-info {
@@ -812,6 +817,23 @@
                             <span class="description">Seuil du flou (Laplacien). Défaut ~100.</span>
                         </div>
                     </div>
+                    
+                    <div class="form-group switch-group quality-field" style="margin-top: 0.5rem;">
+                        <div>
+                            <label for="FILTER_REQUIRE_EXIF">Exclure les images sans EXIF</label>
+                            <div class="description">Rejette automatiquement les captures d'écran et téléchargements d'images sans métadonnées.</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="FILTER_REQUIRE_EXIF">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group quality-field" style="margin-top: 0.5rem;">
+                        <label for="FILTER_FORBIDDEN_KEYWORDS">Mots-clés exclus (séparés par des virgules)</label>
+                        <input type="text" class="form-input" id="FILTER_FORBIDDEN_KEYWORDS" placeholder="screenshot, capture, whatsapp, fb_img">
+                        <span class="description">Exclut les photos dont le nom ou le dossier contient l'un de ces mots-clés.</span>
+                    </div>
                 </div>
 
                 <div class="form-actions">
@@ -821,6 +843,37 @@
             </form>
         </div>
     </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(8, 9, 14, 0.95); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(12px);" onclick="closeLightbox()">
+        <div style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;" onclick="event.stopPropagation(); closeLightbox()">&times;</div>
+        <div class="glass-card" style="width: 90%; max-width: 1000px; display: flex; flex-direction: column; gap: 1.5rem; max-height: 90vh; overflow: hidden; padding: 1.5rem;" onclick="event.stopPropagation()">
+            <div style="width: 100%; height: 60vh; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+                <img id="lightbox-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.3s ease; opacity: 0;" src="" alt="Aperçu" onload="this.style.opacity = 1">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <h3 id="lightbox-title" style="font-size: 1.2rem; color: var(--text-main);">Titre</h3>
+                <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--panel-border); padding-bottom: 0.75rem;">
+                    <span>Résolution: <strong id="lightbox-res" style="color: var(--text-main);">-</strong></span>
+                    <span>Netteté: <strong id="lightbox-sharp" style="color: var(--text-main);">-</strong></span>
+                    <span id="lightbox-meta-extra" style="display: none;">Label: <strong id="lightbox-label" style="color: var(--text-main);">-</strong></span>
+                </div>
+                <div id="lightbox-reason-box" style="display: none;" class="card-reason">
+                    Raison du rejet
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.25rem;">
+                    <span style="font-size: 0.75rem; font-weight: 600; color: #5d6174;">CHEMIN D'ACCÈS COMPLET :</span>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="lightbox-path" readonly style="background: rgba(0,0,0,0.3); border: 1px solid var(--panel-border); border-radius: 0.35rem; padding: 0.5rem; color: var(--text-main); font-family: 'Fira Code', monospace; font-size: 0.75rem; flex: 1; outline: none;" onclick="this.select()">
+                        <button type="button" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem;" onclick="copyLightboxPath()">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copier
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast">
@@ -895,6 +948,8 @@
                     if (input) {
                         if (input.type === 'checkbox') {
                             input.checked = config[key];
+                        } else if (key === 'FILTER_FORBIDDEN_KEYWORDS') {
+                            input.value = Array.isArray(config[key]) ? config[key].join(', ') : '';
                         } else {
                             input.value = config[key];
                         }
@@ -916,6 +971,8 @@
                 if (input.id) {
                     if (input.type === 'checkbox') {
                         config[input.id] = input.checked;
+                    } else if (input.id === 'FILTER_FORBIDDEN_KEYWORDS') {
+                        config[input.id] = input.value.split(',').map(s => s.trim()).filter(s => s.length > 0);
                     } else if (input.type === 'number') {
                         config[input.id] = Number(input.value);
                     } else {
@@ -975,18 +1032,35 @@
         function renderGallery(type) {
             const grid = document.getElementById(`grid-${type}`);
             const data = type === 'selected' ? selectedPhotosData : rejectedPhotosData;
-            grid.innerHTML = '';
 
             if (data.length === 0) {
                 grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">Aucune photo à afficher.</div>`;
                 return;
             }
 
-            data.forEach(photo => {
-                const card = document.createElement('div');
-                card.className = 'photo-card';
+            // Enlever le message d'absence de photo
+            if (grid.firstElementChild && grid.firstElementChild.style.gridColumn === '1 / -1') {
+                grid.innerHTML = '';
+            }
+
+            const newPaths = new Set(data.map(p => p.path));
+
+            // 1. Retirer les cartes obsolètes
+            Array.from(grid.children).forEach(child => {
+                const p = child.getAttribute('data-path');
+                if (p && !newPaths.has(p)) {
+                    grid.removeChild(child);
+                }
+            });
+
+            // 2. Ajouter ou réordonner les cartes
+            data.forEach((photo, index) => {
+                const filename = photo.path.split(/[\\/]/).pop();
+                const imgUrl = `/api/photo?path=${encodeURIComponent(photo.path)}`;
                 
-                // Détermination du badge de netteté/rejet
+                // Chercher la carte par attribut data-path
+                let card = Array.from(grid.children).find(child => child.getAttribute('data-path') === photo.path);
+
                 let badgeHTML = '';
                 if (type === 'selected') {
                     const sh = photo.sharpness;
@@ -995,17 +1069,12 @@
                     else if (sh >= 300) cls = 'sharpness-medium';
                     badgeHTML = `<span class="badge ${cls}">✨ ${sh}</span>`;
                 } else {
-                    const sh = photo.sharpness || 0;
                     badgeHTML = `<span class="badge sharpness-low">❌ Rejeté</span>`;
                 }
 
-                // URL de l'API de preview de photo locale
-                const imgUrl = `/api/photo?path=${encodeURIComponent(photo.path)}`;
-                const filename = photo.path.split(/[\\/]/).pop();
-
-                card.innerHTML = `
+                const cardContent = `
                     <div class="photo-thumb-wrapper">
-                        <img class="photo-thumb" src="${imgUrl}" alt="${filename}" loading="lazy">
+                        <img class="photo-thumb" src="${imgUrl}" alt="${filename}" loading="lazy" onload="this.classList.add('loaded')">
                         ${badgeHTML}
                     </div>
                     <div class="photo-info">
@@ -1018,8 +1087,70 @@
                         <div class="photo-path" title="${photo.path}">${photo.path}</div>
                     </div>
                 `;
-                grid.appendChild(card);
+
+                if (!card) {
+                    card = document.createElement('div');
+                    card.className = 'photo-card';
+                    card.setAttribute('data-path', photo.path);
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', () => showPhotoModal(photo, type));
+                    card.innerHTML = cardContent;
+                    
+                    const ref = grid.children[index];
+                    if (ref) {
+                        grid.insertBefore(card, ref);
+                    } else {
+                        grid.appendChild(card);
+                    }
+                }
             });
+        }
+
+        // Fonctions pour le Modal de prévisualisation (Lightbox)
+        function showPhotoModal(photo, type) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const title = document.getElementById('lightbox-title');
+            const res = document.getElementById('lightbox-res');
+            const sharp = document.getElementById('lightbox-sharp');
+            const metaExtra = document.getElementById('lightbox-meta-extra');
+            const label = document.getElementById('lightbox-label');
+            const reasonBox = document.getElementById('lightbox-reason-box');
+            const pathInput = document.getElementById('lightbox-path');
+
+            const filename = photo.path.split(/[\\/]/).pop();
+            
+            img.style.opacity = '0';
+            img.src = `/api/photo?path=${encodeURIComponent(photo.path)}`;
+            title.innerText = filename;
+            res.innerText = `${photo.width} x ${photo.height}`;
+            sharp.innerText = photo.sharpness || 0;
+            pathInput.value = photo.path;
+
+            if (type === 'selected') {
+                metaExtra.style.display = 'inline';
+                label.innerText = photo.label;
+                reasonBox.style.display = 'none';
+            } else {
+                metaExtra.style.display = 'none';
+                reasonBox.style.display = 'block';
+                reasonBox.innerText = photo.reason;
+            }
+
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.getElementById('lightbox-img').src = ''; // Arrêter le chargement
+        }
+
+        function copyLightboxPath() {
+            const pathInput = document.getElementById('lightbox-path');
+            pathInput.select();
+            navigator.clipboard.writeText(pathInput.value)
+                .then(() => showToast('Chemin d\'accès copié !'))
+                .catch(() => showToast('Erreur lors de la copie', true));
         }
 
         // Filtre de recherche dans la galerie

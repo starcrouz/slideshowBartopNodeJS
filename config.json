@@ -55,5 +55,13 @@
     "FILTER_MIN_HEIGHT": 600,
     "FILTER_ALLOW_PORTRAIT": true,
     "FILTER_MAX_ASPECT_RATIO": 2.2,
-    "FILTER_MIN_SHARPNESS": 100
+    "FILTER_MIN_SHARPNESS": 100,
+    "FILTER_FORBIDDEN_KEYWORDS": [
+        "screenshot",
+        "capture",
+        "whatsapp",
+        "fb_img",
+        "copie"
+    ],
+    "FILTER_REQUIRE_EXIF": true
 }
