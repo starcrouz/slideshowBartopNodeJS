@@ -3,8 +3,8 @@
   "stats": {
     "totalPhotos": 296690,
     "totalVideos": 13278,
-    "selected": 23,
-    "rejected": 41
+    "selected": 42,
+    "rejected": 73
   },
   "selected": [
     {
@@ -236,6 +236,196 @@
       "rotationDeg": 0,
       "ocrWords": 9,
       "ocrChars": 23
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-10-12 (iphone steph)\\IMG_7288.heic",
+      "label": "Paris - Janvier 2020",
+      "sharpness": 1436,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 9
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-08-14 20.00.28.jpg",
+      "label": "Ajaccio - Août 2015",
+      "sharpness": 351,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_2160.JPG",
+      "label": "Paris - Décembre 2014",
+      "sharpness": 326,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8631.JPG",
+      "label": "Iphone 14 So - Juillet 2025",
+      "sharpness": 1468,
+      "width": 1280,
+      "height": 960,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 25
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6495.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 850,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 7
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6800.HEIC",
+      "label": "Paris - Avril 2025",
+      "sharpness": 948,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 23
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-07-15 (WE Bretagne anniv Gwen Ouessant Conquet St Malo)\\DSC06652.JPG",
+      "label": "Saint-Malo - Juillet 2025",
+      "sharpness": 847,
+      "width": 3648,
+      "height": 5472,
+      "rotationDeg": 90,
+      "ocrWords": 3,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6531.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 904,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 20
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-05-13 19.39.20.jpg",
+      "label": "2015 - Décembre 2015",
+      "sharpness": 302,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC06854.JPG",
+      "label": "Izmir Lesbos Chios Claire Denis - Août 2025",
+      "sharpness": 756,
+      "width": 3648,
+      "height": 5472,
+      "rotationDeg": 90,
+      "ocrWords": 1,
+      "ocrChars": 2
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so)\\IMG_0658.JPG",
+      "label": "Como (Italie) - Juillet 2017",
+      "sharpness": 485,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 90,
+      "ocrWords": 9,
+      "ocrChars": 23
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-03-06 (Palerme So et Steph)\\DSC05808.JPG",
+      "label": "Palerme So et Steph - Mars 2025",
+      "sharpness": 843,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 14,
+      "ocrChars": 33
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6289.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 1380,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6758.HEIC",
+      "label": "Paris - Avril 2025",
+      "sharpness": 977,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 12,
+      "ocrChars": 32
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_2391.JPG",
+      "label": "Paris - Janvier 2015",
+      "sharpness": 930,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 90,
+      "ocrWords": 8,
+      "ocrChars": 16
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-03-06 (Palerme So et Steph)\\DSC05845.JPG",
+      "label": "Palerme So et Steph - Mars 2025",
+      "sharpness": 815,
+      "width": 3648,
+      "height": 5472,
+      "rotationDeg": 90,
+      "ocrWords": 3,
+      "ocrChars": 9
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2026\\2026-03-29 (USA Texas Louisiane Mississipi Tennessee)\\DSC08901.JPG",
+      "label": "USA Texas Louisiane Mississipi Tennessee - Mars 2026",
+      "sharpness": 1862,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 3
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 13 pro Steph\\IMG_9577.HEIC",
+      "label": "Lafayette (USA) - Mars 2023",
+      "sharpness": 1691,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 15
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-03-06 (Palerme So et Steph)\\DSC05773.JPG",
+      "label": "Palerme So et Steph - Mars 2025",
+      "sharpness": 928,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 12
     }
   ],
   "rejected": [
@@ -667,6 +857,344 @@
       "ocrWords": 16,
       "ocrChars": 40,
       "label": "Palermo (Italie) - Mars 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-07-08\\IMG_0187.JPG",
+      "reason": "Contient trop de texte (OCR : 20 mots, 47 caract.)",
+      "sharpness": 1992,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 20,
+      "ocrChars": 47,
+      "label": "2018 - Juillet 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9521.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 296 < 300)",
+      "sharpness": 0,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "label": "Paris - Mai 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7719.JPG",
+      "reason": "Contient trop de texte (OCR : 45 mots, 116 caract.)",
+      "sharpness": 1993,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 45,
+      "ocrChars": 116,
+      "label": "Bellême - Juin 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-07-15 (WE Bretagne anniv Gwen Ouessant Conquet St Malo)\\DSC06202.JPG",
+      "reason": "Contient trop de texte (OCR : 24 mots, 60 caract.)",
+      "sharpness": 1696,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 24,
+      "ocrChars": 60,
+      "label": "WE Bretagne anniv Gwen Ouessant Conquet St Malo - Juillet 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_6153.JPG",
+      "reason": "Contient trop de texte (OCR : 24 mots, 57 caract.)",
+      "sharpness": 1321,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 24,
+      "ocrChars": 57,
+      "label": "Oran (DZ) - Avril 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-07-25\\IMG_3169.JPG",
+      "reason": "Contient trop de texte (OCR : 18 mots, 36 caract.)",
+      "sharpness": 389,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 18,
+      "ocrChars": 36,
+      "label": "2018 - Juillet 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_3740.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 171 < 300)",
+      "sharpness": 0,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "label": "Paris - Mars 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2026\\2026-03-29 (USA Texas Louisiane Mississipi Tennessee)\\DSC08683.JPG",
+      "reason": "Contient trop de texte (OCR : 23 mots, 68 caract.)",
+      "sharpness": 1347,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 23,
+      "ocrChars": 68,
+      "label": "USA Texas Louisiane Mississipi Tennessee - Mars 2026"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_E2251.HEIC",
+      "reason": "Contient trop de texte (OCR : 22 mots, 54 caract.)",
+      "sharpness": 1160,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 22,
+      "ocrChars": 54,
+      "label": "Ostuni (Italie) - Août 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-03-06 (Palerme So et Steph)\\DSC05883.JPG",
+      "reason": "Contient trop de texte (OCR : 35 mots, 91 caract.)",
+      "sharpness": 3679,
+      "width": 3648,
+      "height": 5472,
+      "rotationDeg": 90,
+      "ocrWords": 35,
+      "ocrChars": 91,
+      "label": "Palerme So et Steph - Mars 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6462.HEIC",
+      "reason": "Contient trop de texte (OCR : 23 mots, 57 caract.)",
+      "sharpness": 1168,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 23,
+      "ocrChars": 57,
+      "label": "Paris - Mars 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_2209.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 144 < 300)",
+      "sharpness": 0,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 90,
+      "label": "Paris - Décembre 2014"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC07049.JPG",
+      "reason": "Contient trop de texte (OCR : 31 mots, 75 caract.)",
+      "sharpness": 870,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 31,
+      "ocrChars": 75,
+      "label": "Izmir Lesbos Chios Claire Denis - Août 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_4503.JPG",
+      "reason": "Contient trop de texte (OCR : 28 mots, 73 caract.)",
+      "sharpness": 2584,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "ocrWords": 28,
+      "ocrChars": 73,
+      "label": "Argenteuil - Janvier 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-03-28 23.59.34-2.jpg",
+      "reason": "Image trop floue ou plate (Netteté: 92 < 300)",
+      "sharpness": 0,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "label": "Paris - Mars 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6910 1.HEIC",
+      "reason": "Contient trop de texte (OCR : 46 mots, 119 caract.)",
+      "sharpness": 2809,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 46,
+      "ocrChars": 119,
+      "label": "Salerno (Italie) - Juillet 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-08-31 (Vacances été Pouilles Corse)\\DSC00073.JPG",
+      "reason": "Contient trop de texte (OCR : 33 mots, 78 caract.)",
+      "sharpness": 2005,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 33,
+      "ocrChars": 78,
+      "label": "Vacances été Pouilles Corse - Juillet 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-07-15 (WE Bretagne anniv Gwen Ouessant Conquet St Malo)\\DSC06438.JPG",
+      "reason": "Contient trop de texte (OCR : 53 mots, 119 caract.)",
+      "sharpness": 4852,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 53,
+      "ocrChars": 119,
+      "label": "WE Bretagne anniv Gwen Ouessant Conquet St Malo - Juillet 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC07145.JPG",
+      "reason": "Contient trop de texte (OCR : 22 mots, 54 caract.)",
+      "sharpness": 1739,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 22,
+      "ocrChars": 54,
+      "label": "Izmir Lesbos Chios Claire Denis - Août 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-22 (WE Bretagne fagonade)\\IMG_9313.JPG",
+      "reason": "Contient trop de texte (OCR : 91 mots, 235 caract.)",
+      "sharpness": 2468,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 91,
+      "ocrChars": 235,
+      "label": "WE Bretagne fagonade - Mai 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so suite)\\IMG_8125.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 233 < 300)",
+      "sharpness": 0,
+      "width": 3264,
+      "height": 2448,
+      "rotationDeg": 0,
+      "label": "Agadir (Maroc) - Avril 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7734 1.HEIC",
+      "reason": "Contient trop de texte (OCR : 53 mots, 122 caract.)",
+      "sharpness": 1597,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 53,
+      "ocrChars": 122,
+      "label": "Ajaccio - Août 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-18\\IMG_0059.JPG",
+      "reason": "Contient trop de texte (OCR : 18 mots, 44 caract.)",
+      "sharpness": 845,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 18,
+      "ocrChars": 44,
+      "label": "2018 - Août 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6901 1.HEIC",
+      "reason": "Contient trop de texte (OCR : 15 mots, 35 caract.)",
+      "sharpness": 1122,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 15,
+      "ocrChars": 35,
+      "label": "Pompei (Italie) - Juillet 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-01-16 (iphone X Steph)\\Steph 232.JPG",
+      "reason": "Résolution insuffisante (750x1334 < 800x600)",
+      "sharpness": 0,
+      "width": 750,
+      "height": 1334,
+      "rotationDeg": 0,
+      "label": "Iphone X Steph - Janvier 2020"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_E8308.JPG",
+      "reason": "Contient trop de texte (OCR : 51 mots, 234 caract.)",
+      "sharpness": 2005,
+      "width": 1170,
+      "height": 1179,
+      "rotationDeg": 0,
+      "ocrWords": 51,
+      "ocrChars": 234,
+      "label": "Iphone 14 So - Juillet 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\RYEL3384.JPG",
+      "reason": "Contient trop de texte (OCR : 68 mots, 211 caract.)",
+      "sharpness": 3867,
+      "width": 971,
+      "height": 1295,
+      "rotationDeg": 0,
+      "ocrWords": 68,
+      "ocrChars": 211,
+      "label": "Iphone So - Janvier 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-25 (iphone steph)\\IMG_9875.JPG",
+      "reason": "Contient trop de texte (OCR : 24 mots, 57 caract.)",
+      "sharpness": 1310,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 24,
+      "ocrChars": 57,
+      "label": "Erquy - Mai 2018"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-05-30 14.21.09.jpg",
+      "reason": "Contient trop de texte (OCR : 370 mots, 1987 caract.)",
+      "sharpness": 5289,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 0,
+      "ocrWords": 370,
+      "ocrChars": 1987,
+      "label": "Paris - Mai 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2026\\2026-03-29 (USA Texas Louisiane Mississipi Tennessee)\\DSC08600.JPG",
+      "reason": "Contient trop de texte (OCR : 43 mots, 109 caract.)",
+      "sharpness": 4087,
+      "width": 5472,
+      "height": 3648,
+      "rotationDeg": 0,
+      "ocrWords": 43,
+      "ocrChars": 109,
+      "label": "USA Texas Louisiane Mississipi Tennessee - Mars 2026"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_2037.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 211 < 300)",
+      "sharpness": 0,
+      "width": 960,
+      "height": 1280,
+      "rotationDeg": 90,
+      "label": "Iphone Sonia - Août 2015"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-08-12 (iphone Sonia)\\IMG_1798.JPG",
+      "reason": "Contient trop de texte (OCR : 18 mots, 43 caract.)",
+      "sharpness": 462,
+      "width": 2448,
+      "height": 3264,
+      "rotationDeg": 90,
+      "ocrWords": 18,
+      "ocrChars": 43,
+      "label": "Paris - Novembre 2014"
     }
   ],
   "videos": []
