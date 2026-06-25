@@ -343,6 +343,45 @@
             box-shadow: var(--shadow-subtle);
         }
 
+        .photo-card.live-now {
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.35), var(--shadow-subtle);
+        }
+
+        .live-badge {
+            position: absolute;
+            bottom: 0.6rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(16, 185, 129, 0.92);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.2rem 0.65rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.5);
+            animation: livePulse 1.8s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .live-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 2px 8px rgba(16,185,129,0.5); }
+            50% { box-shadow: 0 2px 18px rgba(16,185,129,0.9); }
+        }
+
         .photo-thumb-wrapper {
             width: 100%;
             height: 180px;
@@ -715,7 +754,8 @@
                     </div>
                 </div>
 
-                <div class="glass-card" id="bartop-live-card" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Bandeau compact En Direct (dashboard) -->
+                <div class="glass-card" id="bartop-live-card" style="display: flex; flex-direction: column; gap: 0.75rem;">
                     <div class="terminal-header" style="border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem; margin-bottom: 0;">
                         <span>EN DIRECT DU BARTOP</span>
                         <div style="display: flex; align-items: center; gap: 0.35rem;">
@@ -723,11 +763,18 @@
                             <span style="font-size: 0.7rem; color: var(--accent-green); font-weight: bold; letter-spacing: 0.05em;">LIVE</span>
                         </div>
                     </div>
-                    <div id="bartop-live-content" style="display: flex; flex-direction: column; gap: 0.75rem; justify-content: center; height: 100%; min-height: 250px;">
+                    <div id="bartop-live-content" style="display: flex; flex-direction: column; gap: 0.75rem; justify-content: center; flex: 1; min-height: 220px;">
                         <div style="color: var(--text-muted); text-align: center; font-size: 0.9rem;">Recherche du statut de lecture...</div>
                     </div>
+                    <!-- Lien vers la galerie -->
+                    <div style="text-align: center; padding-top: 0.25rem; border-top: 1px solid var(--panel-border);">
+                        <button onclick="switchTab('selected-gallery')" style="background: none; border: none; color: #a5b4fc; font-size: 0.8rem; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.5rem; border-radius: 0.35rem; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.1)'" onmouseout="this.style.background='none'">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Voir dans la galerie →
+                        </button>
+                    </div>
                 </div>
-                
+
                 <div class="glass-card">
                     <div class="terminal-header">
                         <span>CONSOLE LOGS (DIRECT)</span>
@@ -744,6 +791,21 @@
 
         <!-- Onglet 2: Photos Sélectionnées -->
         <div id="tab-selected-gallery" class="page-content">
+            <!-- Bandeau En Direct intégré à la galerie -->
+            <div class="glass-card" id="gallery-live-banner" style="display: flex; align-items: center; gap: 1.25rem; padding: 1rem 1.5rem; margin-bottom: 0.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); animation: pulse 1.5s infinite;"></span>
+                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent-green); letter-spacing: 0.06em;">EN DIRECT</span>
+                </div>
+                <div id="gallery-live-thumb" style="width: 60px; height: 45px; background: #090a0f; border-radius: 0.4rem; overflow: hidden; flex-shrink: 0; border: 1px solid var(--panel-border); display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d6174" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <div style="flex: 1; min-width: 0;">
+                    <div id="gallery-live-label" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">—</div>
+                    <div id="gallery-live-info" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Aucune lecture en cours</div>
+                </div>
+            </div>
+
             <div class="glass-card">
                 <div class="gallery-controls">
                     <h2>Sélection Actuelle (<span id="count-selected">0</span> photos)</h2>
@@ -928,6 +990,9 @@
             <div style="width: 100%; height: 60vh; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative;">
                 <img id="lightbox-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.3s ease; opacity: 0;" src="" alt="Aperçu" onload="this.style.opacity = 1">
                 <video id="lightbox-video" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;" controls autoplay></video>
+                <!-- Boutons navigation précédent/suivant -->
+                <button id="lightbox-prev" onclick="event.stopPropagation(); navigateLightbox(-1)" title="Précédent (← ou G)" style="position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.12); color:#fff; width:42px; height:42px; border-radius:50%; font-size:1.6rem; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); transition:background 0.2s, transform 0.15s; line-height:1;" onmouseover="this.style.background='rgba(99,102,241,0.55)'" onmouseout="this.style.background='rgba(0,0,0,0.55)'">&#8249;</button>
+                <button id="lightbox-next" onclick="event.stopPropagation(); navigateLightbox(1)" title="Suivant (→ ou D)" style="position:absolute; right:0.75rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.12); color:#fff; width:42px; height:42px; border-radius:50%; font-size:1.6rem; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); transition:background 0.2s, transform 0.15s; line-height:1;" onmouseover="this.style.background='rgba(99,102,241,0.55)'" onmouseout="this.style.background='rgba(0,0,0,0.55)'">&#8250;</button>
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                 <h3 id="lightbox-title" style="font-size: 1.2rem; color: var(--text-main);">Titre</h3>
@@ -935,7 +1000,7 @@
                     <span>Résolution: <strong id="lightbox-res" style="color: var(--text-main);">-</strong></span>
                     <span>Netteté: <strong id="lightbox-sharp" style="color: var(--text-main);">-</strong></span>
                     <span id="lightbox-ocr-container" style="display: none;">Texte (OCR): <strong id="lightbox-ocr" style="color: var(--text-main);">-</strong></span>
-                    <span id="lightbox-meta-extra" style="display: none;">Label: <strong id="lightbox-label" style="color: var(--text-main);">-</strong></span>
+                    <span id="lightbox-meta-extra" style="display: none;">Fichier: <strong id="lightbox-label" style="color: var(--text-main);">-</strong></span>
                 </div>
                 <div id="lightbox-reason-box" style="display: none;" class="card-reason">
                     Raison du rejet
@@ -970,6 +1035,20 @@
             loadHistory();
             connectLogs();
             startBartopLivePolling();
+
+            // Navigation clavier dans la lightbox (flèches ou D/G)
+            document.addEventListener('keydown', (e) => {
+                if (document.getElementById('lightbox').style.display !== 'flex') return;
+                if (e.key === 'ArrowLeft' || e.key === 'g' || e.key === 'G') {
+                    e.preventDefault();
+                    navigateLightbox(-1);
+                } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                    e.preventDefault();
+                    navigateLightbox(1);
+                } else if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
         });
 
         // Gestion de la navigation par onglets
@@ -1170,13 +1249,12 @@
                         ${badgeHTML}
                     </div>
                     <div class="photo-info">
-                        <h4 class="photo-title" title="${filename}">${filename}</h4>
+                        <h4 class="photo-title" title="${photo.label || filename}">${photo.label || filename}</h4>
                         <div class="photo-meta">
                             <span>${photo.width} x ${photo.height}</span>
-                            ${photo.label ? `<span style="color:#a5b4fc; font-weight:600;">${photo.label}</span>` : ''}
                         </div>
                         ${type === 'rejected' ? `<div class="card-reason" title="${photo.reason}">${photo.reason}</div>` : ''}
-                        <div class="photo-path" title="${photo.path}">${photo.path}</div>
+                        <div class="photo-path" title="${photo.path}">${filename}</div>
                     </div>
                 `;
 
@@ -1185,7 +1263,7 @@
                     card.className = 'photo-card';
                     card.setAttribute('data-path', photo.path);
                     card.style.cursor = 'pointer';
-                    card.addEventListener('click', () => showPhotoModal(photo, type));
+                    card.addEventListener('click', () => showPhotoModal(photo, type, index));
                     card.innerHTML = cardContent;
                     
                     const ref = grid.children[index];
@@ -1198,8 +1276,29 @@
             });
         }
 
+        // Navigation lightbox
+        let currentLightboxIndex = -1;
+        let currentLightboxType = '';
+
+        function navigateLightbox(direction) {
+            const sourceArr = currentLightboxType === 'selected' ? selectedPhotosData
+                            : currentLightboxType === 'rejected' ? rejectedPhotosData : null;
+            if (!sourceArr || sourceArr.length === 0) return;
+            currentLightboxIndex = (currentLightboxIndex + direction + sourceArr.length) % sourceArr.length;
+            showPhotoModal(sourceArr[currentLightboxIndex], currentLightboxType, currentLightboxIndex);
+        }
+
         // Fonctions pour le Modal de prévisualisation (Lightbox)
-        function showPhotoModal(photo, type) {
+        function showPhotoModal(photo, type, index = 0) {
+            currentLightboxIndex = index;
+            currentLightboxType = type;
+
+            // Afficher/masquer les boutons de nav selon le type
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            if (prevBtn) prevBtn.style.display = (type === 'selected' || type === 'rejected') ? 'flex' : 'none';
+            if (nextBtn) nextBtn.style.display = (type === 'selected' || type === 'rejected') ? 'flex' : 'none';
+
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
             const videoEl = document.getElementById('lightbox-video');
@@ -1220,8 +1319,12 @@
             img.style.display = 'block';
             img.style.opacity = '0';
             img.src = `/api/photo?path=${encodeURIComponent(photo.path)}`;
-            
-            title.innerText = filename;
+
+            // Label en titre principal, filename en sous-titre
+            title.innerText = photo.label || filename;
+            metaExtra.style.display = 'inline';
+            label.innerText = filename;
+
             res.innerText = `${photo.width} x ${photo.height}`;
             sharp.innerText = photo.sharpness || 0;
             pathInput.value = photo.path;
@@ -1233,13 +1336,6 @@
                 ocrVal.innerText = `${photo.ocrWords} mots / ${photo.ocrChars} lettres`;
             } else {
                 ocrContainer.style.display = 'none';
-            }
-
-            if (photo.label) {
-                metaExtra.style.display = 'inline';
-                label.innerText = photo.label;
-            } else {
-                metaExtra.style.display = 'none';
             }
 
             if (type === 'selected') {
@@ -1536,7 +1632,7 @@
             }
         }
 
-        let lastLivePath = "";
+        let lastLiveFilename = "";
 
         async function updateBartopLive() {
             try {
@@ -1546,62 +1642,149 @@
                     return;
                 }
                 const data = await response.json();
-                if (data.error || !data.source_path) {
+                if (data.error || !data.filename) {
                     showBartopLiveEmpty(data.error);
                     return;
                 }
 
-                if (data.source_path === lastLivePath) {
-                    return;
-                }
-                lastLivePath = data.source_path;
+                // Mettre à jour le panneau seulement si le fichier a changé
+                const filenameChanged = data.filename !== lastLiveFilename;
+                if (filenameChanged) {
+                    lastLiveFilename = data.filename;
 
-                const content = document.getElementById('bartop-live-content');
-                let mediaHTML = "";
-                
-                if (data.type === "photo") {
-                    const imgUrl = `/api/photo?path=${encodeURIComponent(data.source_path)}`;
-                    mediaHTML = `
-                        <div style="width: 100%; height: 180px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid var(--panel-border);">
-                            <img src="${imgUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    // --- PANNEAU DASHBOARD ---
+                    const content = document.getElementById('bartop-live-content');
+                    let mediaHTML = "";
+
+                    if (data.type === "photo" && data.source_path) {
+                        const imgUrl = `/api/photo?path=${encodeURIComponent(data.source_path)}`;
+                        mediaHTML = `
+                            <div style="width: 100%; height: 155px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid var(--panel-border);">
+                                <img src="${imgUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;" loading="lazy">
+                            </div>
+                        `;
+                    } else if (data.type === "photo" && !data.source_path) {
+                        const match = selectedPhotosData.find(p => p.path === data.source_path || p.path.split(/[\\/]/).pop() === data.filename);
+                        if (match) {
+                            const imgUrl = `/api/photo?path=${encodeURIComponent(match.path)}`;
+                            mediaHTML = `
+                                <div style="width: 100%; height: 155px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 1px solid var(--panel-border);">
+                                    <img src="${imgUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;" loading="lazy">
+                                </div>
+                            `;
+                        }
+                    } else if (data.type && data.type.startsWith("video") && data.source_path) {
+                        const videoUrl = `/api/video?path=${encodeURIComponent(data.source_path)}`;
+                        mediaHTML = `
+                            <div style="width: 100%; height: 155px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; border: 1px solid var(--panel-border);">
+                                <video src="${videoUrl}" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+                                <span class="badge sharpness-high" style="top: 0.5rem; right: 0.5rem;">▶️ VIDEO</span>
+                            </div>
+                        `;
+                    }
+
+                    // Label en titre principal, filename en secondaire
+                    content.innerHTML = `
+                        <div style="width: 100%; display: flex; flex-direction: column; gap: 0.5rem;">
+                            ${mediaHTML}
+                            <div style="display: flex; flex-direction: column; gap: 0.1rem;">
+                                <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-main); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${data.label || data.filename}">${data.label || data.filename}</div>
+                                ${data.info ? `<div style="font-size: 0.78rem; color: #a5b4fc; text-align: center; font-weight: 500;">${data.info}</div>` : ''}
+                                <div style="font-size: 0.68rem; color: #5d6174; text-align: center; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 0.15rem;" title="${data.filename}">${data.filename}</div>
+                            </div>
                         </div>
                     `;
-                } else if (data.type && data.type.startsWith("video")) {
-                    const videoUrl = `/api/video?path=${encodeURIComponent(data.source_path)}`;
-                    mediaHTML = `
-                        <div style="width: 100%; height: 180px; background: #090a0f; border-radius: 0.5rem; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; border: 1px solid var(--panel-border);">
-                            <video src="${videoUrl}" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
-                            <span class="badge sharpness-high" style="top: 0.5rem; right: 0.5rem;">▶️ VIDEO</span>
-                        </div>
-                    `;
+
+                    // --- BANDEAU GALERIE ---
+                    updateGalleryLiveBanner(data);
                 }
 
-                content.innerHTML = `
-                    <div style="width: 100%; display: flex; flex-direction: column; gap: 0.5rem;">
-                        ${mediaHTML}
-                        <div style="display: flex; flex-direction: column; gap: 0.15rem;">
-                            <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-main); text-align: center; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${data.filename}">${data.filename}</div>
-                            <div style="font-size: 0.8rem; color: #a5b4fc; text-align: center; font-weight: 500;">${data.label || ''}</div>
-                            ${data.info ? `<div style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">${data.info}</div>` : ''}
-                            <div style="font-size: 0.7rem; color: #5d6174; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 0.25rem;" title="${data.source_path}">${data.source_path}</div>
-                        </div>
-                    </div>
-                `;
+                // --- HIGHLIGHT CARTE (toujours ré-appliqué, en cas de re-rendu de la galerie) ---
+                highlightLiveCard(data.source_path);
+
             } catch (e) {
                 console.error("Erreur lors de la mise à jour du live Bartop:", e);
                 showBartopLiveEmpty();
             }
         }
 
+        function updateGalleryLiveBanner(data) {
+            const label = document.getElementById('gallery-live-label');
+            const info = document.getElementById('gallery-live-info');
+            const thumb = document.getElementById('gallery-live-thumb');
+
+            label.textContent = data.label || data.filename;
+            info.textContent = data.info || data.filename;
+
+            // Miniature
+            let thumbSrc = null;
+            if (data.source_path && data.type === 'photo') {
+                thumbSrc = `/api/photo?path=${encodeURIComponent(data.source_path)}`;
+            } else if (!data.source_path && data.type === 'photo') {
+                const match = selectedPhotosData.find(p => p.path.split(/[\\/]/).pop() === data.filename);
+                if (match) thumbSrc = `/api/photo?path=${encodeURIComponent(match.path)}`;
+            }
+
+            if (thumbSrc) {
+                thumb.innerHTML = `<img src="${thumbSrc}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`;
+            } else {
+                thumb.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d6174" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`;
+            }
+        }
+
+        function highlightLiveCard(sourcePath) {
+            // Retirer l'ancien highlight
+            document.querySelectorAll('.photo-card.live-now').forEach(c => {
+                c.classList.remove('live-now');
+                const badge = c.querySelector('.live-badge');
+                if (badge) badge.remove();
+            });
+
+            if (!sourcePath) return;
+
+            // Trouver la carte par son chemin SOURCE (data-path = chemin source original)
+            const grid = document.getElementById('grid-selected');
+            if (!grid) return;
+
+            Array.from(grid.children).forEach(card => {
+                const cardPath = card.getAttribute('data-path') || '';
+                if (cardPath === sourcePath) {
+                    card.classList.add('live-now');
+                    // Ajouter badge
+                    const wrapper = card.querySelector('.photo-thumb-wrapper');
+                    if (wrapper && !wrapper.querySelector('.live-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'live-badge';
+                        badge.innerHTML = '<span class="dot"></span> EN COURS';
+                        wrapper.appendChild(badge);
+                    }
+                    // Scroll vers la carte si on est dans la galerie
+                    if (document.getElementById('tab-selected-gallery').classList.contains('active')) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+        }
+
         function showBartopLiveEmpty(customMsg) {
             const content = document.getElementById('bartop-live-content');
             content.innerHTML = `<div style="color: var(--text-muted); text-align: center; font-size: 0.9rem;">${customMsg || 'Aucun élément en cours de lecture.'}</div>`;
-            lastLivePath = "";
+            // Mettre à jour le bandeau galerie
+            const label = document.getElementById('gallery-live-label');
+            const info = document.getElementById('gallery-live-info');
+            const thumb = document.getElementById('gallery-live-thumb');
+            if (label) label.textContent = '—';
+            if (info) info.textContent = 'Aucune lecture en cours';
+            if (thumb) thumb.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d6174" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+            lastLiveFilename = "";
+            // Retirer les highlights
+            highlightLiveCard('');
         }
 
         function startBartopLivePolling() {
             updateBartopLive();
-            setInterval(updateBartopLive, 2000);
+            // Polling toutes les 3s (le slideshow change au minimum toutes les 1s)
+            setInterval(updateBartopLive, 3000);
         }
     </script>
 </body>

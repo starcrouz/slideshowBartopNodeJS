@@ -1,56 +1,36 @@
 {
-  "timestamp": 1782347309980,
+  "timestamp": 1782349286594,
   "stats": {
     "totalPhotos": 296690,
     "totalVideos": 13278,
-    "selected": 59,
-    "rejected": 21
+    "selected": 100,
+    "rejected": 15
   },
   "selected": [
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-08-31 (Vacances été Pouilles Corse)\\DSC00809.JPG",
-      "label": "Vacances été Pouilles Corse - Août 2023",
-      "sharpness": 2403,
-      "width": 3648,
-      "height": 5472,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos casting indivision\\P1340843.JPG",
+      "label": "Tangier (Maroc) - Mars 2015",
+      "sharpness": 373,
+      "width": 1920,
+      "height": 2560,
       "rotationDeg": 90,
-      "ocrWords": 3,
-      "ocrChars": 6
+      "ocrWords": 2,
+      "ocrChars": 4
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-05-28 (iphone so)\\IMG_0569.JPG",
-      "label": "Paris - Juillet 2017",
-      "sharpness": 700,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 90,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5560 1.HEIC",
-      "label": "Paris - Juillet 2020",
-      "sharpness": 3225,
-      "width": 4032,
-      "height": 3024,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_7415 1.HEIC",
+      "label": "Breuillet - Décembre 2020",
+      "sharpness": 563,
+      "width": 3024,
+      "height": 4032,
       "rotationDeg": 0,
-      "ocrWords": 6,
-      "ocrChars": 14
+      "ocrWords": 0,
+      "ocrChars": 0
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3625.HEIC",
-      "label": "Paris - Avril 2020",
-      "sharpness": 423,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2009\\2009-11-02 (vacances toussaint juan)\\IMG_0017.JPG",
-      "label": "Vacances toussaint juan - Octobre 2009",
-      "sharpness": 388,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-02-14 (vacances Auray avec pattemma)\\IMG_8301.JPEG",
+      "label": "Quiberon - Février 2021",
+      "sharpness": 1458,
       "width": 2048,
       "height": 1536,
       "rotationDeg": 0,
@@ -58,379 +38,389 @@
       "ocrChars": 4
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-04-08 10.49.46.jpg",
-      "label": "Paris - Avril 2015",
-      "sharpness": 801,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 0,
-      "ocrWords": 2,
-      "ocrChars": 4
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos casting indivision\\P1340681.JPG",
-      "label": "Tangier (Maroc) - Mars 2015",
-      "sharpness": 1128,
-      "width": 1920,
-      "height": 2560,
-      "rotationDeg": 90,
-      "ocrWords": 3,
-      "ocrChars": 6
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_7675.HEIC",
-      "label": "Ioánnina (Grèce) - Août 2024",
-      "sharpness": 2085,
-      "width": 5712,
-      "height": 4284,
-      "rotationDeg": 0,
-      "ocrWords": 5,
-      "ocrChars": 11
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7334.HEIC",
-      "label": "Paris - Mai 2025",
-      "sharpness": 3723,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2023\\2023-07-24 - iphone 13 pro Steph\\IMG_0494.HEIC",
+      "label": "Paris - Avril 2023",
+      "sharpness": 2355,
       "width": 3024,
       "height": 4032,
       "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
+      "ocrWords": 8,
+      "ocrChars": 19
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6041.HEIC",
-      "label": "Dieulefit - Juillet 2020",
-      "sharpness": 1235,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-11 12.47.59.jpg",
-      "label": "Tangier (Maroc) - Novembre 2015",
-      "sharpness": 889,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-08-17 (Izmir Lesbos Chios Claire Denis)\\DSC08039.JPG",
-      "label": "Izmir Lesbos Chios Claire Denis - Août 2025",
-      "sharpness": 2012,
-      "width": 3648,
-      "height": 5472,
-      "rotationDeg": 90,
-      "ocrWords": 3,
-      "ocrChars": 8
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-15 14.37.37-1.jpg",
-      "label": "Tangier (Maroc) - Novembre 2015",
-      "sharpness": 537,
-      "width": 960,
-      "height": 1280,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\PAKF1216.JPG",
-      "label": "10 12b iPhone 14 So - Octobre 2024",
-      "sharpness": 440,
-      "width": 1536,
-      "height": 2048,
-      "rotationDeg": 0,
-      "ocrWords": 2,
-      "ocrChars": 5
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6269 1.HEIC",
-      "label": "Ajaccio - Août 2020",
-      "sharpness": 2245,
-      "width": 3024,
-      "height": 4032,
-      "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_6023.JPG",
-      "label": "Vienna (Autriche) - Septembre 2023",
-      "sharpness": 603,
-      "width": 1536,
-      "height": 2049,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos tournage Indivision\\IMG_2646.JPG",
-      "label": "2015",
-      "sharpness": 316,
-      "width": 960,
-      "height": 1280,
-      "rotationDeg": 90,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2016\\2016-04-25 (Portugal)\\P1380222.JPG",
-      "label": "Coimbra (Portugal) - Avril 2016",
-      "sharpness": 797,
-      "width": 1920,
-      "height": 2560,
-      "rotationDeg": 90,
-      "ocrWords": 3,
-      "ocrChars": 6
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\2025-12-31 (Laponie Cac Rico)\\DSC08409.JPG",
-      "label": "Laponie Cac Rico - Décembre 2025",
-      "sharpness": 1501,
-      "width": 5472,
-      "height": 3648,
-      "rotationDeg": 0,
-      "ocrWords": 2,
-      "ocrChars": 4
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_1091.JPG",
-      "label": "Versailles - Décembre 2018",
-      "sharpness": 1380,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 4,
-      "ocrChars": 10
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-06 17.17.39.jpg",
-      "label": "Tangier (Maroc) - Novembre 2015",
-      "sharpness": 416,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-10-23 20.41.14.jpg",
-      "label": "Lannion - Octobre 2015",
-      "sharpness": 946,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-04\\IMG_4032.JPG",
-      "label": "2018 - Juillet 2018",
-      "sharpness": 1097,
-      "width": 5184,
-      "height": 3456,
-      "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4361.HEIC",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4097.HEIC",
       "label": "Paris - Décembre 2021",
-      "sharpness": 691,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-11\\IMG_9696.JPG",
-      "label": "2018 - Août 2018",
-      "sharpness": 2629,
-      "width": 5184,
-      "height": 3456,
-      "rotationDeg": 0,
-      "ocrWords": 4,
-      "ocrChars": 11
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_1077.JPG",
-      "label": "Paris - Décembre 2018",
-      "sharpness": 1579,
+      "sharpness": 361,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
       "ocrWords": 1,
-      "ocrChars": 3
+      "ocrChars": 2
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0388.JPG",
-      "label": "2018 - Août 2018",
-      "sharpness": 411,
-      "width": 5184,
-      "height": 3456,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3018.HEIC",
+      "label": "Athens (Grèce) - Août 2024",
+      "sharpness": 806,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8566.HEIC",
+      "label": "Brest - Juillet 2025",
+      "sharpness": 629,
+      "width": 3024,
+      "height": 4032,
       "rotationDeg": 0,
       "ocrWords": 5,
-      "ocrChars": 11
+      "ocrChars": 13
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-18\\IMG_9989.JPG",
-      "label": "2018 - Août 2018",
-      "sharpness": 2279,
-      "width": 5184,
-      "height": 3456,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_2764.HEIC",
+      "label": "Paris - Janvier 2021",
+      "sharpness": 783,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 7
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6310.HEIC",
+      "label": "Paris - Juin 2022",
+      "sharpness": 1234,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 7
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_7942.HEIC",
+      "label": "Paris - Septembre 2023",
+      "sharpness": 666,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9876.HEIC",
+      "label": "Paris - Janvier 2024",
+      "sharpness": 1914,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 5,
+      "ocrChars": 13
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9253.HEIC",
+      "label": "Teguise (Espagne) - Décembre 2023",
+      "sharpness": 3046,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 8,
+      "ocrChars": 19
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6417.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 5410,
+      "width": 3024,
+      "height": 4032,
       "rotationDeg": 0,
       "ocrWords": 2,
       "ocrChars": 5
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-10-24 20.14.12.jpg",
-      "label": "2015 - Décembre 2015",
-      "sharpness": 409,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 0,
-      "ocrWords": 2,
-      "ocrChars": 4
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0513.JPG",
-      "label": "2018 - Août 2018",
-      "sharpness": 379,
-      "width": 3456,
-      "height": 5184,
-      "rotationDeg": 90,
-      "ocrWords": 3,
-      "ocrChars": 8
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\COLOR_POP(4).jpg",
-      "label": "Split (Croatie) - Juillet 2018",
-      "sharpness": 1173,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3488.HEIC",
+      "label": "Brussels (Belgique) - Septembre 2024",
+      "sharpness": 3720,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
+      "ocrWords": 11,
+      "ocrChars": 27
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0934.JPG",
-      "label": "Paris - Décembre 2018",
-      "sharpness": 1574,
-      "width": 3024,
-      "height": 4032,
-      "rotationDeg": 90,
-      "ocrWords": 2,
-      "ocrChars": 8
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9940.HEIC",
-      "label": "Paris - Février 2024",
-      "sharpness": 2467,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 2,
-      "ocrChars": 4
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6596.HEIC",
-      "label": "Créteil - Septembre 2020",
-      "sharpness": 2834,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_1911.JPG",
-      "label": "Paris - Novembre 2019",
-      "sharpness": 316,
-      "width": 3264,
-      "height": 2448,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3360.HEIC",
-      "label": "Paris - Septembre 2024",
-      "sharpness": 2866,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8374.HEIC",
-      "label": "Paris - Juillet 2025",
-      "sharpness": 712,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0677.JPG",
-      "label": "Nice - Novembre 2018",
-      "sharpness": 589,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 90,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_6802.JPG",
-      "label": "Dar es Salaam (Tanzanie) - Décembre 2022",
-      "sharpness": 3994,
-      "width": 4032,
-      "height": 3024,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4032.HEIC",
-      "label": "Paris - Mai 2020",
-      "sharpness": 676,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9511.HEIC",
+      "label": "Santa Cruz de Tenerife (Espagne) - Décembre 2023",
+      "sharpness": 2252,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
       "ocrWords": 6,
-      "ocrChars": 18
+      "ocrChars": 12
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_2844.HEIC",
-      "label": "Vólos (Grèce) - Août 2024",
-      "sharpness": 5976,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8199.HEIC",
+      "label": "Paris - Octobre 2023",
+      "sharpness": 1727,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3883.HEIC",
+      "label": "Brussels (Belgique) - Novembre 2021",
+      "sharpness": 1445,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 13,
+      "ocrChars": 61
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_3107.HEIC",
+      "label": "Thiais - Janvier 2021",
+      "sharpness": 1164,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 10
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3157.HEIC",
+      "label": "Ajaccio - Août 2024",
+      "sharpness": 2299,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 7,
+      "ocrChars": 14
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3198.HEIC",
+      "label": "Paris - Septembre 2024",
+      "sharpness": 479,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8048.HEIC",
+      "label": "Paris - Juin 2025",
+      "sharpness": 450,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 7
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2008\\2008-02-02 (vacances Ile de la Reuion)\\IMG_7412.JPG",
+      "label": "Vacances Ile de la Reuion - Janvier 2008",
+      "sharpness": 1272,
+      "width": 2592,
+      "height": 1944,
+      "rotationDeg": 0,
+      "ocrWords": 14,
+      "ocrChars": 32
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8320.HEIC",
+      "label": "Paris - Octobre 2023",
+      "sharpness": 787,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 10
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3763.HEIC",
+      "label": "Napoli (Italie) - Septembre 2024",
+      "sharpness": 1354,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 9
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5893.HEIC",
+      "label": "Saint-François (Guadeloupe) - Avril 2022",
+      "sharpness": 818,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 15
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5455 1.HEIC",
+      "label": "Paris - Juillet 2020",
+      "sharpness": 1370,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 19
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\EZVR6645.JPG",
+      "label": "2022 - Décembre 2021",
+      "sharpness": 1352,
+      "width": 3840,
+      "height": 2160,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5954 1.HEIC",
+      "label": "Dieulefit - Juillet 2020",
+      "sharpness": 1804,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 7
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8369.HEIC",
+      "label": "Paris - Juillet 2025",
+      "sharpness": 700,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6237.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 1017,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\05 08 2021\\IMG_8917.JPG",
+      "label": "2021 - Août 2021",
+      "sharpness": 309,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6911 1.HEIC",
+      "label": "Salerno (Italie) - Juillet 2023",
+      "sharpness": 3384,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 10,
+      "ocrChars": 24
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\13 08 2021\\IMG_9011.JPG",
+      "label": "2021 - Août 2021",
+      "sharpness": 996,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 10,
+      "ocrChars": 21
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3377.HEIC",
+      "label": "Brussels (Belgique) - Septembre 2024",
+      "sharpness": 2064,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 13
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5658 1.HEIC",
+      "label": "Gennes - Juillet 2020",
+      "sharpness": 1336,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4338.JPG",
+      "label": "Piraeus (Grèce) - Août 2022",
+      "sharpness": 1636,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8116.HEIC",
+      "label": "Strasbourg - Juillet 2025",
+      "sharpness": 7773,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 11,
+      "ocrChars": 23
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_3493.JPG",
+      "label": "Montana (Bulgarie) - Août 2022",
+      "sharpness": 1575,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
       "ocrWords": 5,
-      "ocrChars": 12
+      "ocrChars": 13
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_2940.HEIC",
-      "label": "Kateríni (Grèce) - Août 2024",
-      "sharpness": 3515,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9398.HEIC",
+      "label": "Arrecife (Espagne) - Décembre 2023",
+      "sharpness": 2370,
       "width": 3024,
       "height": 4032,
       "rotationDeg": 0,
-      "ocrWords": 5,
-      "ocrChars": 11
+      "ocrWords": 14,
+      "ocrChars": 36
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4114.HEIC",
-      "label": "Paris - Décembre 2021",
-      "sharpness": 961,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3927.HEIC",
+      "label": "Paris - Mai 2020",
+      "sharpness": 1637,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 8,
+      "ocrChars": 22
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5910.HEIC",
+      "label": "Dieulefit - Juillet 2020",
+      "sharpness": 2723,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 12,
+      "ocrChars": 28
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5799.HEIC",
+      "label": "Alençon - Avril 2022",
+      "sharpness": 349,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
@@ -438,139 +428,149 @@
       "ocrChars": 2
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2020\\2020-11-09 (iphone Steph du 1510 au 0911)\\IMG_1901.heic",
-      "label": "Pornichet - Octobre 2020",
-      "sharpness": 995,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4962.HEIC",
+      "label": "Paris - Février 2022",
+      "sharpness": 1638,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 3
+      "ocrWords": 6,
+      "ocrChars": 13
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-14 14.33.41.jpg",
-      "label": "Tangier (Maroc) - Novembre 2015",
-      "sharpness": 543,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_E6298.HEIC",
-      "label": "Paris - Mai 2024",
-      "sharpness": 306,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7695.HEIC",
+      "label": "Bellême - Juin 2025",
+      "sharpness": 4263,
       "width": 3024,
       "height": 4032,
       "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
+      "ocrWords": 8,
+      "ocrChars": 19
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0373.JPG",
-      "label": "2018 - Août 2018",
-      "sharpness": 1907,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\13 08 2021\\IMG_9065.JPG",
+      "label": "2021 - Août 2021",
+      "sharpness": 1326,
       "width": 5184,
       "height": 3456,
-      "rotationDeg": 0,
-      "ocrWords": 5,
-      "ocrChars": 10
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\IMG_0786(1).JPG",
-      "label": "Kraljevo (RS) - Juillet 2018",
-      "sharpness": 1336,
-      "width": 3264,
-      "height": 2448,
-      "rotationDeg": 0,
-      "ocrWords": 5,
-      "ocrChars": 12
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0319.JPG",
-      "label": "Paris - Octobre 2018",
-      "sharpness": 1277,
-      "width": 3264,
-      "height": 2448,
-      "rotationDeg": 0,
-      "ocrWords": 0,
-      "ocrChars": 0
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0313.JPG",
-      "label": "2018 - Août 2018",
-      "sharpness": 1080,
-      "width": 3456,
-      "height": 5184,
-      "rotationDeg": 90,
-      "ocrWords": 3,
-      "ocrChars": 10
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\IMG_0037(1).JPG",
-      "label": "Belgrade (RS) - Juillet 2018",
-      "sharpness": 458,
-      "width": 3264,
-      "height": 2448,
       "rotationDeg": 0,
       "ocrWords": 3,
       "ocrChars": 8
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_8191.HEIC",
-      "label": "Vólos (Grèce) - Août 2024",
-      "sharpness": 996,
-      "width": 5712,
-      "height": 4284,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_3343.HEIC",
+      "label": "Paris - Février 2021",
+      "sharpness": 1910,
+      "width": 4032,
+      "height": 3024,
       "rotationDeg": 0,
-      "ocrWords": 2,
-      "ocrChars": 5
+      "ocrWords": 4,
+      "ocrChars": 9
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3832.HEIC",
-      "label": "Saint-Vincent-de-Tyrosse - Novembre 2021",
-      "sharpness": 488,
-      "width": 3024,
-      "height": 4032,
-      "rotationDeg": 0,
-      "ocrWords": 1,
-      "ocrChars": 2
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2016\\Jarmila 60\\Jarmila 60\\IMG_9751.jpg",
-      "label": "Jarmila 60 - Novembre 2016",
-      "sharpness": 347,
-      "width": 5184,
-      "height": 3456,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9721.HEIC",
+      "label": "Santa Cruz de Tenerife (Espagne) - Janvier 2024",
+      "sharpness": 327,
+      "width": 4032,
+      "height": 3024,
       "rotationDeg": 0,
       "ocrWords": 4,
       "ocrChars": 8
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0668.JPG",
-      "label": "Nice - Novembre 2018",
-      "sharpness": 1327,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 90,
-      "ocrWords": 0,
-      "ocrChars": 0
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6121.HEIC",
+      "label": "Palermo (Italie) - Mars 2025",
+      "sharpness": 1515,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 13
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-11-04 (vacances Toussaint Juan les Pins)\\IMG_0641.JPG",
-      "label": "Vacances Toussaint Juan les Pins - Novembre 2018",
-      "sharpness": 1313,
-      "width": 5184,
-      "height": 3456,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4295.JPG",
+      "label": "Kórinthos (Grèce) - Août 2022",
+      "sharpness": 1315,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 6,
+      "ocrChars": 13
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7809.HEIC",
+      "label": "Paris - Juin 2025",
+      "sharpness": 909,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5808 1.HEIC",
+      "label": "Paris - Juillet 2020",
+      "sharpness": 1009,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 3,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4465.JPG",
+      "label": "Porto-Vecchio - Août 2022",
+      "sharpness": 1606,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 5,
+      "ocrChars": 10
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8306.HEIC",
+      "label": "Paris - Octobre 2023",
+      "sharpness": 2964,
+      "width": 4032,
+      "height": 3024,
       "rotationDeg": 0,
       "ocrWords": 0,
       "ocrChars": 0
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2017\\2017-02-12 (vacances ski Puy saint vincent)\\2017-02-05 15.12.48.jpg",
-      "label": "Gap - Février 2017",
-      "sharpness": 990,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9464.HEIC",
+      "label": "Arrecife (Espagne) - Décembre 2023",
+      "sharpness": 1073,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 13
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8756.HEIC",
+      "label": "Paris - Juillet 2025",
+      "sharpness": 2904,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 5
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4576 1.HEIC",
+      "label": "Paris - Juin 2020",
+      "sharpness": 377,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5142.HEIC",
+      "label": "Paris - Février 2022",
+      "sharpness": 2150,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
@@ -578,9 +578,9 @@
       "ocrChars": 2
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0886.JPG",
-      "label": "Paris - Décembre 2018",
-      "sharpness": 1903,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4864 1.HEIC",
+      "label": "Paris - Juillet 2020",
+      "sharpness": 570,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
@@ -588,214 +588,645 @@
       "ocrChars": 0
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2016\\Jarmila 60\\Jarmila 60\\IMG_9676.jpg",
-      "label": "Jarmila 60 - Novembre 2016",
-      "sharpness": 879,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5641.HEIC",
+      "label": "Milano (Italie) - Avril 2022",
+      "sharpness": 342,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_3933.HEIC",
+      "label": "Paris - Mars 2021",
+      "sharpness": 907,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 9
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\13 08 2021\\IMG_9028.JPG",
+      "label": "2021 - Août 2021",
+      "sharpness": 689,
       "width": 5184,
       "height": 3456,
       "rotationDeg": 0,
+      "ocrWords": 5,
+      "ocrChars": 12
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6356.HEIC",
+      "label": "Ajaccio - Août 2020",
+      "sharpness": 1768,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 9
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3298.HEIC",
+      "label": "Paris - Septembre 2024",
+      "sharpness": 1107,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 11
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5237 1.HEIC",
+      "label": "Paris - Juillet 2020",
+      "sharpness": 614,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3849.HEIC",
+      "label": "Brussels (Belgique) - Octobre 2024",
+      "sharpness": 1564,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 8
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4223.HEIC",
+      "label": "Paris - Décembre 2021",
+      "sharpness": 2571,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_5640.HEIC",
+      "label": "Paris - Février 2025",
+      "sharpness": 474,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
       "ocrWords": 3,
       "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_3769.HEIC",
+      "label": "Paris - Mars 2021",
+      "sharpness": 690,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4115.HEIC",
+      "label": "Paris - Mars 2021",
+      "sharpness": 381,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4343 1.HEIC",
+      "label": "Paris - Juin 2020",
+      "sharpness": 699,
+      "width": 2320,
+      "height": 3088,
+      "rotationDeg": 0,
+      "ocrWords": 7,
+      "ocrChars": 16
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4207.HEIC",
+      "label": "Paris - Mars 2021",
+      "sharpness": 1467,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 15
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_4445 1.HEIC",
+      "label": "Paris - Juin 2020",
+      "sharpness": 386,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6178.HEIC",
+      "label": "Palermo (Italie) - Mars 2025",
+      "sharpness": 1676,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 6
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5639.HEIC",
+      "label": "Milano (Italie) - Avril 2022",
+      "sharpness": 714,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 4
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6065.HEIC",
+      "label": "Palermo (Italie) - Mars 2025",
+      "sharpness": 4745,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 13
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8526.HEIC",
+      "label": "Paris - Novembre 2023",
+      "sharpness": 1100,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 24
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3302.HEIC",
+      "label": "Paris - Septembre 2024",
+      "sharpness": 3291,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 14
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3888 1.HEIC",
+      "label": "Paris - Mai 2020",
+      "sharpness": 1118,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 7,
+      "ocrChars": 17
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_8327.HEIC",
+      "label": "Paris - Octobre 2023",
+      "sharpness": 1427,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 13,
+      "ocrChars": 52
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4463.JPG",
+      "label": "Porto-Vecchio - Août 2022",
+      "sharpness": 1832,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 14
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3514.HEIC",
+      "label": "Bilbao (Espagne) - Octobre 2021",
+      "sharpness": 2807,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 6,
+      "ocrChars": 13
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8364.HEIC",
+      "label": "Paris - Juillet 2025",
+      "sharpness": 358,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2022-12-31 (vacances Tanzanie)\\IMG_8882.JPG",
+      "label": "Vacances Tanzanie - Décembre 2022",
+      "sharpness": 852,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 3
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\13 08 2021\\IMG_9036.JPG",
+      "label": "2021 - Août 2021",
+      "sharpness": 3385,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 11
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5304.JPG",
+      "label": "Paris - Juillet 2020",
+      "sharpness": 803,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6723.HEIC",
+      "label": "Paris - Avril 2025",
+      "sharpness": 983,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 5
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6479.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 8956,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 11,
+      "ocrChars": 25
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3233.HEIC",
+      "label": "Brussels (Belgique) - Septembre 2024",
+      "sharpness": 2490,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 8
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6455.HEIC",
+      "label": "Paris - Mars 2025",
+      "sharpness": 2285,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 5
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\PWCS3135.JPG",
+      "label": "Iphone 14 So - Juillet 2025",
+      "sharpness": 3461,
+      "width": 1200,
+      "height": 1600,
+      "rotationDeg": 0,
+      "ocrWords": 9,
+      "ocrChars": 25
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8237.HEIC",
+      "label": "Strasbourg - Juillet 2025",
+      "sharpness": 1436,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 0,
+      "ocrChars": 0
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6490.HEIC",
+      "label": "Paris - Juin 2022",
+      "sharpness": 2065,
+      "width": 3024,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 1,
+      "ocrChars": 2
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4192.JPG",
+      "label": "Kalamáta (Grèce) - Août 2022",
+      "sharpness": 705,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 4,
+      "ocrChars": 10
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_7944.HEIC",
+      "label": "Paris - Septembre 2023",
+      "sharpness": 611,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 2,
+      "ocrChars": 5
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6004.HEIC",
+      "label": "Palermo (Italie) - Mars 2025",
+      "sharpness": 1541,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 12,
+      "ocrChars": 29
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4388.HEIC",
+      "label": "Paris - Avril 2021",
+      "sharpness": 1447,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 4,
+      "ocrChars": 11
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3301.HEIC",
+      "label": "Paris - Septembre 2024",
+      "sharpness": 3210,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 8,
+      "ocrChars": 21
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4475.JPG",
+      "label": "Ste-Lucie de Porto-Vecchio - Août 2022",
+      "sharpness": 4998,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "ocrWords": 10,
+      "ocrChars": 24
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\13 08 2021\\IMG_8990.JPG",
+      "label": "2021 - Août 2021",
+      "sharpness": 1278,
+      "width": 3456,
+      "height": 5184,
+      "rotationDeg": 90,
+      "ocrWords": 4,
+      "ocrChars": 9
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_4479.JPG",
+      "label": "Ajaccio - Août 2022",
+      "sharpness": 1037,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 90,
+      "ocrWords": 2,
+      "ocrChars": 5
     }
   ],
   "rejected": [
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-10-26 20.44.02.jpg",
-      "reason": "Contient trop de texte (OCR : 80 mots, 334 caract.)",
-      "sharpness": 1852,
-      "width": 2448,
-      "height": 3264,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-13 (iphone 15 Steph)\\IMG_6076.JPG",
+      "reason": "Contient trop de texte (OCR : 18 mots, 49 caract.)",
+      "sharpness": 3166,
+      "width": 1536,
+      "height": 2049,
       "rotationDeg": 0,
-      "ocrWords": 80,
-      "ocrChars": 334,
-      "label": "Paris - Octobre 2015"
+      "ocrWords": 18,
+      "ocrChars": 49,
+      "label": "Vienna (Autriche) - Septembre 2023"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IXSD3781.JPG",
-      "reason": "Résolution insuffisante (696x1197 < 800x600)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6188.JPG",
+      "reason": "Contient trop de texte (OCR : 174 mots, 496 caract.)",
+      "sharpness": 2937,
+      "width": 1416,
+      "height": 2001,
+      "rotationDeg": 0,
+      "ocrWords": 174,
+      "ocrChars": 496,
+      "label": "Iphone So - Janvier 2023"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_2608.JPG",
+      "reason": "Image trop floue ou plate (Netteté: 230 < 300)",
       "sharpness": 0,
-      "width": 696,
-      "height": 1197,
+      "width": 3264,
+      "height": 2448,
       "rotationDeg": 0,
-      "label": "2022 - Décembre 2020"
+      "label": "Gif-sur-Yvette - Janvier 2020"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos casting indivision\\2015-03-30 07.38.53.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 115 < 300)",
-      "sharpness": 0,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0,
-      "label": "2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-04 15.51.15.jpg",
-      "reason": "Contient trop de texte (OCR : 81 mots, 459 caract.)",
-      "sharpness": 1101,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 0,
-      "ocrWords": 81,
-      "ocrChars": 459,
-      "label": "Paris - Novembre 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-12-22 10.07.11 HDR.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 30 < 300)",
-      "sharpness": 0,
-      "width": 960,
-      "height": 1280,
-      "rotationDeg": 0,
-      "label": "Paris - Décembre 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos casting indivision\\P1350348.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 98 < 300)",
-      "sharpness": 0,
-      "width": 1920,
-      "height": 2560,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3603.JPG",
+      "reason": "Contient trop de texte (OCR : 44 mots, 235 caract.)",
+      "sharpness": 4602,
+      "width": 3024,
+      "height": 4032,
       "rotationDeg": 90,
-      "label": "Paris - Juin 2015"
+      "ocrWords": 44,
+      "ocrChars": 235,
+      "label": "Breuillet - Avril 2020"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_6537.HEIC",
-      "reason": "Contient trop de texte (OCR : 26 mots, 131 caract.)",
-      "sharpness": 1405,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9902.HEIC",
+      "reason": "Contient trop de texte (OCR : 17 mots, 79 caract.)",
+      "sharpness": 894,
       "width": 4032,
       "height": 3024,
       "rotationDeg": 0,
-      "ocrWords": 26,
-      "ocrChars": 131,
-      "label": "Paris - Juillet 2022"
+      "ocrWords": 17,
+      "ocrChars": 79,
+      "label": "Paris - Février 2024"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos casting indivision\\2015-03-02 18.17.54.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 247 < 300)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8306.HEIC",
+      "reason": "Image trop floue ou plate (Netteté: 24 < 300)",
       "sharpness": 0,
-      "width": 3264,
-      "height": 2448,
+      "width": 4032,
+      "height": 3024,
       "rotationDeg": 0,
-      "label": "Beauvais - Mars 2015"
+      "label": "Paris - Juillet 2025"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0414.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 49 < 300)",
-      "sharpness": 0,
-      "width": 5184,
-      "height": 3456,
-      "rotationDeg": 0,
-      "label": "2018 - Août 2018"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos tournage Indivision\\IMG_3720.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 75 < 300)",
-      "sharpness": 0,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 90,
-      "label": "Tangier (Maroc) - Mars 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_6129.HEIC",
-      "reason": "Image trop floue ou plate (Netteté: 238 < 300)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_3848.HEIC",
+      "reason": "Image trop floue ou plate (Netteté: 190 < 300)",
       "sharpness": 0,
       "width": 3024,
       "height": 4032,
       "rotationDeg": 0,
-      "label": "Palermo (Italie) - Mars 2025"
+      "label": "Saint-Vincent-de-Tyrosse - Novembre 2021"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Photos Trip Canon 2018-08-24\\IMG_0324.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 56 < 300)",
-      "sharpness": 0,
-      "width": 5184,
-      "height": 3456,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_8151.HEIC",
+      "reason": "Contient trop de texte (OCR : 25 mots, 59 caract.)",
+      "sharpness": 4057,
+      "width": 4032,
+      "height": 3024,
       "rotationDeg": 0,
-      "label": "2018 - Août 2018"
+      "ocrWords": 25,
+      "ocrChars": 59,
+      "label": "Strasbourg - Juillet 2025"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-08-30 (Photos Trip)\\Trip été 2018. Photos autres que Canon 60D\\IMG_9659.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 50 < 300)",
-      "sharpness": 0,
-      "width": 3264,
-      "height": 2448,
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_5625.HEIC",
+      "reason": "Contient trop de texte (OCR : 20 mots, 45 caract.)",
+      "sharpness": 4524,
+      "width": 4032,
+      "height": 3024,
       "rotationDeg": 0,
-      "label": "Rapperswil (Suisse) - Juillet 2018"
+      "ocrWords": 20,
+      "ocrChars": 45,
+      "label": "Paris - Février 2025"
     },
     {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\Photos casting indivision\\2015-03-02 18.12.55.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 127 < 300)",
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_3423.HEIC",
+      "reason": "Image trop floue ou plate (Netteté: 144 < 300)",
       "sharpness": 0,
-      "width": 3264,
-      "height": 2448,
-      "rotationDeg": 0,
-      "label": "Beauvais - Mars 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-10-06 08.27.00.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 88 < 300)",
-      "sharpness": 0,
-      "width": 1280,
-      "height": 960,
-      "rotationDeg": 0,
-      "label": "Paris - Octobre 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2018\\2018-11-18 (gouter concert kipu)\\P1100180.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 101 < 300)",
-      "sharpness": 0,
-      "width": 2592,
-      "height": 3456,
-      "rotationDeg": 0,
-      "label": "Gouter concert kipu - Novembre 2018"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0200.JPG",
-      "reason": "Image trop floue ou plate (Netteté: 259 < 300)",
-      "sharpness": 0,
-      "width": 2448,
-      "height": 3264,
-      "rotationDeg": 90,
-      "label": "Paris - Septembre 2018"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2016\\2017-06-05 (Spectacle Ascendanse)\\prince3271.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 264 < 300)",
-      "sharpness": 0,
-      "width": 4928,
-      "height": 3280,
-      "rotationDeg": 0,
-      "label": "Spectacle Ascendanse - Juin 2017"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-09-27 20.27.41.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 134 < 300)",
-      "sharpness": 0,
-      "width": 3264,
-      "height": 2448,
-      "rotationDeg": 0,
-      "label": "Paris - Septembre 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2015\\2015-12-31 (année)\\2015-11-27 00.45.36-1.jpg",
-      "reason": "Image trop floue ou plate (Netteté: 181 < 300)",
-      "sharpness": 0,
-      "width": 3264,
-      "height": 2448,
-      "rotationDeg": 0,
-      "label": "Tangier (Maroc) - Novembre 2015"
-    },
-    {
-      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2019\\2019-02-10 (iphone Steph)\\IMG_0931.JPG",
-      "reason": "Contient trop de texte (OCR : 15 mots, 69 caract.)",
-      "sharpness": 1004,
       "width": 3024,
       "height": 4032,
-      "rotationDeg": 90,
+      "rotationDeg": 0,
+      "label": "Paris - Septembre 2024"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5344.HEIC",
+      "reason": "Image trop floue ou plate (Netteté: 297 < 300)",
+      "sharpness": 0,
+      "width": 4032,
+      "height": 3024,
+      "rotationDeg": 0,
+      "label": "Paris - Février 2022"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2025\\Iphone 14 So (2025-07-30)\\IMG_7772.HEIC",
+      "reason": "Contient trop de texte (OCR : 15 mots, 36 caract.)",
+      "sharpness": 1877,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
       "ocrWords": 15,
-      "ocrChars": 69,
-      "label": "Paris - Décembre 2018"
+      "ocrChars": 36,
+      "label": "Paris - Juin 2025"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2024\\2024-10-12b (iPhone 14 So)\\IMG_9865.HEIC",
+      "reason": "Contient trop de texte (OCR : 69 mots, 356 caract.)",
+      "sharpness": 928,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "ocrWords": 69,
+      "ocrChars": 356,
+      "label": "Paris - Janvier 2024"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2021\\2021-08-16 (Photos Espagne)\\05 08 2021\\IMG_8391.JPG",
+      "reason": "Contient trop de texte (OCR : 17 mots, 46 caract.)",
+      "sharpness": 2930,
+      "width": 5184,
+      "height": 3456,
+      "rotationDeg": 0,
+      "ocrWords": 17,
+      "ocrChars": 46,
+      "label": "2021 - Juillet 2021"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-14 (iphone So)\\IMG_5685 1.HEIC",
+      "reason": "Image trop floue ou plate (Netteté: 86 < 300)",
+      "sharpness": 0,
+      "width": 3024,
+      "height": 4032,
+      "rotationDeg": 0,
+      "label": "Saumur - Juillet 2020"
     }
   ],
-  "videos": []
+  "videos": [
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2003\\2003-07-24 (corse 2)\\films\\PICT0298.AVI",
+      "label": "Corse 2 - Juillet 2003",
+      "duration": "30s",
+      "sizeMb": 6.7,
+      "id": "001",
+      "filename": "PICT0298.AVI"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2013\\2013-12-01 (photos iphone so)\\IMG_0476.MOV",
+      "label": "2013",
+      "duration": "7s",
+      "sizeMb": 2.9,
+      "id": "002",
+      "filename": "IMG_0476.MOV"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2008\\2008-04-06 (David youngen)\\MVI_8569.AVI",
+      "label": "David youngen - Avril 2008",
+      "duration": "23s",
+      "sizeMb": 39.6,
+      "id": "003",
+      "filename": "MVI_8569.AVI"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2013\\2013-12-01 (photos iphone so)\\IMG_0480.MOV",
+      "label": "2013",
+      "duration": "13s",
+      "sizeMb": 5.7,
+      "id": "004",
+      "filename": "IMG_0480.MOV"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2009\\2009-01-12 - iphone\\1225310680.mov",
+      "label": "Iphone - Janvier 2009",
+      "duration": "56s",
+      "sizeMb": 12.3,
+      "id": "005",
+      "filename": "1225310680.mov"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2008\\2008-06-14 (Kermesse Mila)\\Photo 577.avi",
+      "label": "Kermesse Mila - Juin 2008",
+      "duration": "4s",
+      "sizeMb": 8,
+      "id": "006",
+      "filename": "Photo 577.avi"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\IMG_3017.MOV",
+      "label": "2022",
+      "duration": "1s",
+      "sizeMb": 1.9,
+      "id": "007",
+      "filename": "IMG_3017.MOV"
+    },
+    {
+      "path": "E:\\Google Drive\\_Perso\\Medias\\Photos\\_2022\\2023-01-08 (photos iPhone steph)\\EWCY2191.MP4",
+      "label": "2022",
+      "duration": "24s",
+      "sizeMb": 22.1,
+      "id": "008",
+      "filename": "EWCY2191.MP4"
+    }
+  ]
 }
