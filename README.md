@@ -1,32 +1,53 @@
 # SlideshowRecalbox
 
-A complete solution to manage and display a high-quality photo slideshow on a Recalbox-powered Bartop/Raspberry Pi.
+A complete solution to manage and display a high-quality photo/video slideshow on a Recalbox-powered Bartop/Raspberry Pi.
 
 The project is divided into two distinct parts:
-1. **Photo Selector (PC)**: A Node.js application to prepare your images.
+1. **Photo Selector (PC)**: A Node.js application to prepare and transfer your images & videos.
 2. **Screensaver System (RPi)**: A Python-based idle monitor and animated slideshow for Recalbox.
 
 ---
 
 ## 1. Photo Selector (PC / Node.js)
 
-Maintains a selection of 100 optimized photos from your library.
+Maintains a selection of optimized photos from your library and transfers them to the Bartop over the network.
 
-- **Quality Filtering**: Excludes blurry, low-resolution, or badly proportioned images based on customizable thresholds.
-- **In-place Overwriting**: Replaces files sequentially without clearing the folder first, avoiding slideshow downtime.
+- **Quality Filtering**: Excludes blurry, low-resolution, badly proportioned, or text-heavy images based on customizable thresholds.
+- **OCR Detection**: Uses Tesseract to detect and reject images containing too much text (screenshots, documents, memes…).
+- **Metadata Enrichment**: Reads EXIF data to generate `.txt` sidecar files with location labels (city/country), date, and source path. Handles HEIC/iPhone photos natively.
+- **Video Support**: Copies personal videos to the Bartop alongside photos (configurable size limit).
+- **Smart Shuffling**: In-place overwriting of destination files to avoid slideshow downtime.
+- **Lock File**: Prevents concurrent runs (via scheduler or dashboard).
 
 ### Installation & Usage
 1. `npm install`
 2. Configure `config.json` (see settings below).
 3. Run manually: `node index.js`
 
-### Quality Filter Configuration
-You can adjust the following parameters in `config.json` :
-* `ENABLE_QUALITY_FILTERS` (true/false) : Activer ou désactiver les filtres.
-* `FILTER_MIN_WIDTH` / `FILTER_MIN_HEIGHT` : Dimensions minimales des photos (ex: `800`x`600`).
-* `FILTER_ALLOW_PORTRAIT` (true/false) : Autoriser ou rejeter les photos verticales.
-* `FILTER_MAX_ASPECT_RATIO` : Élimine les panoramas extrêmes (ex: `2.2`).
-* `FILTER_MIN_SHARPNESS` : Seuil de netteté (ex: `100`). Le script calcule la variance du Laplacien pour détecter le flou. Plus le chiffre est élevé, plus le filtre est sévère.
+### `config.json` Parameters
+
+| Key | Description |
+|---|---|
+| `SOURCE_DIR` | Source folder for your photos |
+| `DEST_DIR` | Network destination on the Bartop (e.g. `\\RECALBOX\share\...`) |
+| `VIDEO_DEST_DIR` | Network destination for personal videos |
+| `NB_IMAGES` | Number of photos to select (default: `100`) |
+| `SCREEN_W` / `SCREEN_H` | Target screen resolution (used for aspect ratio filtering) |
+| `VIDEO_LIMIT_MB` | Maximum size of a video file to copy (in MB) |
+| `CITY_OVERRIDES` | Rename specific detected cities (e.g. suburbs → city center) |
+| `COUNTRY_NAMES` | Translate ISO country codes to display names |
+| `GENERIC_FOLDERS` | Folder names to ignore when building location labels |
+| `ENABLE_QUALITY_FILTERS` | Enable/disable all quality filters (`true`/`false`) |
+| `FILTER_MIN_WIDTH` / `FILTER_MIN_HEIGHT` | Minimum image dimensions (e.g. `800` x `600`) |
+| `FILTER_ALLOW_PORTRAIT` | Allow or reject portrait-orientation photos |
+| `FILTER_MAX_ASPECT_RATIO` | Reject extreme panoramas (e.g. `2.2`) |
+| `FILTER_MIN_SHARPNESS` | Blur threshold (Laplacian variance). Higher = stricter (e.g. `300`) |
+| `FILTER_FORBIDDEN_KEYWORDS` | Reject files whose name contains these strings (e.g. `screenshot`, `whatsapp`) |
+| `FILTER_REJECT_DOCUMENTS` | Reject images that look like documents (OCR-based) |
+| `FILTER_REQUIRE_EXIF` | Only accept photos with valid EXIF data |
+| `FILTER_OCR_MAX_WORDS` | Max number of detected words before rejection |
+| `FILTER_OCR_MAX_CHARS` | Max number of detected characters before rejection |
+| `FILTER_OCR_MIN_CONFIDENCE` | Minimum OCR confidence to count a word |
 
 ### Background Hourly Execution (Windows Task Scheduler)
 To automatically update your photos/videos every hour, but **only if your Bartop is turned on and connected**:
@@ -37,20 +58,25 @@ To automatically update your photos/videos every hour, but **only if your Bartop
    .\create_task.ps1
    ```
 This registers a task named `BartopPhotoSelector` in your Windows Task Scheduler.
-- **Silent operation**: It executes via [run_silent.vbs](file:///c:/Users/steph/Documents/Bartop-NodeJS/run_silent.vbs) to prevent command prompt windows from flashing.
-- **Smart detection**: [index.js](file:///c:/Users/steph/Documents/Bartop-NodeJS/index.js) automatically tests connection with the Bartop's network name (TCP port 445) before running. If the Bartop is turned off, the script exits immediately (within 2 seconds) to avoid background lag or network timeouts.
+- **Silent operation**: Executes via [run_silent.vbs](run_silent.vbs) to prevent command prompt windows from flashing.
+- **Smart detection**: [index.js](index.js) automatically tests connection with the Bartop's network name (TCP port 445) before running. If the Bartop is off, the script exits immediately (within 2 seconds).
 
-To remove the scheduled task, run this in PowerShell:
+To remove the scheduled task:
 ```powershell
 Unregister-ScheduledTask -TaskName "BartopPhotoSelector" -Confirm:$false
 ```
 
 ### Optional Interactive Web Dashboard (PC)
-For a visual overview of your selection, you can run the local Web Dashboard on your PC. It allows you to:
-- See the **selected photos** with their sharpness scores and labels.
-- See the **discarded photos** and the reason they were rejected (blurry, bad size, portrait orientation, etc.).
-- Easily edit `config.json` parameters.
-- Trigger a new selection run and see the console logs in real-time.
+A local web interface to monitor and control the selector. Features:
+- View **selected photos** with sharpness scores and metadata labels.
+- View **rejected photos** with the reason for rejection (blurry, bad size, portrait, text detected, etc.).
+- View **personal videos** selected for transfer.
+- See what is **currently displayed on the Bartop** (photo/video name, metadata).
+- Edit `config.json` parameters directly from the browser.
+- Trigger a new selection run and watch **real-time console logs** (Server-Sent Events).
+- **Stop** a running selection at any time.
+- **Photo previews** with HEIC/iPhone support (auto-converted on the fly, cached locally).
+- **Video playback** with HTTP Range Requests (streaming).
 
 To start the dashboard:
 1. Run:
@@ -58,7 +84,7 @@ To start the dashboard:
    node server.js
    ```
 2. Open your browser at: `http://localhost:3000`
-3. Stop it with `Ctrl+C` once you are done (it does not need to run in the background).
+3. Stop it with `Ctrl+C` once you are done.
 
 ---
 
@@ -67,27 +93,52 @@ To start the dashboard:
 A two-script system to turn your Recalbox into a photo frame when idle.
 
 ### Components
-- **[idle_monitor.py](display/idle_monitor.py)**: The "brain". It monitors joysticks/buttons and kills EmulationStation when no activity is detected to launch the slideshow.
-- **[slideshow.py](display/slideshow.py)**: The "display". Shows photos with a Ken Burns (zoom) effect and metadata labels.
+- **[idle_monitor.py](display/idle_monitor.py)**: The "brain". Monitors joysticks/buttons and stops EmulationStation when no activity is detected, then launches the slideshow. Restarts ES when the user exits.
+- **[slideshow.py](display/slideshow.py)**: The "display". Shows photos and videos with animated transitions and metadata overlays.
 
-### Features & Controls
-- **Multi-Mode Support**: Toggle between **Photos**, **Personal Videos**, and **Game Videos** (Screenshots/Snaps).
-- **Smart Shuffling**: Randomized display without repeats.
-- **Ultra-responsive Exit**: Instant wake-up on any button (except Info/Mode).
-- **Controls**:
-  - **Exit**: Press **Any Button** (except Info/Mode) or any **Key**.
-  - **Navigate**: Joystick **Left/Right** to skip.
-  - **Adjust Speed**: Joystick **Up/Down** (Score 1-20, Up = Faster).
-  - **Info Mode**: Press **Button 1** (ID 289) to pause and show details.
-    - *Diagnostic tip*: While in Info Mode, press any other button to see its ID without exiting!
-  - **Switch Mode**: Press the **Mode Button** (default ID 304) to cycle modes.
+### Slideshow Features
+- **4 Display Modes** (cycled with the Mode Button):
+  - `Photos` — Displays selected photos from the images folder.
+  - `Vidéos` — Plays personal videos from the videos folder.
+  - `Jeux` — Plays game video snaps from the Recalbox roms folder.
+  - `Cycle Auto` — Rotates through all three modes automatically every 60 seconds.
+- **Rich Photo Animations** (6 types, chosen randomly per photo):
+  - Zoom In / Zoom Out
+  - Pan Left / Pan Right / Pan Up / Pan Down
+  - Smooth vertical scroll for portrait-orientation photos (no black bars).
+- **Fade-in transition** on each photo load.
+- **Metadata overlay**: Displays the photo label (location/date) in the bottom-right corner.
+- **Persistent Settings**: Speed, mode, mute state are saved to `slideshow_settings.json` and restored on next launch.
+- **Current state export**: Writes `current.json` at each media change so the web dashboard can display what's currently playing on the Bartop.
+
+### Controls
+| Input | Action |
+|---|---|
+| **Any button** (except Info/Mode) | Exit slideshow |
+| **Any key** | Exit slideshow |
+| **Joystick Left/Right** | Skip to previous/next item |
+| **Joystick Up/Down** | Adjust display speed (photos only) |
+| **Button 1** (ID `289`) in photo mode | Toggle **Info panel** (shows full label, date, source path, countdown) |
+| **Button 1** (ID `289`) in video mode | Toggle **Mute** audio |
+| **Mode Button** (ID `304`) | Cycle through display modes |
+| *While in Info mode* | Press any other button to see its ID (diagnostic) |
+
+### Idle Monitor Configuration
+Edit the constants at the top of [idle_monitor.py](display/idle_monitor.py):
+
+| Variable | Description |
+|---|---|
+| `TIMEOUT_SECONDS` | Idle time before launching the screensaver (default: `60`) |
+| `GAME_PROCESSES` | List of emulator process names that pause the idle timer |
+| `SLIDESHOW_SCRIPT` | Path to `slideshow.py` on the Raspberry Pi |
+| `ES_START_SCRIPT` | Path to the EmulationStation init script |
 
 ### Installation on Recalbox
 1. Copy the `display` folder to `/recalbox/share/userscripts/`.
-2. To start the monitor automatically:
+2. To start the monitor automatically on boot:
    - Edit `/recalbox/share/system/custom.sh`:
      ```bash
-     python /recalbox/share/userscripts/idle_monitor.py &
+     python /recalbox/share/userscripts/slideshow/idle_monitor.py &
      ```
    - Ensure it's executable: `chmod +x /recalbox/share/system/custom.sh`
 
@@ -95,10 +146,21 @@ A two-script system to turn your Recalbox into a photo frame when idle.
 
 ## Advanced Options
 
-If your Raspberry Pi is struggling with the animation, you can disable it in `idle_monitor.py` by adding `--no-animation` to the slideshow call:
+### Disable Animation
+If your Raspberry Pi struggles with the Ken Burns animations, disable them by passing `--no-animation` to the slideshow call in `idle_monitor.py`:
 ```python
-subprocess.call(["python", "/recalbox/share/userscripts/slideshow/slideshow.py", "--no-animation"])
+subprocess.call(["python", SLIDESHOW_SCRIPT, "--no-animation"])
 ```
+
+### Slideshow Settings File
+The slideshow saves its state to `/recalbox/share/userscripts/slideshow/slideshow_settings.json`. You can edit this file manually to pre-configure:
+- `display_time`: Default duration per photo in seconds.
+- `info_button`: Button ID for the Info/Mute action (default: `289`).
+- `mode_button`: Button ID for cycling modes (default: `304`).
+- `current_mode`: Starting mode (`1`=Photos, `2`=Videos, `3`=Games, `4`=Cycle).
+- `is_muted`: Whether audio starts muted (`true`/`false`).
+
+---
 
 ## License
 ISC
